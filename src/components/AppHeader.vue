@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+const emits = defineEmits(['toggle-layout'])
+const toggleLayout = (typeForm) => {
+  emits('toggle-layout', typeForm)
+}
+</script>
 <template>
   <nav
     id="topPanel"
@@ -54,11 +59,14 @@
           </form>
         </ul>
         <div class="buttons ms-3">
-          <button class="btn btn-warning text-white btn-sm text-capitalise">
+          <button class="btn btn-warning text-white btn-sm text-capitalise"
+            @click="toggleLayout('login')"
+          >
             Авторизация
           </button>
           <button
             class="btn btn-warning text-white btn-sm text-capitalize ms-1"
+            @click="toggleLayout('register')"
           >
             Регистрация
           </button>

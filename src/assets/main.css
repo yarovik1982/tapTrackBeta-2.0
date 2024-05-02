@@ -25,3 +25,45 @@ a{
 #mainContent{
   padding-top: 130px;
 }
+.layout{
+  background-image: linear-gradient(rgba(0,0,0, .3), rgba(0,0,0,.3 ));
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.custom-form {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  width: 25%;
+  min-width: 560px;
+  background-color: #fff;
+  padding: 1rem;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+.bookmark {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  position: relative;
+  top: 0;
+  right: 0;
+}
+.custom-form.show{
+  animation-name: isShow;
+  animation-duration: .5s;
+  animation-timing-function: ease;
+}
+@keyframes isShow{
+  from{top:-100% ;}
+  to{top: 50px;}
+}

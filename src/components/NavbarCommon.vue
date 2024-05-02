@@ -8,6 +8,11 @@ const currRouter = ref(router.currentRoute.value.path)
 watchEffect(router.currentRoute,(to, from) => {
   currRouter.value = to
 })
+const emits = defineEmits(['toggle-layout'])
+const toggleLayout = (typeForm) => {
+   emits('toggle-layout', typeForm)
+  //  console.log(typeForm);
+}
 </script>
 <template>
      <nav class="navbar navbar-expand position-fixed w-100" style="top:90px; left:0;" >
@@ -28,7 +33,7 @@ watchEffect(router.currentRoute,(to, from) => {
           </li>
          
           <li class="nav-item ms-3">
-            <a role="button" class="nnav-link py-0" >Написать нам</a>
+            <a role="button" class="nnav-link py-0" @click="toggleLayout('writeUs')">Написать нам</a>
           </li>        
         </ul>
         
