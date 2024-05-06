@@ -34,7 +34,29 @@ import BreweryPage from '@/views/BreweryPage.vue'
     {
       path:'/profile',
       name:'profile',
-      component:() => import('@/views/ProfilePage.vue')
+      component:() => import('@/views/ProfilePage.vue'),
+      children:[
+        {
+          path:'/profile-favorite',
+          name:'profile-favorite',
+          component:() => import('@/views/ProfileFavoritePage.vue')
+        },
+        {
+          path:'/profile-reviews',
+          name:'profile-reviews',
+          component:() => import('@/views/ProfileReviewsPage.vue')
+        },
+        {
+          path:'/profile-places',
+          name:'profile-places',
+          component:() => import('@/views/ProfilePlacesPage.vue')
+        },
+        {
+          path:'/profile-brewery',
+          name:'profile-brewery',
+          component:() => import('@/views/ProfileBreweryPage.vue')
+        },
+      ]
     },
     
   ]
@@ -43,4 +65,17 @@ import BreweryPage from '@/views/BreweryPage.vue'
     routes
   })
 
+  // router.beforeEach((to, from, next) => {
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   const access = JSON.parse(localStorage.getItem("access"));
+  //   if (to.path.startsWith("/profile")) {
+  //     if (access && user) {
+  //       next();
+  //     } else {
+  //       next("/");
+  //     }
+  //   } else {
+  //     next();
+  //   }
+  // });
 export default router
