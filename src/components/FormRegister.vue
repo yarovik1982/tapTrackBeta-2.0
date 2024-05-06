@@ -1,21 +1,34 @@
 <script setup>
+import InputText from '@/components/UI/InputText.vue';
+import { ref } from 'vue';
 const emits = defineEmits(['close-form'])
 const closeForm = () => {
    emits('close-form')
 }
+const username = ref('')
+
+const sendData = () => {
+  const data = {
+    username:username.value.trim()
+  }
+  console.log(data);
+}
 </script>
 <template>
-    <form id="register">
+    <form id="register" @submit.prevent="sendData">
     <h3 class="form-title text-center">Регистрация</h3>
     <i
       class="bi bi-x fs-1 text-white position-absolute fw-bold"
-      style="top: -25px;right: -40px; z-index: 110; cursor: pointer; font-weight: bold;"
+      style="top: -25px;right: -40px; cursor: pointer; font-weight: bold;"
       @click="closeForm"
     ></i>
-    <div class="mb-3">
-      <label for="inpName" class="form-label">Name</label>
-      <input type="text" class="form-control form-control-sm" id="inpName" />
-    </div>
+    <input-text
+      :title="'Name'"
+      :id="'inpName'" 
+      v-model="username"
+      @emit-input="input"
+    />
+    <div>{{ username }}</div>
     <div class="mb-3">
       <label for="inpLogin" class="form-label">Login</label>
       <input type="text" class="form-control form-control-sm" id="inpLogin" />

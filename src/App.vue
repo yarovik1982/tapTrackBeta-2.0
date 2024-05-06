@@ -1,50 +1,41 @@
 <script setup>
 import AppHeader from '@/components/AppHeader.vue'
 import LayoutForModal from '@/components/LayoutForModal.vue'
-import FormLogin from '@/components/FormLogin.vue';
-import FormRegister from '@/components/FormRegister.vue';
-import FormWriteUs from '@/components/FormWriteUs.vue'
+import AppToTop from '@/components/UI/AppToTop.vue'
+import AppFooter from '@/components/AppFooter.vue'
+import { unScroll, scroll, scrollUp } from '@/functions/scroll'
 import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
 
-const isActive = ref(false)
-const currentTypeForm = ref(null)
-const toggleLayout = (typeForm) => {
-  isActive.value = !isActive.value
-  currentTypeForm.value = typeForm
+const currentFormType = ref('')
+const showForm = (type) => {
+  currentFormType.value = type
+  unScroll()
 }
 const closeForm = () => {
-  isActive.value = !isActive.value
+  currentFormType.value = ''
+  scroll()
+}
+const scrollTo = () => {
+  scrollUp()
 }
 </script>
 
 <template>
   <LayoutForModal 
-    v-if="isActive" 
-    @toggle-layout="toggleLayout"
-    
-  >
-    <FormLogin 
-      :class="['custom-form', {show: isActive}]"
-      v-if="currentTypeForm === 'login'"
-      @close-form="closeForm"
-    ></FormLogin>
-    <FormRegister 
-      :class="['custom-form', {show: isActive}]"
-      v-if="currentTypeForm === 'register'"
-      @close-form="closeForm"
-    ></FormRegister>
-    <FormWriteUs
-    :class="['custom-form', {show: isActive}]"
-    v-if="currentTypeForm === 'writeUs'"
+    v-if="currentFormType" 
+    :type="currentFormType" 
     @close-form="closeForm"
-    ></FormWriteUs>
-</LayoutForModal>
-  <AppHeader @toggle-layout="toggleLayout"></AppHeader>
-  
+  ></LayoutForModal>
+ 
+ <div class="position-sticky top-0" style="z-index: 5;">
+  <AppHeader @show-form="showForm"></AppHeader>
+ </div>
+  <AppToTop @click="scrollTo"></AppToTop>
   <RouterView 
-    @emit-layout="toggleLayout('writeUs')"
+    @open-form="showForm"
   />
+  <AppFooter @open-form="showForm"></AppFooter>
 </template>
 
 <style scoped>

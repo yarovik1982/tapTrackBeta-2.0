@@ -1,47 +1,50 @@
 <script setup>
+import FormLogin from '@/components/FormLogin.vue';
+import FormRegister from '@/components/FormRegister.vue';
+import FormWriteUs from '@/components/FormWriteUs.vue';
+import { computed, ref } from 'vue';
 
-import { ref } from 'vue';
+const emits = defineEmits(['close-form'])
+const closeForm = () => {
+  emits('close-form')
+}
 const props = defineProps({
-   isActive: false,
+  type:{
+    type:String,
+    required:true
+  }
 })
 
-// const isShow = ref(false)
-const emits = defineEmits(['toggle-layout'])
-const toggleLayout = () => {
-   emits('toggle-layout')
-}
+const currentForm = computed(() => {
+  switch(props.type){
+    case 'login':
+      return FormLogin;
+    case 'register':
+      return FormRegister;
+    case 'writeUs':
+      return FormWriteUs
+  }
+})
+
 </script>
 <template>
-    <div class="layout position-fixed top-0 start-0 w-100 h-100 " :isActive="isActive" @click.self="toggleLayout">
-      <slot></slot>>
-
-      <!-- <form class="custom-form">
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label"
-        >Адрес электронной почты</label
-      >
-      <input
-        type="email"
-        class="form-control"
-        id="exampleInputEmail1"
-        aria-describedby="emailHelp"
-      />
-      <div id="emailHelp" class="form-text">
-        Мы никогда никому не передадим вашу электронную почту.
-      </div>
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Пароль</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" />
-    </div>
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-      <label class="form-check-label" for="exampleCheck1">Проверить меня</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Отправить</button>
-  </form> -->
+    
+    <div class="layout position-fixed top-0 start-0 w-100 h-100 "  @click.self="closeForm">
+      <component :is="currentForm" class="custom-form" @close-form="closeForm"></component>
     </div>
 </template>
 <style scoped >
 
 </style>
+<!-- <div class="layout position-fixed top-0 start-0 w-100 h-100 " :isActive="isActive" @click.self="toggleLayout">
+      <slot></slot>>
+    </div> -->
+    // {
+      // const props = defineProps({
+      //    isActive: false,
+      // })
+      // const emits = defineEmits(['toggle-layout'])
+      // const toggleLayout = () => {
+      //    emits('toggle-layout')
+      // }
+      // }

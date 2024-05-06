@@ -1,9 +1,17 @@
 <script setup>
+const emits = defineEmits(['close-form'])
+const closeForm = () => {
+  emits('close-form')
+}
 </script>
 <template>
     <form id="writeUas" >
     <h3 class="form-title text-center">Написать нам</h3>
-    <button class="btn btn-close position-absolute text-white" style="top: 0;right: 0px; z-index: 110"></button>
+    <i
+      class="bi bi-x fs-1 text-white position-absolute fw-bold"
+      style="top: -25px;right: -40px; cursor: pointer; font-weight: bold;"
+      @click="closeForm"
+    ></i>
     <div class="row g-3 mb-3">
       <div class="col">
         <label for="inpName" class="form-label">Name</label>
