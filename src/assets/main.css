@@ -3,6 +3,7 @@
 body{
   background-image:linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,.7)) ,url(../assets/images/Layer1.svg);
   background-attachment: fixed;
+  min-width: 1200px;
 }
 body.unScroll{
   padding-right: 21px;

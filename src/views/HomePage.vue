@@ -1,9 +1,9 @@
 <script setup>
-// import HomeHeroSection from '@/components/HomeHeroSection.vue';
 import Card from '@/components/Card.vue';
 import Rating from 'primevue/rating'
 import AppOffer from "@/components/AppOffer.vue";
 import SliderPlices from "@/components/SliderPlices.vue";
+import SliderReviews from '@/components/SliderReviews.vue'
 import { ref } from 'vue';
 const emits = defineEmits(["open-form"]);
 const showForm = (type) => {
@@ -126,6 +126,19 @@ const ratingValue = ref(0)
           
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="reviews" class="mb-5">
+    <h5 class="text-center mx-auto mb-5 ">
+      <span class="section-title bg-blur text-uppercase position-relative px-2 d-inline-block rounded rounded-5 fw-semibold"
+        >отзывы</span
+      >
+    </h5>
+    <div class="bg-white py-3">
+      <div class="container py-3">
+      <slider-reviews/>
+    </div>
     </div>
   </section>
 
