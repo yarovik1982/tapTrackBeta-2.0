@@ -18,6 +18,11 @@ const emits = defineEmits(['show-form'])
 const showForm = (type) => {
   emits('show-form', type)
 }
+const handleLogout = (type) => {
+  localStorage.removeItem('user')
+  router.push('/')
+  emits('show-form', type)
+}
 const auth = ref(false)
 </script>
 <template>
@@ -84,7 +89,9 @@ const auth = ref(false)
           </button>
         </div>
         <div class="buttons ms-3">
-          <button class="btn btn-warning btn-sm text-white text-capitalize">
+          <button class="btn btn-warning btn-sm text-white text-capitalize"
+            @click="handleLogout('login')"
+          >
             выход
           </button>
         </div>
@@ -107,6 +114,7 @@ const auth = ref(false)
           <li class="nav-item ms-3">
             <RouterLink :class="['nnav-link', 'py-0', 'position-relative', {'text-white': isScrolled, '': !isScrolled}]" to="/brewery">Пивоварни</RouterLink>
           </li>
+         
          
           <li class="nav-item ms-3">
             <a role="button" :class="['nnav-link', 'py-0', 'position-relative', {'text-white': isScrolled, '': !isScrolled}]" @click="showForm('writeUs')">Написать нам</a>

@@ -4,12 +4,16 @@ import { getUser } from '@/functions/storage';
 import { ref } from 'vue';
 // import { useRouter } from 'vue-router'
 
-const emits = defineEmits(['open-form'])
-const openForm = () => {
-    emits('open-form')
+const emits = defineEmits(['open-form', 'handle-click'])
+const openForm = (type) => {
+    emits('open-form', type)
+    console.log(type);
+}
+const  handleClick = (type) => {
+  emits('open-form', type)
 }
 const user = getUser()
-const userRole = user.role
+const userRole = user?.role
 // const router = useRouter()
 // const currentRouter = router.currentRoute.value.path
 const userName = ref('madbad')
@@ -64,6 +68,7 @@ const mail = ref('madbad@mail.com')
               <i
                 class="bi bi-pencil fs-2 text-warning"
                 style="cursor: pointer"
+                @click="handleClick('editProfile')"
               ></i>
             </div>
             <div class="flex-avatar-icon">

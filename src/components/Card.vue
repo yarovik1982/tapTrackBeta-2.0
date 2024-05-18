@@ -9,7 +9,7 @@ const props = defineProps({
 })
 </script>
 <template>
-  <div class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50" style="box-shadow: 0 0 20px 5px rgba(0, 0, 0, .2);">
+  <div class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 box-shadow" >
     <div class="row g-0 align-items-center">
       <div class="col-md-4 p-3">
         <img :src="item.image" class="img-fluid rounded rounded-4" width="250" height="300" :alt="item.name" />
@@ -39,4 +39,8 @@ const props = defineProps({
     </div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.box-shadow{
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 20px 0px;
+}
+</style>

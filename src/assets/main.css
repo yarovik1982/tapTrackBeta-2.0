@@ -1,7 +1,7 @@
 @import './base.css';
 
 body{
-  background-image:linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,.7)) ,url(../assets/images/Layer1.svg);
+  /* background-image:linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,.7)) ,url(../assets/images/Layer1.svg); */
   background-attachment: fixed;
   min-width: 1200px;
 }
@@ -35,6 +35,9 @@ a{
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 50px;
 }
 .custom-form {
   position: absolute;
@@ -106,4 +109,7 @@ a{
 .card-description:hover {
   box-shadow: 0 0 20px 1px rgba(0,0,0,.5);
   cursor: ns-resize;
+}
+input:-webkit-autofill {
+  transition: all 5000s ease-in-out 0s;
 }

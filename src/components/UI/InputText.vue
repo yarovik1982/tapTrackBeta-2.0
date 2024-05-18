@@ -1,28 +1,27 @@
 <script setup>
-import { ref } from "vue"
+import { nextTick } from "vue";
+import { onMounted, ref } from "vue"
 
-const isBlur = ref(false)
-const handleBlur = () => {
-   isBlur.value = !isBlur.value
-}
-defineEmits(['update:modelValue'])
-// const update = (event) => {
-//    emits('emit-input', event.target.modelValue)
-// }
+const emits = defineEmits(['emit-blur:modelValue','emit-input:modelValue'])
 const props = defineProps({
    id:{type:String,required:true},
    title:{type:String,required:true},
-   modelValue:{type:String,default:''}
+   modelValue:{type:String,default:''},
+   labelClass:{type:[String, Array], default:''},
+   inputType:{type:String, default:'text'},
+   isBlur:{type:Boolean, default:false}
 })
+
 </script>
 <template>
-    <div class="mb-3 position-relative">
-       <input type="text" class="app-form-control" 
+    <div class="mb-4 position-relative">
+       <input :type="inputType" class="app-form-control" 
          :id="id" 
          :value="modelValue"
-         @input="$emit('update:modelValue', $event.target.value.trim())" 
+         @input="emits('emit-input:modelValue', $event.target.value)" 
+         @blur="emits('emit-blur:modelValue', $event.target.value)"
       />
-       <label :for="id" class="app-form-label position-absolute">{{title}}</label>
+       <label :for="id" :class="labelClass">{{title}}</label>
        <i class="bi bi-person-fill position-absolute"></i>
     </div>
 </template>
@@ -45,9 +44,12 @@ const props = defineProps({
    outline: none;
 }
 .app-form-control:focus ~ .app-form-label{
-   top: -20px;
+   top: -16px;
 }
 
+.app-form-label.isTop{
+  top: -16px;
+}
 .bi-person-fill{
    right: 10px;
    color:rgba(0,0,0,.6)

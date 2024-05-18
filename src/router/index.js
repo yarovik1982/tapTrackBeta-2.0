@@ -3,6 +3,7 @@ import HomePage from '@/views/HomePage.vue'
 import PlacePage from '@/views/PlacePage.vue'
 import BeerPage from '@/views/BeerPage.vue'
 import BreweryPage from '@/views/BreweryPage.vue'
+// import TestPage from '@/views/TestPage.vue'
 
 
   const routes = [
@@ -19,6 +20,12 @@ import BreweryPage from '@/views/BreweryPage.vue'
       // component:() => import('@/views/PlacePage.vue')
       component:PlacePage
     },
+    // {
+    //   path:'/test',
+    //   name:'test',
+    //   // component:() => import('@/views/TestPage.vue')
+    //   component:TestPage
+    // },
     {
       path:'/beer',
       name:'beer',
