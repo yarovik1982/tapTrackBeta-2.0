@@ -57,6 +57,7 @@ const mail = ref('madbad@mail.com')
         <div class="col-8">
             <RouterView
                 @open-form="openForm"
+                
             ></RouterView>
         </div>
         <div class="col-4">
@@ -79,7 +80,7 @@ const mail = ref('madbad@mail.com')
             </div>
           </div>
           <div class="flex-avatar">
-            <img src="" alt="AVATAR" />
+            <img src="../assets/images/image-5.png" alt="AVATAR" />
             <div
               class="flex-avatar-upload bg-opacity-50 bg-warning d-flex justify-content-center position-absolute bottom-0 w-100"
             >
@@ -87,6 +88,7 @@ const mail = ref('madbad@mail.com')
                 <i
                   class="bi bi-camera fs-2 text-white"
                   style="cursor: pointer"
+                  @click="handleClick('addAvatar')"
                 ></i>
               </div>
             </div>
@@ -127,15 +129,15 @@ const mail = ref('madbad@mail.com')
 }
 .flex-body {
   padding: 1rem;
-  border:#ffc107 1px solid;
+  border:rgb(255, 193, 7) 1px solid;
 }
 .flex-dir-col {
   position: relative;
 }
 .flex-avatar {
   margin: 0 auto;
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   background: #ccc;
   border-radius: 50%;
   overflow: hidden;

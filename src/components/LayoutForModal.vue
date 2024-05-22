@@ -5,6 +5,7 @@ import FormWriteUs from '@/components/FormWriteUs.vue';
 import FormEditProfile from '@/components/FormEditProfile.vue';
 import FormAddPlace from '@/components/FormAddPlace.vue';
 import FormAddBrewery from '@/components/FormAddBrewery.vue';
+import FormAddAvatar from '@/components/FormAddAvatar.vue'
 import { computed, ref } from 'vue';
 
 const emits = defineEmits(['close-form'])
@@ -32,6 +33,8 @@ const currentForm = computed(() => {
       return FormAddPlace;
     case 'addBrewery':
       return FormAddBrewery;
+    case 'addAvatar':
+      return FormAddAvatar
   }
 })
 
