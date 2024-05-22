@@ -18,15 +18,15 @@ const setConfirm = () => {
   confirmAge.setConfirmAge()
 }
 
-const currentFormType = ref('')
-const showForm = (type) => {
-  currentFormType.value = type
-  unScroll()
-}
-const closeForm = () => {
-  currentFormType.value = ''
-  scroll()
-}
+// const currentFormType = ref('')
+// const showForm = (type) => {
+//   currentFormType.value = type
+//   unScroll()
+// }
+// const closeForm = () => {
+//   currentFormType.value = ''
+//   scroll()
+// }
 const scrollTo = () => {
   scrollUp()
 }
@@ -38,19 +38,17 @@ const scrollTo = () => {
     </LayoutForAge>
   </Teleport>
   <LayoutForModal 
-    v-if="currentFormType" 
-    :type="currentFormType" 
-    @close-form="closeForm"
+    
   ></LayoutForModal>
  
- <div class="position-sticky top-0" style="z-index: 5;">
-  <AppHeader @show-form="showForm"></AppHeader>
+ <div class="position-sticky top-0" style="z-index: 12;">
+  <AppHeader ></AppHeader>
  </div>
   <AppToTop @click="scrollTo"></AppToTop>
   <RouterView 
-    @open-form="showForm"
+    
   />
-  <AppFooter @open-form="showForm"></AppFooter>
+  <AppFooter ></AppFooter>
 </template>
 
 <style scoped>

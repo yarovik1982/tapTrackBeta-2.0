@@ -2,15 +2,11 @@
 import { RouterView } from 'vue-router'
 import { getUser } from '@/functions/storage';
 import { ref } from 'vue';
-// import { useRouter } from 'vue-router'
+import { useForms } from '@/stores/forms';
 
-const emits = defineEmits(['open-form', 'handle-click'])
+const formsStore = useForms()
 const openForm = (type) => {
-    emits('open-form', type)
-    console.log(type);
-}
-const  handleClick = (type) => {
-  emits('open-form', type)
+   formsStore.openLayout(type)
 }
 const user = getUser()
 const userRole = user?.role
@@ -55,10 +51,7 @@ const mail = ref('madbad@mail.com')
   <div class="container-fluid">
     <div class="row">
         <div class="col-8">
-            <RouterView
-                @open-form="openForm"
-                
-            ></RouterView>
+            <RouterView/>
         </div>
         <div class="col-4">
             <h5 class="text-center">Profile</h5>
@@ -69,7 +62,7 @@ const mail = ref('madbad@mail.com')
               <i
                 class="bi bi-pencil fs-2 text-warning"
                 style="cursor: pointer"
-                @click="handleClick('editProfile')"
+                @click="openForm('editProfile')"
               ></i>
             </div>
             <div class="flex-avatar-icon">
@@ -88,7 +81,7 @@ const mail = ref('madbad@mail.com')
                 <i
                   class="bi bi-camera fs-2 text-white"
                   style="cursor: pointer"
-                  @click="handleClick('addAvatar')"
+                  @click="openForm('addAvatar')"
                 ></i>
               </div>
             </div>

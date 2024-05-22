@@ -1,5 +1,6 @@
 <script setup>
 import InputPassword from '@/components/UI/InputPassword.vue';
+import BtnCloseLayout from '@/components/UI/BtnCloseLayout.vue';
 import { ref } from 'vue';
 import { useUserCreate } from '@/stores/user-create';
 
@@ -30,11 +31,7 @@ const sendData = () => {
 <template>
     <form id="register" @submit.prevent="sendData">
     <h3 class="form-title text-center py-3 mb-3">Регистрация</h3>
-    <i
-      class="bi bi-x fs-1 text-white position-absolute fw-bold"
-      style="top: -25px;right: -40px; cursor: pointer; font-weight: bold;"
-      @click="closeForm"
-    ></i>
+    <btn-close-layout/>
     
     <div class="mb-5 position-relative">
        <input type="text" class="app-form-control" 

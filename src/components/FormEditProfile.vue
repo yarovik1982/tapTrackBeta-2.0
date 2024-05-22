@@ -5,10 +5,8 @@ import InputText from '@/components/UI/InputText.vue';
 
 
 import { nextTick, onMounted, ref } from 'vue';
-const emits = defineEmits(['close-form'])
-const closeForm = () => {
-   emits('close-form')
-}
+import BtnCloseLayout from '@/components/UI/BtnCloseLayout.vue';
+
 const userName = ref('')
 const mail = ref('')
 const telephoneNumber = ref('')
@@ -32,11 +30,7 @@ const sendData = () => {
 <template>
     <form id="editProfile" @submit.prevent="sendData">
     <h3 class="form-title text-center py-3 mb-3">Редакторовать профиль</h3>
-    <i
-      class="bi bi-x fs-1 text-white position-absolute fw-bold"
-      style="top: -25px;right: -40px; cursor: pointer; font-weight: bold;"
-      @click="closeForm"
-    ></i>
+    <btn-close-layout/>
     
     <div class="mb-5 position-relative">
        <input type="text" class="app-form-control" 

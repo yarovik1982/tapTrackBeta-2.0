@@ -1,11 +1,7 @@
 <template>
   <form id="addBrewery" class="w-75">
   <h3 class="form-title text-center py-3">Добавить пивоварню</h3>
-  <i
-    class="bi bi-x fs-1 text-white position-absolute fw-bold"
-    style="top: -25px;right: -40px; cursor: pointer; font-weight: bold;"
-    @click="closeForm"
-  ></i>
+ <btn-close-layout/>
   <div class="row g-3 ">
     <div class="col py-3 d-flex flex-column align-items-center justify-content-between">
        <div
@@ -84,6 +80,7 @@
 import {onMounted, onUnmounted, ref } from 'vue';
 import { AvatarEditor } from "avatar-editor";
 import "avatar-editor/dist/style.css";
+import BtnCloseLayout from '@/components/UI/BtnCloseLayout.vue';
 
 const scaleVal = ref(1);
 const scaleStep = 0.02;

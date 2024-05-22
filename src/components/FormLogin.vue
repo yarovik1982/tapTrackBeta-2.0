@@ -1,21 +1,18 @@
 <script setup>
+import BtnCloseLayout from '@/components/UI/BtnCloseLayout.vue'
+// import FloatLabel from 'primevue/floatlabel';
 
-import FloatLabel from 'primevue/floatlabel';
 
-const emits = defineEmits(['close-form'])
-const closeForm = () => {
-  emits('close-form')
-}
+// const emits = defineEmits(['close-form'])
+// const closeForm = () => {
+//   emits('close-form')
+// }
 </script>
 <template>
   <form id="login">
     <h3 class="form-title text-center">Авторизация</h3>
     
-      <i
-      class="bi bi-x fs-1 text-white position-absolute fw-bold"
-      style="top: -25px;right: -40px; cursor: pointer; font-weight: bold;"
-      @click="closeForm"
-    ></i>
+      <btn-close-layout/>
     
     
     <div class="mb-3">

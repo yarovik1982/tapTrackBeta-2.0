@@ -1,8 +1,10 @@
 <script setup>
-const emit = defineEmits(['open-form'])
-const handleClick = (typeForm) => {
-  emit("open-form", typeForm);
-};
+import { useForms } from '@/stores/forms';
+
+const formsStore = useForms()
+const handleClick = (type) => {
+  formsStore.openLayout(type)
+}
 </script>
 <template>
     <footer class="footer bg-white bg-opacity-50">

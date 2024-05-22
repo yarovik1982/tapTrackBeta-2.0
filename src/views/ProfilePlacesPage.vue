@@ -1,9 +1,9 @@
 <script setup>
-const emits = defineEmits(['open-form'])
+import { useForms } from '@/stores/forms';
 
+const formsStore = useForms()
 const openForm = (type) => {
-   emits('open-form', type)
-//    console.log(type);
+   formsStore.openLayout(type)
 }
 </script>
 <template>

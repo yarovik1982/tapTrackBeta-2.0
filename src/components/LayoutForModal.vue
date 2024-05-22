@@ -7,20 +7,23 @@ import FormAddPlace from '@/components/FormAddPlace.vue';
 import FormAddBrewery from '@/components/FormAddBrewery.vue';
 import FormAddAvatar from '@/components/FormAddAvatar.vue'
 import { computed, ref } from 'vue';
+import { useForms } from '@/stores/forms';
 
-const emits = defineEmits(['close-form'])
-const closeForm = () => {
-  emits('close-form')
-}
-const props = defineProps({
-  type:{
-    type:String,
-    required:true
-  }
-})
+// const emits = defineEmits(['close-form'])
+// const closeForm = () => {
+//   emits('close-form')
+// }
+const formsStore = useForms()
+const typeForm = computed(() => formsStore.formType)
+// const props = defineProps({
+//   type:{
+//     type:String,
+//     required:true
+//   }
+// })
 
 const currentForm = computed(() => {
-  switch(props.type){
+  switch(typeForm.value){
     case 'login':
       return FormLogin;
     case 'register':
@@ -37,12 +40,14 @@ const currentForm = computed(() => {
       return FormAddAvatar
   }
 })
-
+const closeForm = () => {
+  formsStore.closeLayout()
+}
 </script>
 <template>
     
-    <div class="layout position-fixed top-0 start-0 w-100 h-100 "  @click.self="closeForm">
-      <component :is="currentForm" class="custom-form" @close-form="closeForm"></component>
+    <div class="layout position-fixed top-0 start-0 w-100 h-100 "  @click.self="closeForm" v-if="typeForm">
+      <component :is="currentForm" class="custom-form" ></component>
     </div>
 </template>
 <style scoped >

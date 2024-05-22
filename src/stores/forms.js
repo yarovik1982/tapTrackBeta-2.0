@@ -1,36 +1,20 @@
 import { defineStore } from "pinia";
+import { unScroll, scroll } from '@/functions/scroll'
 
 
-export const useForms = defineStore("forms", {
+export const useForms = defineStore("formsStore", {
   state: () => ({
-    formType: null,
+    formType: '',
   }),
-  getters: {
-    getFormType() {
-      return this.formType;
-    },
-  },
+  
   actions: {
-    setFormType(type) {
-      this.formType = type;
+    openLayout(type) {
+      unScroll()
+      return this.formType = type;
     },
-    openForm(type) {
-      switch (type) {
-        case "login":
-          return FormLogin;
-        case "register":
-          return FormRegister;
-        case "writeUs":
-          return FormWriteUs;
-        case "editProfile":
-          return FormEditProfile;
-        case "addPlace":
-          return FormAddPlace;
-        case "addBrewery":
-          return FormAddBrewery;
-        case "addAvatar":
-          return FormAddAvatar;
-      }
-    },
+    closeLayout(){
+      scroll()
+      return this.formType = ''
+    }
   },
 });

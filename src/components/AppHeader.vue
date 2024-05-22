@@ -2,7 +2,9 @@
 import { onBeforeMount, onBeforeUnmount, onMounted, ref } from "vue"
 import { useRouter } from "vue-router";
 import { handleScroll } from "@/functions/scroll";
+import { useForms } from "@/stores/forms";
 
+const formsStore = useForms()
 const isScrolled = ref(false)
 const updateScroll = () => {
   isScrolled.value = handleScroll()
@@ -14,9 +16,10 @@ onBeforeUnmount(()=>{
   window.addEventListener('scroll',updateScroll)
 })
 const router = useRouter()
-const emits = defineEmits(['show-form'])
+// const emits = defineEmits(['show-form'])
 const showForm = (type) => {
-  emits('show-form', type)
+  // emits('show-form', type)
+  formsStore.openLayout(type)
 }
 const handleLogout = (type) => {
   localStorage.removeItem('user')
