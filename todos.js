@@ -1,3 +1,7 @@
+//todo GLOBAL TASKS   
+// Настроить или заменить плагин рейтинг, чтобы считал дроби 
+
+
 //___ задачи на 26.05.24   
 //! запрос на profile-favorite
-//! pfghjc на profile-rewiews
+//! запрос на profile-rewiews

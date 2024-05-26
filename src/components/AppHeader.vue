@@ -87,17 +87,19 @@ const isAuth = computed(() => userAuthStore.Get_Profile)
         <div class="buttons ms-3">
           <button class="btn btn-warning text-white btn-sm text-capitalise"
             @click="showForm('login')"
+            v-if="!isAuth"
           >
             Авторизация
           </button>
           <button
             class="btn btn-warning text-white btn-sm text-capitalize ms-1"
             @click="showForm('register')"
+            v-if="!isAuth"
           >
             Регистрация
           </button>
         </div>
-        <div class="buttons ms-3">
+        <div class="buttons ms-3" v-if="isAuth">
           <button class="btn btn-warning btn-sm text-white text-capitalize"
             @click="handleLogout('login')"
           >

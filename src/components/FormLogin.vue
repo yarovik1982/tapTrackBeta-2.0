@@ -23,7 +23,9 @@ const handleSubmit = async () => {
    window.location.reload()
  },500)
 };
-
+const handleClick = (type) => {
+  formsStore.openLayout(type)
+}
 </script>
 <template>
   <form id="login" @submit.prevent="handleSubmit">
@@ -45,7 +47,16 @@ const handleSubmit = async () => {
       :id="'inpPassword'"
       :placeholder="'Пароль'"
       v-model="password"
-    ></input-password>    
+    ></input-password>   
+    <div class="mb-3">
+      <p>
+        Нет аккаунта? 
+        <strong 
+          style="cursor: pointer;"
+          @click="handleClick('register')"
+        >Зарегистрироваться</strong>
+      </p>
+    </div> 
     <button
       type="submit"
       class="btn btn-warning rounded rounded-5 text-white d-block m-auto"
