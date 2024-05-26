@@ -1,0 +1,30 @@
+.card-description {
+   padding: 8px;
+   height: fit-content;
+   max-height: 200px;
+   transition: box-shadow 0.3s linear;
+   overflow-y: auto;
+   box-shadow: 0 0 1px 1px #ffc107;
+   border-radius: 8px;
+ }
+ .card-description:hover {
+   box-shadow: 0 0 20px 1px rgba(0,0,0,.5);
+   cursor: ns-resize;
+ }
+ .card-row{
+   display: flex;
+   align-items: center;
+   padding: 0.25rem;
+}
+.card-row-overflow{
+   max-height: 200px;
+   height: fit-content;
+   padding: 0.25rem;
+   transition: box-shadow 0.3s linear;
+   overflow-y: auto;
+   box-shadow: 0 0 1px 1px #ffc107;
+   border-radius: 8px;
+ }
+ .card-shadow {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 20px 0px;
+}

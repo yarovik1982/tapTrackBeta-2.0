@@ -1,4 +1,5 @@
 @import './base.css';
+@import './card.css';
 
 body{
   /* background-image:linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,.7)) ,url(../assets/images/Layer1.svg); */
@@ -98,18 +99,16 @@ a{
   top: 100px;
   left: 0;
 }
-.card-description {
-  padding: 8px;
-  max-height: 200px;
-  transition: box-shadow 0.3s linear;
-  overflow-y: auto;
-  box-shadow: 0 0 1px 1px #ffc107;
-  border-radius: 8px;
-}
-.card-description:hover {
-  box-shadow: 0 0 20px 1px rgba(0,0,0,.5);
-  cursor: ns-resize;
-}
+
 input:-webkit-autofill {
   transition: all 5000s ease-in-out 0s;
+}
+.p-rating-item svg{
+  width: 24px;
+  height: 24px;
+  fill: #ffc107;
+  cursor: pointer;
+}
+.p-rating-item:not(:first-child) svg{
+  margin-left:4px;
 }

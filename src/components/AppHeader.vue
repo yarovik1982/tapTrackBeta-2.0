@@ -1,8 +1,10 @@
 <script setup>
-import { onBeforeMount, onBeforeUnmount, onMounted, ref } from "vue"
+import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref, watchEffect } from "vue"
 import { useRouter } from "vue-router";
 import { handleScroll } from "@/functions/scroll";
 import { useForms } from "@/stores/forms";
+import { useUserAuth } from "@/stores/user-auth";
+import { storeToRefs } from "pinia";
 
 const formsStore = useForms()
 const isScrolled = ref(false)
@@ -16,17 +18,21 @@ onBeforeUnmount(()=>{
   window.addEventListener('scroll',updateScroll)
 })
 const router = useRouter()
-// const emits = defineEmits(['show-form'])
+
 const showForm = (type) => {
-  // emits('show-form', type)
+
   formsStore.openLayout(type)
 }
 const handleLogout = (type) => {
-  localStorage.removeItem('user')
+  localStorage.clear()
   router.push('/')
-  emits('show-form', type)
+  formsStore.openLayout(type)
+  window.location.reload()
 }
-const auth = ref(false)
+const userAuthStore = useUserAuth()
+const { auth , token, refresh, userProfile} = storeToRefs(userAuthStore)
+const isAuth = computed(() => userAuthStore.Get_Profile)
+
 </script>
 <template>
   <nav id="topPanel" class="navbar navbar-expand navbar-dark bg-dark ">
@@ -122,7 +128,8 @@ const auth = ref(false)
           <li class="nav-item ms-3">
             <a role="button" :class="['nnav-link', 'py-0', 'position-relative', {'text-white': isScrolled, '': !isScrolled}]" @click="showForm('writeUs')">Написать нам</a>
           </li>        
-          <li class="nav-item ms-auto" >
+         
+          <li class="nav-item ms-auto" v-if="isAuth">
             <RouterLink to="/profile" :class="['nnav-link', 'py-0', 'position-relative', {'text-white': isScrolled, '': !isScrolled}]">Профиль</RouterLink>
           </li>        
         </ul>

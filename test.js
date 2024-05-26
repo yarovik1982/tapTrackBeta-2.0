@@ -9,6 +9,8 @@ function parseJwt(token) {
  }
  
 
- const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5YXJvdmlrIiwiaXNzIjoiYXBwIiwiZXhwIjoxNjkyOTA1NjEwLCJpYXQiOjE2OTI5MDM4MTB9.5uxIcXbLA1Ycd9Z1X3iKPIpsLSBmkcgbOYk8UtL29ltIkJo6gGPYcnnpIm47WtSA-IJgddGOdP2QPsGMxUMQhA"
+ const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYWRiYWRfbyIsImlzcyI6ImFwcCIsImV4cCI6MTcxNjY0MTAxMywiaWF0IjoxNzE2NjM5ODEzfQ.eqvQ6tAjOR26tZOVT63qe3Pxkus-OqnehUc9K9hvOH-EXvgK-iVchQaG-U7pwUjgf-NGSik_86qCtJZgrh8k3Q"
  const decodedPayload = parseJwt(token);
  console.log(decodedPayload);
+//  console.log(token.slice(0,token.length));
+console.log((1716641013-1716639813 )/ 60);

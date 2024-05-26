@@ -3,18 +3,25 @@ import { RouterView } from 'vue-router'
 import { getUser } from '@/functions/storage';
 import { ref } from 'vue';
 import { useForms } from '@/stores/forms';
+import { useUserAuth } from '@/stores/user-auth'
+import { storeToRefs } from 'pinia';
+
+
+const userAuthStore = useUserAuth()
+const { userProfile, token } = storeToRefs(userAuthStore)
+const acces = token.value
+
 
 const formsStore = useForms()
 const openForm = (type) => {
    formsStore.openLayout(type)
 }
-const user = getUser()
-const userRole = user?.role
-// const router = useRouter()
-// const currentRouter = router.currentRoute.value.path
-const userName = ref('madbad')
-const login = ref('madbad')
-const mail = ref('madbad@mail.com')
+const user = JSON.parse(userProfile.value)
+const userRole = user?.userRole
+const userName = ref(user?.userName)
+const login = ref(user?.login)
+const mail = ref(user?.mail)
+const image = ref(user?.image)
 </script>
 <template>
     
@@ -73,7 +80,7 @@ const mail = ref('madbad@mail.com')
             </div>
           </div>
           <div class="flex-avatar">
-            <img src="../assets/images/image-5.png" alt="AVATAR" />
+            <img :src="image" alt="AVATAR" />
             <div
               class="flex-avatar-upload bg-opacity-50 bg-warning d-flex justify-content-center position-absolute bottom-0 w-100"
             >

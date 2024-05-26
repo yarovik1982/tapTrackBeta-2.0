@@ -3,6 +3,8 @@ import HomePage from '@/views/HomePage.vue'
 import PlacePage from '@/views/PlacePage.vue'
 import BeerPage from '@/views/BeerPage.vue'
 import BreweryPage from '@/views/BreweryPage.vue'
+// import { useUserAuth } from '@/stores/user-auth'
+// import { storeToRefs } from 'pinia'
 // import TestPage from '@/views/TestPage.vue'
 
 
@@ -65,6 +67,11 @@ import BreweryPage from '@/views/BreweryPage.vue'
         },
       ]
     },
+    {
+      path:'/profile-place-:id',
+      name:'one-place',
+      component:() => import('@/views/ProfileOnePlase.vue')
+    }
     
   ]
   const router = createRouter({
@@ -72,17 +79,20 @@ import BreweryPage from '@/views/BreweryPage.vue'
     routes
   })
 
-  // router.beforeEach((to, from, next) => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   const access = JSON.parse(localStorage.getItem("access"));
-  //   if (to.path.startsWith("/profile")) {
-  //     if (access && user) {
-  //       next();
-  //     } else {
-  //       next("/");
-  //     }
-  //   } else {
-  //     next();
-  //   }
-  // });
+  // const userAuthStore = useUserAuth()
+  // const {userProfile, token} = storeToRefs(userAuthStore)
+
+  router.beforeEach((to, from, next) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const access = JSON.parse(localStorage.getItem("token"));
+    if (to.path.startsWith("/profile")) {
+      if (access && user) {
+        next();
+      } else {
+        next("/");
+      }
+    } else {
+      next();
+    }
+  });
 export default router
