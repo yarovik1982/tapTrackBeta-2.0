@@ -131,13 +131,13 @@ const rating = ref(3.5);
                     <p class="card-text">
                       {{ item.feedbackText }}
                     </p>
-                    <p class="card-text">
+                    <!-- <p class="card-text">
                       <a role="button" @click="handleClick('createFeedback')">
                         <small class="text-body-secondary">
                         Оставить отзыв
                       </small>
                       </a>
-                    </p>
+                    </p> -->
                   </div>
                 </div>
               </div>

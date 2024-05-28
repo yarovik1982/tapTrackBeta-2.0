@@ -26,6 +26,7 @@ actions:{
          // this.loading = false
       } catch (error){
          if(error.response && error.response.status === 401){
+            await localStorage.clear()
             formsStore.openLayout('login')
          } else {
             console.error('Error fetching data:', error)

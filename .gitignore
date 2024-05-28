@@ -15,7 +15,7 @@ coverage
 *.local
 HelpInfo.txt
 test.js
-
+data
 /cypress/videos/
 /cypress/screenshots/
 

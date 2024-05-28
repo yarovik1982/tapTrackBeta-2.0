@@ -3,5 +3,5 @@
 
 
 //___ задачи на 26.05.24   
-//! запрос на profile-favorite
+// запрос на profile-favorite //todo ВЫПОЛНЕНО  
 // запрос на profile-rewiews //todo ВЫПОЛНЕНО   

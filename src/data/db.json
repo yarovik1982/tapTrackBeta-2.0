@@ -1,6 +1,7 @@
 {
     "places":[
         {
+            "title":"berr-1",
             "placeId": 59,
             "name": "Пивнуха",
             "address": "Оренбуг, ул. Ленина, ",
@@ -13,6 +14,7 @@
             "setAvailabilityOfSpaceForTheUser": false
         },
         {
+            "title":"berr-2",
             "placeId": 125,
             "name": "Армянское пиво",
             "address": "Респ Крым, г Армянск, ул Симферопольская, д 4Д",
@@ -25,6 +27,7 @@
             "setAvailabilityOfSpaceForTheUser": false
         },
         {
+            "title":"berr-3",
             "placeId": 20,
             "name": "13 rules Bar&Shop",
             "address": "ул. Брюсова. д. 4/1",
@@ -37,6 +40,7 @@
             "setAvailabilityOfSpaceForTheUser": false
         },
         {
+            "title":"berr-4",
             "placeId": 21,
             "name": "Why Not?",
             "address": "ул. Островского. д. 47",
@@ -49,6 +53,7 @@
             "setAvailabilityOfSpaceForTheUser": false
         },
         {
+            "title":"berr-5",
             "placeId": 58,
             "name": "card-image",
             "address": null,
@@ -61,6 +66,7 @@
             "setAvailabilityOfSpaceForTheUser": false
         },
         {
+            "title":"berr-6",
             "placeId": 60,
             "name": "Пивная фактория",
             "address": "Респ Крым, г Армянск, ул Вишнёвая, двлд 1",
@@ -73,6 +79,7 @@
             "setAvailabilityOfSpaceForTheUser": false
         },
         {
+            "title":"berr-7",
             "placeId": 57,
             "name": "shop",
             "address": null,
@@ -85,6 +92,7 @@
             "setAvailabilityOfSpaceForTheUser": false
         },
         {
+            "title":"berr-8",
             "placeId": 131,
             "name": "Oleg",
             "address": "г Москва, ул Тверская, д 1",
