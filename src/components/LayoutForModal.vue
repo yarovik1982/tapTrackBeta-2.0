@@ -5,9 +5,11 @@ import FormWriteUs from '@/components/FormWriteUs.vue';
 import FormEditProfile from '@/components/FormEditProfile.vue';
 import FormAddPlace from '@/components/FormAddPlace.vue';
 import FormAddBrewery from '@/components/FormAddBrewery.vue';
-import FormAddAvatar from '@/components/FormAddAvatar.vue'
+import FormAddAvatar from '@/components/FormAddAvatar.vue';
+import FormCreateFeedback from '@/components/FormCreateFeedback.vue'
 import { computed, ref } from 'vue';
 import { useForms } from '@/stores/forms';
+
 
 // const emits = defineEmits(['close-form'])
 // const closeForm = () => {
@@ -37,7 +39,9 @@ const currentForm = computed(() => {
     case 'addBrewery':
       return FormAddBrewery;
     case 'addAvatar':
-      return FormAddAvatar
+      return FormAddAvatar;
+    case 'createFeedback':
+      return FormCreateFeedback;
   }
 })
 const closeForm = () => {

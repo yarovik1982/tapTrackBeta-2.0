@@ -8,11 +8,17 @@ import StarRating from '@/components/StarRating.vue'
 import AppOffer from "@/components/AppOffer.vue";
 import SliderPlices from "@/components/SliderPlices.vue";
 import SliderReviews from "@/components/SliderReviews.vue";
+import { useForms } from "@/stores/forms";
 import { ref } from "vue";
-const emits = defineEmits(["open-form"]);
-const showForm = (type) => {
-  emits("open-form", type);
-};
+// const emits = defineEmits(["open-form"]);
+// const showForm = (type) => {
+//   emits("open-form", type);
+// };
+
+const formsStore = useForms()
+const handleClick = (type) => {
+  formsStore.openLayout(type)
+}
 const data = ref([
   {
     id: 0,
@@ -67,7 +73,7 @@ const rating = ref(3.5);
             </p>
             <button
               class="btn btn-info btn-sm text-capitalize"
-              @click="showForm('writeUs')"
+              @click="handleClick('writeUs')"
             >
               написать нам
             </button>
@@ -126,7 +132,7 @@ const rating = ref(3.5);
                       {{ item.feedbackText }}
                     </p>
                     <p class="card-text">
-                      <a role="button">
+                      <a role="button" @click="handleClick('createFeedback')">
                         <small class="text-body-secondary">
                         Оставить отзыв
                       </small>
