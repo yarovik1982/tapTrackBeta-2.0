@@ -1,10 +1,12 @@
 <script setup>
+import IconHeart from "@/components/UI/IconHeart.vue";
+import IconHeartFill from "@/components/UI/IconHeartFill.vue";
 import { useForms } from "@/stores/forms";
 import { usePlace } from "@/stores/place";
-import { watch } from "vue";
-import { onMounted, ref } from "vue";
+import axios from "axios";
+import { BASE_URL } from "@/constants/url";
 import { useRouter } from "vue-router";
-
+import { ref } from "vue";
 
 const formsStore = useForms();
 
@@ -14,11 +16,64 @@ const handleClick = (id) => {
 };
 const placeStore = usePlace();
 
+const token = JSON.parse(localStorage.getItem("token"));
+
 const userId = JSON.parse(localStorage.getItem("user"))?.userId;
 placeStore.PLACE_LIST_USER(userId);
+// placeStore.FAKE_PLACE();
 
 const openForm = (type) => {
   formsStore.openLayout(type);
+};
+
+async function ADD_FAVORITE(data, token) {
+  try {
+    const response = await axios.post(`${BASE_URL}/place/favorite`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.status;
+  } catch (error) {
+    if (error.response && error.response.status === 422) {
+      console.log(error);
+    } else {
+      console.error("Error in ADD_FAVORITE:", error);
+    }
+  }
+}
+async function REMOVE_FAVORITE(data, token) {
+  try {
+    const response = await axios.delete(
+      `${BASE_URL}/place/favorite/remove`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.status;
+  } catch (error) {
+    if (error.response && error.response.status === 422) {
+      console.log(error);
+    } else {
+      console.error("Error in REMOVE_FAVORITE:", error);
+    }
+  }
+}
+
+const setFavorite = async (itemId, state) => {
+  const data = {
+    userId: userId,
+    placeId: itemId,
+  };
+  if (!state) {
+    await ADD_FAVORITE(data, token);
+    location.reload();
+  } else await REMOVE_FAVORITE(data, token);
+  // const isFavorite = item.setAvailabilityOfSpaceForTheUser
+  // console.log(itemId);
 };
 </script>
 <template>
@@ -55,7 +110,21 @@ const openForm = (type) => {
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h5 class="card-title">{{ item.name }}</h5>
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <div>
+                <icon-heart
+                  :state="item.setAvailabilityOfSpaceForTheUser"
+                  :itemId="item.placeId"
+                 v-if="!item.setAvailabilityOfSpaceForTheUser"
+                />
+                <icon-heart-fill
+                  :state="item.setAvailabilityOfSpaceForTheUser"
+                  :itemid="item.placeId"
+                  v-else
+                />
+              </div>
+            </div>
             <p class="card-text">{{ item.type }}</p>
 
             <p class="card-text">{{ item.address }}</p>

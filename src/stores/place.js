@@ -50,6 +50,20 @@ actions:{
             console.error('Error fetching data:', error)
          }
       }
+   },
+   async FAKE_PLACE(placeId){
+      try{
+         // this.loading = true
+         const response = await axios.get(`http://localhost:3000/places`)
+         this.dataList = await response.data
+         // this.loading = false
+      } catch (error){
+         if(error.response && error.response.status === 401){
+            formsStore.openLayout('login')
+         } else {
+            console.error('Error fetching data:', error)
+         }
+      }
    }
 
 }

@@ -1,5 +1,5 @@
 <script setup>
-import MainContent from '@/components/MainContent.vue'
+import StarRating from '@/components/StarRating.vue';
 import AdvContent from '@/components/AdvContent.vue';
 import { ref } from 'vue'
 
@@ -20,10 +20,10 @@ const beerList = ref([
   {id:4,'name':'Beer 4', 'image':'src/assets/images/news4.jpg'},
 ])
 const breweryList = ref([
-  {id:1,'name':'Brewery 1',"type":"Бар","description":"Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание ",'image':'src/assets/images/news1.jpg'},
-  {id:2,'name':'Brewery 2',"type":"Бар","description":"Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание ",'image':'src/assets/images/news2.jpg'},
-  {id:3,'name':'Brewery 3',"type":"Бар","description":"Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание ",'image':'src/assets/images/news3.jpg'},
-  {id:4,'name':'Brewery 4',"type":"Бар","description":"Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание ",'image':'src/assets/images/news4.jpg'},
+  {id:1,'name':'Brewery 1',"type":"Пивоварня","description":"Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание ",'image':'src/assets/images/news1.jpg', "averageRating":6},
+  {id:2,'name':'Brewery 2',"type":"Сидродельня","description":"Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание ",'image':'src/assets/images/news2.jpg', "averageRating":4.8},
+  {id:3,'name':'Brewery 3',"type":"Медоварня","description":"Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание ",'image':'src/assets/images/news3.jpg', "averageRating":5.3},
+  {id:4,'name':'Brewery 4',"type":"Пивоварня","description":"Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание ",'image':'src/assets/images/news4.jpg', "averageRating":6},
 ])
 </script>
 <template>
@@ -32,7 +32,46 @@ const breweryList = ref([
       <div class="container-fluid">
       <div class="row">
         <div class="col-8 px-1">
-          <MainContent :list="breweryList"/>
+          <div
+            class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 card-shadow"
+            v-for="item in breweryList"
+            :key="item.id"
+          >
+            <div class="row g-0 align-items-center">
+              <div class="col-4 p-3">
+                <img
+                  :src="item.image"
+                  class="img-fluid rounded-4"
+                  :alt="item.name"
+                  style="width: 250px; height: 300px"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    
+                  </div>
+                  <p class="card-text">{{ item.type }}</p>
+                  <star-rating
+                    :max="6"
+                    :current="item.averageRating"
+                  />
+                  <p class="card-description">
+                    {{ item.description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            class="btn btn-warning btn-sm text-white rounded rounded-5 m-auto d-block"
+            style="width: 270px"
+          >
+            Показать еще
+          </button>
         </div>
         <div class="col-4 px-1">
          <AdvContent

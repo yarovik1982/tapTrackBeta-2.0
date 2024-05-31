@@ -8,7 +8,7 @@ const formsStore = useForms()
 
 export const useFavoritesStore = defineStore('favorites', {
  state: () => ({
-   favorites:[]
+   favorites:[],
  }),
  getters: {},
  actions: {
@@ -29,6 +29,30 @@ export const useFavoritesStore = defineStore('favorites', {
          } else {
             console.error('Error fetching data:', error)
          }
+      }
+   },
+   async SEND_FAVORITE_REQUEST(state, id, userId){
+      const data = {
+         placeId:id,
+         userId:userId
+      }
+      try{
+         
+         const response = state ? (await axios.post(`${BASE_URL}/place/favorite`, data,{
+            headers:{
+               Authorization: `Bearer ${token}`
+            }
+         })) : (await axios.delete(`${BASE_URL}/place/favoritr/remove`, data, {
+            headers:{
+               Authorization: `Bearer ${token}`
+            }
+         }))
+         
+         return response.status
+      } catch (error){
+         if(error.response && error.response.status === 422){
+            console.log(error);
+         } 
       }
    }
  },

@@ -2,7 +2,10 @@
 import { computed } from 'vue';
 const props = defineProps({
    max:{type:Number,required:true},
-   current:{type:Number, required:false}
+   current:{type:Number, required:false},
+   size:{type:Number,default:32},
+   disabledColor:{type:String, default: '#e7e7e7'},
+   activeColor:{type:String, default:'#ffc107'}
 })
 
 const getRating = computed(() => {
@@ -11,10 +14,10 @@ const getRating = computed(() => {
 </script>
 <template>
   <div class="star-rating">
-    <div class="star-item">
-      <span v-for="n in props.max" :key="n">&star;</span>
+    <div class="star-item" :style="{fontSize: props.size + 'px'}">
+      <span v-for="n in props.max" :key="n" :style="{color:  props.disabledColor}">&starf;</span>
       <div class="star-item-current" :style="{width: getRating + '%'}">
-        <span v-for="n in props.max" :key="n">&starf;</span>
+        <span v-for="n in props.max" :key="n" :style="{color: props.activeColor}">&starf;</span>
       </div>
     </div>
     <span class="rating-value">{{ props.current }}</span>
@@ -27,8 +30,8 @@ const getRating = computed(() => {
 }
 .star-item{
   display: inline-block;
-  color: #ffc107;
-  font-size: 2rem;
+  /* color: #b4b4b4;
+  font-size: 2rem; */
   position: relative;
 }
 .star-item .star-item-current{

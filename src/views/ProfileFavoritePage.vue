@@ -1,4 +1,5 @@
 <script setup>
+import IconHeartFill from '@/components/UI/IconHeartFill.vue';
 import { useFavoritesStore } from '@/stores/favorites';
 
 const favorites = useFavoritesStore()
@@ -23,7 +24,10 @@ favorites.USER_FAVORITE_PLACE(userId)
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h5 class="card-title">{{ item.name }}</h5>
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <icon-heart-fill/>
+            </div>
             <div class="d-flex align-items-center">
               
             </div>
