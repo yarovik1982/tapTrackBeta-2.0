@@ -14,8 +14,9 @@ dist-ssr
 coverage
 *.local
 HelpInfo.txt
-test.js
-data
+./test.js
+./todos.js
+./src/data
 /cypress/videos/
 /cypress/screenshots/
 
