@@ -8,6 +8,7 @@ favorites.USER_FAVORITE_PLACE(userId)
 </script>
 <template>
     <h4 class="text-center">Favorite Page</h4>
+    <h5 class="text-center" v-if="favorites.favorites.length === 0">Список избранных пуст</h5>
     <div
       class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 card-shadow"
       v-for="item in favorites.favorites"
@@ -26,7 +27,9 @@ favorites.USER_FAVORITE_PLACE(userId)
           <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
               <h5 class="card-title">{{ item.name }}</h5>
-              <icon-heart-fill/>
+              <icon-heart-fill
+                :item-id="item.placeId"
+              />
             </div>
             <div class="d-flex align-items-center">
               

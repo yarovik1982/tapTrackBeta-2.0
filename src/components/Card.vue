@@ -1,5 +1,5 @@
 <script setup>
-import FavoriteIcon from '@/components/UI/FavoriteIcon.vue'
+// import FavoriteIcon from '@/components/UI/FavoriteIcon.vue'
 
 const props = defineProps({
   item:{
