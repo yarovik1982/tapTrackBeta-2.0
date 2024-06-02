@@ -10,6 +10,10 @@ getData.PLACE_ADBLOCK()
 getData.BEER_ADBLOCK()
 getData.BREWERY_ADBLOCK()
 
+const showMoreData = () => {
+  getData.BREWERY_LIST()
+}
+
 </script>
 <template>
     <div class="px-2">
@@ -54,6 +58,8 @@ getData.BREWERY_ADBLOCK()
           <button
             class="btn btn-warning btn-sm text-white rounded rounded-5 m-auto d-block"
             style="width: 270px"
+            @click="showMoreData"
+            v-if="getData.hasMoreBrewery"
           >
             Показать еще
           </button>
