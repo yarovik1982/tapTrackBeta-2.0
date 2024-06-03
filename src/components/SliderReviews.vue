@@ -20,58 +20,32 @@
      :modules="modules"
      class="customSwiper "
    >
-     <swiper-slide v-for="slide in data" :key="slide.id">
+     <swiper-slide v-for="slide in feedback.feedbackListMain" :key="slide.id">
        <div class="slide-img">
-         <img :src="slide.image" />
+         <img :src="slide.imageFeedback" :alt="slide.beerName"/>
        </div> 
-       <p class="slide-text">{{ slide.text }} {{ slide.id }}</p>
+       <p class="slide-text">{{ slide.feedbackText }} </p>
 
      </swiper-slide>
    </swiper>
  </template>
- <script>
- // Import Swiper Vue.js components
- import { Swiper, SwiperSlide } from "swiper/vue";
- import { ref } from 'vue'
+  <script setup>
+  import { Swiper, SwiperSlide } from 'swiper/vue';
+  import { Autoplay, EffectCoverflow } from 'swiper/modules';
+  import { useFeedbackStore } from '@/stores/feedback.js';
+  import 'swiper/css';
+  import "swiper/css/effect-coverflow";
+  
+  defineProps();
+  defineEmits();
+  defineExpose();
+  
+  const modules = [Autoplay, EffectCoverflow];
  
- // Import Swiper styles
- import "swiper/css";
+  const feedback = useFeedbackStore()
+  feedback._FEEDBACK_LIST_MAIN()
+  </script>
  
- import "swiper/css/effect-coverflow";
-//  import "swiper/css/pagination";
- 
-//  import "./style.css";
- 
- // import required modules
- import { Autoplay, EffectCoverflow } from "swiper/modules";
- 
- export default {
-   components: {
-     Swiper,
-     SwiperSlide,
-   },
-   setup() {
-      const data = ref([
-         {id:1, 'image':"src/assets/images/news1.jpg",'text': 'Отзыв Отзыв Отзыв Отзыв Отзыв Отзыв Отзыв Отзыв Отзыв Отзыв Отзыв Отзыв Отзыв '},
-         {id:2, 'image':"src/assets/images/news2.jpg",'text': 'Отзыв'},
-         {id:3, 'image':"src/assets/images/news3.jpg",'text': 'Отзыв'},
-         {id:4, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
-         {id:5, 'image':"src/assets/images/news1.jpg",'text': 'Отзыв'},
-         {id:6, 'image':"src/assets/images/news2.jpg",'text': 'Отзыв'},
-         {id:7, 'image':"src/assets/images/news3.jpg",'text': 'Отзыв'},
-         {id:8, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
-         {id:9, 'image':"src/assets/images/news1.jpg",'text': 'Отзыв'},
-         {id:10, 'image':"src/assets/images/news2.jpg",'text': 'Отзыв'},
-         {id:11, 'image':"src/assets/images/news3.jpg",'text': 'Отзыв'},
-         {id:12, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
-      ])
-     return {
-       modules: [Autoplay, EffectCoverflow],
-       data
-     };
-   },
- };
- </script>
  <style scoped>
  .customSwiper {
    display: flex;
@@ -81,15 +55,10 @@
    flex-direction: column;
    align-items: center;
  }
- /* .custonSwiper div {
-   align-self: center;
-   overflow: hidden;
-   position: relative;
- } */
+ 
  .slide-img {
    width: fit-content;
    aspect-ratio: 1;
-   /* background: red; */
    position: relative;
    z-index: 5;
    overflow: hidden;

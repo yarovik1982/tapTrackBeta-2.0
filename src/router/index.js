@@ -71,6 +71,28 @@ import BreweryPage from '@/views/BreweryPage.vue'
       path:'/profile-place-:id',
       name:'one-place',
       component:() => import('@/views/ProfileOnePlase.vue')
+    },
+    {
+      path:'/search',
+      name:'search',
+      component: () => import('@/views/SearchPage.vue'),
+      children:[
+        {
+          path:'/search/place',
+          name:'search-place',
+          component:() => import('@/views/SearchPlace.vue')
+        },
+        {
+          path:'/search/beer',
+          name:'search-beer',
+          component:() => import('@/views/SearchBeer.vue')
+        },
+        {
+          path:'/search/brewery',
+          name:'search-brewery',
+          component:() => import('@/views/SearchBrewery.vue')
+        },
+      ]
     }
     
   ]

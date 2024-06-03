@@ -14,71 +14,37 @@
      :modules="modules"
      class="mySwiper "
    >
-     <swiper-slide class="slide border border-2 border-warning rounded rounded-4 p-1">
-      <div class="text-center text-capitalize mb-4">slide title</div>
-      <img src="../assets/images/news1.jpg" class="rounded rounded-4" alt="">
+     <swiper-slide 
+      class="slide border border-2 border-warning rounded rounded-4 p-1"
+      v-for="slide in getData.placeAdvList"
+      
+      :key="slide.placeId"
+    >
+      <div class="text-center text-capitalize mb-4">{{ slide.name }}</div>
+      <!-- <img src="../assets/images/news1.jpg" class="rounded rounded-4" alt=""> -->
+      <div class="slide-img">
+        <img :src="slide.image" class="rounded rounded-4" :alt="slide.name" height="290">
+      </div>
     </swiper-slide>
-     <swiper-slide class="slide border border-2 border-warning rounded rounded-4 p-1">
-      <div class="text-center text-capitalize mb-4">slide title</div>
-      <img src="../assets/images/news2.jpg" class="rounded rounded-4" alt="">
-    </swiper-slide>
-     <swiper-slide class="slide border border-2 border-warning rounded rounded-4 p-1">
-      <div class="text-center text-capitalize mb-4">slide title</div>
-      <img src="../assets/images/news3.jpg" class="rounded rounded-4" alt="">
-    </swiper-slide>
-     <swiper-slide class="slide border border-2 border-warning rounded rounded-4 p-1">
-      <div class="text-center text-capitalize mb-4">slide title</div>
-      <img src="../assets/images/news4.jpg" class="rounded rounded-4" alt="">
-    </swiper-slide>
-     <swiper-slide class="slide border border-2 border-warning rounded rounded-4 p-1">
-      <div class="text-center text-capitalize mb-4">slide title</div>
-      <img src="../assets/images/news1.jpg" class="rounded rounded-4" alt="">
-    </swiper-slide>
-     <swiper-slide class="slide border border-2 border-warning rounded rounded-4 p-1">
-      <div class="text-center text-capitalize mb-4">slide title</div>
-      <img src="../assets/images/news2.jpg" class="rounded rounded-4" alt="">
-    </swiper-slide>
-     <swiper-slide class="slide border border-2 border-warning rounded rounded-4 p-1">
-      <div class="text-center text-capitalize mb-4">slide title</div>
-      <img src="../assets/images/news3.jpg" class="rounded rounded-4" alt="">
-    </swiper-slide>
-     <swiper-slide class="slide border border-2 border-warning rounded rounded-4 p-1">
-      <div class="text-center text-capitalize mb-4">slide title</div>
-      <img src="../assets/images/news4.jpg" class="rounded rounded-4" alt="">
-    </swiper-slide>
-     <swiper-slide class="slide border border-2 border-warning rounded rounded-4 p-1">
-      <div class="text-center text-capitalize mb-4">slide title</div>
-      <img src="../assets/images/news4.jpg" class="rounded rounded-4" alt="">
-    </swiper-slide>
+     
      
    </swiper>
    </div>
  </template>
- <script>
-   // Import Swiper Vue.js components
-   import { Swiper, SwiperSlide } from 'swiper/vue';
+ <script setup>
+ import { Swiper, SwiperSlide } from 'swiper/vue';
+ import { Autoplay } from 'swiper/modules';
+ import { useGetDataStore } from '@/stores/getData';
+ import 'swiper/css';
  
-   // Import Swiper styles
-   import 'swiper/css';
+ defineProps();
+ defineEmits();
+ defineExpose();
  
-  //  import 'swiper/css/navigation';
- 
-  //  import '../main.css';
- 
-   // import required modules
-   import { Autoplay } from 'swiper/modules';
- 
-   export default {
-     components: {
-       Swiper,
-       SwiperSlide,
-     },
-     setup() {
-       return {
-         modules: [Autoplay],
-       };
-     },
-   };
+ const modules = [Autoplay];
+
+ const getData = useGetDataStore()
+ getData.PLACE_ADBLOCK()
  </script>
  <style>
  .swiper{
@@ -90,9 +56,16 @@
   background: rgba(255, 255, 255, .7);
   /* width: 250px; */
  }
- .slide img {
+ 
+ .slide-img {
+  width: 100%;
+  height: 290px;
+  border-radius: 2rem;
+  background: transparent;
+}
+.slide-img img{
   width: 100%;
   object-fit: cover;
- }
+}
  </style>
  

@@ -112,3 +112,6 @@ input:-webkit-autofill {
 .p-rating-item:not(:first-child) svg{
   margin-left:4px;
 }
+input[type=search]:focus{
+  box-shadow: initial;
+}

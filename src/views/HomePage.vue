@@ -10,10 +10,6 @@ import SliderPlices from "@/components/SliderPlices.vue";
 import SliderReviews from "@/components/SliderReviews.vue";
 import { useForms } from "@/stores/forms";
 import { ref } from "vue";
-// const emits = defineEmits(["open-form"]);
-// const showForm = (type) => {
-//   emits("open-form", type);
-// };
 
 const formsStore = useForms()
 const handleClick = (type) => {
@@ -96,7 +92,7 @@ const rating = ref(3.5);
     <h3 class="text-center mx-auto mb-5">
       <span class="section-title text-capitalize position-relative"
         >Популярные места</span
-      >
+        >
     </h3>
     <slider-plices></slider-plices>
   </section>
