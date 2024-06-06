@@ -1,31 +1,42 @@
 <script setup>
-import { RouterView } from 'vue-router'
-import { getUser } from '@/functions/storage';
-import { ref } from 'vue';
-import { useForms } from '@/stores/forms';
-import { useUserAuth } from '@/stores/user-auth'
-import { storeToRefs } from 'pinia';
+import { RouterView } from "vue-router";
+import { getUser } from "@/functions/storage";
+import { ref } from "vue";
+import { useForms } from "@/stores/forms";
+import { useUserAuth } from "@/stores/user-auth";
+import { storeToRefs } from "pinia";
+import { useAvatarStore } from "@/stores/avatar";
+
+const userAuthStore = useUserAuth();
+const { userProfile, token } = storeToRefs(userAuthStore);
+const user = JSON.parse(userAuthStore.Get_Profile);
+const userId = user?.userId;
+const acces = JSON.parse(userAuthStore.Get_AccesJwt);
+
+const avatar = useAvatarStore();
+const handleClick = async () => {
+  try {
+    // Remove the user's photo
+    await avatar._USER_PHOTO_REMOVE(userId);
+
+    // Update the user's profile
+    await userAuthStore._USER_PROFILE(acces);
+
+    // Redirect to the same page after 2 seconds
+    setTimeout(() => location.reload(), 2000);
+  } catch (error) {
+    console.error('Error during handleClick:', error);
+  }
+};
 
 
-const userAuthStore = useUserAuth()
-const { userProfile, token } = storeToRefs(userAuthStore)
-const acces = token.value
-
-
-const formsStore = useForms()
+const formsStore = useForms();
 const openForm = (type) => {
-   formsStore.openLayout(type)
-}
-const user = JSON.parse(userProfile.value)
-const userRole = user?.userRole
-const userName = ref(user?.userName)
-const login = ref(user?.login)
-const mail = ref(user?.mail)
-const image = ref(user?.image)
+  formsStore.openLayout(type);
+};
 </script>
 <template>
-    
-    <nav class="navbar navbar-expand bg-body-tertiary mt-5">
+  <nav class="navbar navbar-expand bg-body-tertiary mt-5">
     <div class="container-fluid">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav w-100 justify-content-around">
@@ -39,13 +50,19 @@ const image = ref(user?.image)
               >Мои Отзывы</RouterLink
             >
           </li>
-          <li class="nav-item" v-if="userRole === 2 || userRole === 3">
+          <li
+            class="nav-item"
+            v-if="user?.userRole === 2 || user?.userRole === 3"
+          >
             <RouterLink class="nav-link py-0" to="/profile-places"
               >Мои точки продаж</RouterLink
             >
           </li>
 
-          <li class="nav-item" v-if="userRole === 3 || userRole === 1">
+          <li
+            class="nav-item"
+            v-if="user?.userRole === 3 || user?.userRole === 1"
+          >
             <RouterLink class="nav-link py-0" to="/profile-brewery"
               >Мои пивоварни</RouterLink
             >
@@ -56,64 +73,85 @@ const image = ref(user?.image)
   </nav>
 
   <div class="container-fluid">
-    <div class="row">
-        <div class="col-8">
-            <RouterView/>
-        </div>
-        <div class="col-4">
-            <h5 class="text-center">Profile</h5>
-            <div class="flex-body">
-        <div class="flex-dir-col">
-          <div class="flex-avatar-settings">
-            <div class="flex-avatar-icon">
-              <i
-                class="bi bi-pencil fs-2 text-warning"
-                style="cursor: pointer"
-                @click="openForm('editProfile')"
-              ></i>
-            </div>
-            <div class="flex-avatar-icon">
-              <i
-                class="bi bi-trash fs-2 text-warning"
-                style="cursor: pointer"
-              ></i>
-            </div>
-          </div>
-          <div class="flex-avatar">
-            <img :src="image" alt="AVATAR" />
-            <div
-              class="flex-avatar-upload bg-opacity-50 bg-warning d-flex justify-content-center position-absolute bottom-0 w-100"
-            >
-              <div class="flex-avatar-icon">
-                <i
-                  class="bi bi-camera fs-2 text-white"
-                  style="cursor: pointer"
-                  @click="openForm('addAvatar')"
-                ></i>
+    <div class="row mt-5">
+      <div class="col-8">
+        <RouterView />
+      </div>
+      <div class="col-4">
+        
+        <div class="flex-body">
+          <div class="flex-dir-col">
+            
+            <div class="flex-avatar">
+              <img :src="user?.image" alt="AVATAR" />
+              <div
+                class="flex-avatar-upload bg-opacity-50 bg-warning d-flex justify-content-center position-absolute bottom-0 w-100"
+              >
+                <div class="flex-avatar-icon" v-if="user?.image">
+                  <i
+                    class="bi bi-trash fs-2 text-white"
+                    style="cursor: pointer"
+                    @click="handleClick"
+                    title="Удалить аватар"
+                  ></i>
+                </div>
+                <div class="flex-avatar-icon" v-else>
+                  <i
+                    class="bi bi-camera fs-2 text-white"
+                    style="cursor: pointer"
+                    title="Установить аватар"
+                    @click="openForm('addAvatar')"
+                  ></i>
+                </div>
               </div>
             </div>
           </div>
+          <form class="form-profile p-2 mt-5 position-relative">
+            <div class="flex-avatar-settings">
+              <div class="flex-avatar-icon">
+                <i
+                  class="bi bi-pencil fs-4 text-warning"
+                  style="cursor: pointer"
+                  title="Редактировать профиль"
+                  @click="openForm('editProfile')"
+                ></i>
+              </div>
+            </div>
+            <h5 class="text-center">Profile</h5>
+            <div class="mb-3 border-bottom border-2 border-warning">
+              <label class="form-label">Имя</label>
+              <input
+                type="text"
+                class="w-100 border-0 px-2 fw-bold"
+                :value="user?.userName"
+                readonly
+              />
+            </div>
+            <div class="mb-3 border-bottom border-2 border-warning">
+              <label class="form-label">Login</label>
+              <input
+                type="text"
+                class="w-100 border-0 px-2 fw-bold"
+                :value="user?.login"
+                readonly
+              />
+            </div>
+            <div class="mb-3 border-bottom border-2 border-warning">
+              <label class="form-label">Email</label>
+              <input
+                type="text"
+                class="w-100 border-0 px-2 fw-bold"
+                :value="user?.mail"
+                readonly
+              />
+            </div>
+          </form>
         </div>
-        <form  class="p-2">
-          <div class="mb-3 border-bottom border-2 border-warning">
-            <label class="form-label">Имя</label>
-            <input type="text" class="w-100 border-0 px-2 fw-bold" :value="userName" readonly>
-          </div>
-          <div class="mb-3 border-bottom border-2 border-warning">
-            <label class="form-label">Login</label>
-            <input type="text" class="w-100 border-0 px-2 fw-bold" :value="login" readonly>
-          </div>
-          <div class="mb-3 border-bottom border-2 border-warning">
-            <label class="form-label">Email</label>
-            <input type="text" class="w-100 border-0 px-2 fw-bold" :value="mail" readonly>
-          </div>
-        </form>
       </div>
-        </div>
     </div>
   </div>
 </template>
-<style scoped >
+<style scoped>
 .nav-item {
   border-radius: 0.5rem;
 }
@@ -129,7 +167,8 @@ const image = ref(user?.image)
 }
 .flex-body {
   padding: 1rem;
-  border:rgb(255, 193, 7) 1px solid;
+  border: rgb(255, 193, 7) 1px solid;
+  border-radius: 16px;
 }
 .flex-dir-col {
   position: relative;
@@ -147,29 +186,29 @@ const image = ref(user?.image)
   width: fit-content;
   position: absolute;
   top: 0;
-  left: 0;
+  right:  0;
 }
-.flex-avatar-settings > .flex-avatar-icon{
+.flex-avatar-settings > .flex-avatar-icon {
   opacity: 0;
-  transition: opacity .5s linear;
-  -webkit-transition: opacity .5s linear;
-  -moz-transition: opacity .5s linear;
-  -ms-transition: opacity .5s linear;
-  -o-transition: opacity .5s linear;
+  transition: opacity 0.5s linear;
+  -webkit-transition: opacity 0.5s linear;
+  -moz-transition: opacity 0.5s linear;
+  -ms-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
 }
 
-.flex-avatar-upload{
+.flex-avatar-upload {
   opacity: 0;
-  transition: opacity .5s linear;
-  -webkit-transition: opacity .5s linear;
-  -moz-transition: opacity .5s linear;
-  -ms-transition: opacity .5s linear;
-  -o-transition: opacity .5s linear;
+  transition: opacity 0.5s linear;
+  -webkit-transition: opacity 0.5s linear;
+  -moz-transition: opacity 0.5s linear;
+  -ms-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
 }
-.flex-avatar:hover .flex-avatar-upload{
+.flex-avatar:hover .flex-avatar-upload {
   opacity: 1;
 }
-.flex-dir-col:hover .flex-avatar-settings > .flex-avatar-icon{
+.form-profile:hover .flex-avatar-settings > .flex-avatar-icon {
   opacity: 1;
 }
 </style>

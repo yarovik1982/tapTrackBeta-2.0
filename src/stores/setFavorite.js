@@ -3,9 +3,8 @@ import { BASE_URL } from '@/constants/url';
 import axios from "axios";
 
 const token = JSON.parse(localStorage.getItem('token'))
-console.log(token);
-const refresh = JSON.parse(localStorage.getItem('refresh'))
-console.log(token);
+
+
 
 export const useSetFavoriteStore = defineStore('setFavorite', {
  state: () => ({

@@ -1,4 +1,8 @@
-const sendToServer = async () => {
+import { BASE_URL } from "@/constants/url";
+
+const token = JSON.parse(localStorage.getItem('token'))
+
+export const sendToServer = async () => {
    if (avatarEditorRef.value) {
      const canvasData = avatarEditorRef.value.getImageScaled();
      const blob = await new Promise((resolve) => {
@@ -10,10 +14,10 @@ const sendToServer = async () => {
      formData.append('image', blob, 'avatar.png');
  
      try {
-       const response = await fetch('/upload', {
+       const response = await fetch(`${BASE_URL}/user/photo?userId=${userId}`, {
          method: 'POST',
          headers:{
-            'Authorisation': 'Bearer ' + token,
+            'Authorisation': `Bearer ${token}`,
          },
          body: formData,
        });

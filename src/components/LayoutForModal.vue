@@ -7,8 +7,10 @@ import FormAddPlace from '@/components/FormAddPlace.vue';
 import FormAddBrewery from '@/components/FormAddBrewery.vue';
 import FormAddAvatar from '@/components/FormAddAvatar.vue';
 import FormCreateFeedback from '@/components/FormCreateFeedback.vue'
+import FormSuccess from '@/components/FormSuccess.vue'
 import { computed, ref } from 'vue';
 import { useForms } from '@/stores/forms';
+import FormSuccessVue from './FormSuccess.vue';
 
 
 // const emits = defineEmits(['close-form'])
@@ -42,6 +44,8 @@ const currentForm = computed(() => {
       return FormAddAvatar;
     case 'createFeedback':
       return FormCreateFeedback;
+    case 'success':
+      return FormSuccess;
   }
 })
 const closeForm = () => {

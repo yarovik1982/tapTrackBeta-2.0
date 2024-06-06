@@ -7,7 +7,7 @@ const userId = JSON.parse(localStorage.getItem("user"))?.userId;
 favorites.USER_FAVORITE_PLACE(userId)
 </script>
 <template>
-    <h4 class="text-center">Favorite Page</h4>
+    <!-- <h4 class="text-center">Favorite Page</h4> -->
     <h5 class="text-center" v-if="favorites.favorites.length === 0">Список избранных пуст</h5>
     <div
       class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 card-shadow"

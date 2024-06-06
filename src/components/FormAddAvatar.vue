@@ -3,6 +3,14 @@ import {onMounted, onUnmounted, ref } from 'vue';
 import { AvatarEditor } from "avatar-editor";
 import "avatar-editor/dist/style.css";
 import BtnCloseLayout from '@/components/UI/BtnCloseLayout.vue';
+import { BASE_URL } from '@/constants/url';
+import axios from 'axios';
+import { useUserAuth } from '@/stores/user-auth';
+
+const token = JSON.parse(localStorage.getItem('token'))
+const userId = JSON.parse(localStorage.getItem('user'))?.userId
+
+const userAuthStore = useUserAuth()
 
 const scaleVal = ref(1);
 const scaleStep = 0.02;
@@ -33,22 +41,51 @@ const save = () => {
   if (avatarEditorRef.value) {
     const canvasData = avatarEditorRef.value.getImageScaled();
     const blob = canvasData.toBlob((blob) => {
-      // Создаем объект URL для загрузки изображения
       const url = URL.createObjectURL(blob);
 
-      // Создаем ссылку для загрузки изображения
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'image.png'; // Имя файла для загрузки
+      link.download = 'image.png';
 
-      // Добавляем ссылку на страницу и симулируем клик по ней
       document.body.appendChild(link);
       link.click();
 
-      // Удаляем ссылку после загрузки
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-    }, 'image/png', 0.8); // Формат и качество изображения
+    }, 'image/png', 0.8); 
+  }
+};
+
+const sendToServer = async () => {
+  console.log("click");
+  if (avatarEditorRef.value) {
+    console.log(avatarEditorRef.value);
+    const canvasData = avatarEditorRef.value.getImageScaled();
+    const blob = await new Promise((resolve) => {
+      canvasData.toBlob(resolve, 'image/png');
+    });
+
+    const formData = new FormData();
+    formData.append('image', blob, 'avatar.png');
+
+    try {
+      const response = await axios.post(`${BASE_URL}/user/photo?userId=${userId}`, formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      if (response.status === 200) {
+        console.log('Изображение успешно отправлено на сервер');
+        userAuthStore._USER_PROFILE(token)
+        location.reload()
+      } else {
+        console.error('Ошибка при отправке изображения на сервер');
+      }
+    } catch (error) {
+      console.error('Ошибка сети:', error);
+    }
   }
 };
 
@@ -91,12 +128,16 @@ onUnmounted(() => {
     :step="scaleStep"
     v-model="scaleVal"
   />
-  <button @click.prevent="save">Save</button>
+  <button class="btn btn-info" @click.prevent="save">сохранить на компьютере</button>
 </div>
     </div>
     
   </div>
-  <button type="submit" class="btn btn-warning text-white d-block m-auto rounded rounded-5" style="width: 270px;">Отправить</button>
+  <button type="submit" 
+    class="btn btn-warning text-white d-block m-auto rounded rounded-5" 
+    style="width: 270px;"
+    @click.prevent="sendToServer"
+  >Отправить</button>
 </form>
 </template>
 <style scoped >

@@ -19,6 +19,8 @@
     "swiper": "^11.1.1",
     "vue": "^3.4.21",
     "vue-dadata": "^3.0.0-beta.13",
+    "vue-date-pick": "^1.5.1",
+    "vue-imask": "^7.6.1",
     "vue-router": "^4.3.0",
     "vue3-star-ratings": "^3.0.5"
   },
