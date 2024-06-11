@@ -87,13 +87,13 @@ const setFavorite = async (itemId, state) => {
   <div class="position-relative">
     <button
       class="btn btn-warning btn-sm text-white rounded rounded-5 me-2 d-block position-absolute"
-      style="width: 270px; z-index: 10; top: -100px; left: 120%"
+      style="width: 270px; z-index: 10; top: -160px; left: 120%"
       @click="openForm('addPlace')"
     >
       Добавить точку продаж
     </button>
 
-    <h4 class="text-center">Places Page</h4>
+    <!-- <h4 class="text-center">Places Page</h4> -->
     <div
       class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 card-shadow"
       v-for="item in placeStore.dataList"
@@ -131,11 +131,19 @@ const setFavorite = async (itemId, state) => {
             <p class="card-description">
               {{ item.description }}
             </p>
+            <div class="card-row justify-content-end py-3">
+              <button
+                class="btn btn-outline-warning btn-sm  rounded rounded-5 me-2 d-block position-absolute"
+                
+                @click="handleClick(item.placeId)"
+              >
+                Подробнее
+              </button>
+            </div>
             <div class="card-row justify-content-center py-3">
               <button
                 class="btn btn-warning btn-sm text-white rounded rounded-5 me-2 d-block position-absolute"
                 style="width: 270px"
-                @click="handleClick(item.placeId)"
               >
                 Ассортимент
               </button>

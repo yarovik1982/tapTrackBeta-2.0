@@ -16,12 +16,12 @@ const openForm = (type) => {
   <div class="position-relative">
     <button
       class="btn btn-warning btn-sm text-white rounded rounded-5 me-2 d-block position-absolute"
-      style="width: 270px; z-index: 10; top: -100px; left: 120%"
+      style="width: 270px; z-index: 10; top: -150px; left: 120%"
       @click="openForm('addBrewery')"
     >
       Добавить пивоварню
     </button>
-    <h4 class="text-center">Brewery Page</h4>
+    <!-- <h4 class="text-center">Brewery Page</h4> -->
     <div
       class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 card-shadow"
       v-for="item in breweriesStore.dataList"

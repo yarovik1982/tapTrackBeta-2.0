@@ -27,5 +27,17 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
     "vite": "^5.2.8"
-  }
+  },
+  "description": "",
+  "main": "test.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yarovik1982/tapTrackBeta-2.0.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yarovik1982/tapTrackBeta-2.0/issues"
+  },
+  "homepage": "https://github.com/yarovik1982/tapTrackBeta-2.0#readme"
 }

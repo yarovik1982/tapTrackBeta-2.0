@@ -4,12 +4,14 @@ import { useForms } from "./forms";
 import axios from "axios";
 
 const token = JSON.parse(localStorage.getItem('token'))
-const formsStore = useForms()
+// const formsStore = useForms()
 
 export const usePlace = defineStore('placeStore', {
    state: () => ({
      dataList :[],
-     loading :false
+     loading :false,
+     itemPlase:{},
+     isShow:null
 
    }),
    
@@ -41,12 +43,17 @@ actions:{
                Authorization: `Bearer ${token}`
             }
          })
-         this.dataList = await response.data
-         // this.loading = false
+         
+         this.itemPlase = await response.data
+         this.isShow = response.status
       } catch (error){
          if(error.response && error.response.status === 401){
             formsStore.openLayout('login')
-         } else {
+         }
+         if(error.response && error.response.status === 404) {
+            this.isShow = 404
+         }
+         else {
             console.error('Error fetching data:', error)
          }
       }
@@ -64,7 +71,45 @@ actions:{
             console.error('Error fetching data:', error)
          }
       }
-   }
+   },
+   // async _PLACE_CREATE(data, params) {
+   //    try {
+   //      const response = await axios.post(`${BASE_URL}/place/create`, data, {
+   //        headers: {
+   //          "Content-Type": "application/json",
+   //          "Authorization": `Bearer ${token}`,
+   //        },
+   //        params: params,
+   //      });
+    
+   //      if (response.status === 200) {
+   //        console.log("Place created successfully:", response.data);
+   //      } else {
+   //        console.error("Error creating place:", response.status, response.data);
+   //      }
+   //    } catch (error) {
+   //      console.error("Error making request:", error.status, error.response?.data);
+   //    }
+   //  }
+   async _PLACE_CREATE(data, params) {
+      try {
+        const headers = data instanceof FormData
+          ? { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}` }
+          : { "Content-Type": "application/json", "Authorization": `Bearer ${token}` };
+    
+        const response = await axios.post(`${BASE_URL}/place/create`, data, {
+          headers,
+          params
+        });
+    
+        return response.data; // Возвращаем данные из ответа
+      } catch (error) {
+        console.error("Error making request:", error.status, error.response?.data);
+        throw error; // Перебрасываем ошибку наверх
+      }
+    }
+    
+    
 
 }
    

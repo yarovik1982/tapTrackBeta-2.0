@@ -3,6 +3,12 @@ import {onMounted, onUnmounted, ref } from 'vue';
 import { AvatarEditor } from "avatar-editor";
 import "avatar-editor/dist/style.css";
 import BtnCloseLayout from '@/components/UI/BtnCloseLayout.vue';
+import { VueDadata } from 'vue-dadata';
+import "vue-dadata/dist/style.css";
+import { dadataToken } from '@/constants/dadataToken';
+import { useDatadaStore } from '@/stores/datada';
+import { usePlace } from '@/stores/place';
+import { replaceQuotes } from '@/functions/replaceQuotes';
 
 const scaleVal = ref(1);
 const scaleStep = 0.02;
@@ -27,13 +33,17 @@ const handleWheelEvent = (e) => {
   }
 };
 
-// const save = () => {
-//   if (avatarEditorRef.value) {
-//     const canvasData = avatarEditorRef.value.getImageScaled();
-//     const img = canvasData.toDataURL("image/png");
-//     console.log(img);
-//   }
-// };
+const query = ref('')
+const token = dadataToken
+const datada = useDatadaStore()
+
+const placeStore = usePlace()
+const userId = JSON.parse(localStorage.getItem('user')).userId
+// const jwtToken = JSON.parse(localStorage.getItem('token'))
+const name = ref('')
+const type = ref('')
+const description = ref('')
+
 const save = () => {
   if (avatarEditorRef.value) {
     const canvasData = avatarEditorRef.value.getImageScaled();
@@ -56,6 +66,34 @@ const save = () => {
     }, 'image/png', 0.8); // Формат и качество изображения
   }
 };
+const handleSubmit = async () => {
+  
+  let formData = null;
+  if (avatarEditorRef.value) {
+    const canvasData = avatarEditorRef.value.getImageScaled();
+    const blob = await new Promise((resolve) => {
+      canvasData.toBlob(resolve, 'image/png');
+    });
+
+    formData = new FormData();
+    formData.append('image', blob, 'avatar.png');
+  }
+
+  await datada.setAddress(query.value, token);
+    const params = {
+      name: name.value,
+      typePlace: type.value,
+      description: replaceQuotes(description.value),
+      address: datada.address,
+      city: datada.city,
+      geoLat: datada.geoLat,
+      geoLon: datada.geoLon,
+      userId: userId
+    };
+  await placeStore._PLACE_CREATE(formData, params);
+};
+
+
 
 
 onMounted(() => {
@@ -73,101 +111,103 @@ const closeForm = () => {
 const placeName = ref('')
 </script>
 <template>
-    <form id="addPlace" class="w-75">
+    <form id="addPlace" class="w-75" @submit.prevent="handleSubmit">
     <h3 class="form-title text-center py-3">Добавить точку продаж</h3>
-   <btn-close-layout/>
-    <div class="row g-3 ">
-      <div class="col py-3 d-flex flex-column align-items-center justify-content-between">
-         <div
-    style="
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      grid-gap: 50px;
-    "
-  >
-    <avatar-editor
-      :width="250"
-      :height="250"
-      ref="avatarEditorRef"
-      @image-ready="onImageReady"
-      v-model:scale="scaleVal"
-    />
-    <input
-      type="range"
-      :min="scaleMin"
-      :max="scaleMax"
-      :step="scaleStep"
-      v-model="scaleVal"
-    />
-    <button @click.prevent="save">Save</button>
-  </div>
+    <btn-close-layout />
+    <div class="row g-3">
+      <div
+        class="col py-3 d-flex flex-column align-items-center justify-content-between"
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            grid-gap: 50px;
+          "
+        >
+          <avatar-editor
+            :width="250"
+            :height="300"
+            ref="avatarEditorRef"
+            @image-ready="onImageReady"
+            v-model:scale="scaleVal"
+          />
+          <input
+            type="range"
+            :min="scaleMin"
+            :max="scaleMax"
+            :step="scaleStep"
+            v-model="scaleVal"
+          />
+          <button class="btn btn-info btn-sm" @click.prevent="save">Сохранить на компьютере</button>
+        </div>
       </div>
       <div class="col py-3">
-         <div class="mb-5 position-relative">
-       <input type="text" class="app-form-control" 
-         id="inpName" 
-         v-model="placeName"
-        placeholder="Имя"
-      />
-       <label for="inpName" class="app-form-label position-absolute">Имя</label>
-       <i class="bi bi-person-fill position-absolute"></i>
-    </div>
-    <div class="mb-5 position-relative">
-      <input type="email" class="app-form-control"   
-         id="inpEmail" 
-         v-model="placeName"
-          placeholder="Почта"
-         
-      />
-       <label for="inpPhoneNumber"  class="app-form-label position-absolute">Почта</label>
-       <!-- <i class="bi bi-person-fill position-absolute"></i> -->
-       <i class="bi bi-envelope-fill position-absolute"></i>
-    </div>
-    <div class="mb-5 position-relative">
-      <input type="text" class="app-form-control"   
-         id="inpPhone" 
-         v-model="placeName"
-          placeholder="Телефон"
-         
-      />
-       <label for="inpPhoneNumber"  class="app-form-label position-absolute">Телефон</label>
-       <!-- <i class="bi bi-person-fill position-absolute"></i> -->
-       <i class="bi bi-telephone-fill position-absolute"></i>
-    </div>
-    <div class="mb-5 position-relative">
-      <input type="text" class="app-form-control"   
-         id="inpBirthday" 
-         v-model="placeName"
-          placeholder="Дата рождения дд-мм-гггг"
-        
-      />
-       <label for="inpBirthday" class="app-form-label position-absolute">Дата рождения</label>
-       <i class="bi bi-person-fill position-absolute"></i>
-    </div>
-    <div class="mb-5 position-relative">
-      <input type="text" class="app-form-control"   
-         id="inpCountry" 
-         v-model="placeName"
-          placeholder="Страна"
-        
-      />
-       <label for="inpCountry" class="app-form-label position-absolute">Страна</label>
-       <i class="bi bi-person-fill position-absolute"></i>
-    </div>
-    <div class=" position-relative">
-      <input type="text" class="app-form-control"  
-         id="inpCity" 
-         v-model="placeName"
-          placeholder="Город"
-         
-      />
-       <label for="inpCity" class="app-form-label position-absolute">Город</label>
-       <i class="bi bi-person-fill position-absolute"></i>
-    </div>
+        <div class="mb-5 position-relative">
+          <input
+            name="name"
+            type="text"
+            class="app-form-control"
+            id="inpName"
+            v-model="name"
+            placeholder="Имя"
+          />
+          <label for="inpName" class="app-form-label position-absolute"
+            >Наименование</label
+          >
+        </div>
+        <div class="mb-5 position-relative">
+          <label for="type" class=" label-for-select" style="width: 100%"
+            >Выберите тип</label
+          >
+          <select
+            class="app-form-control"
+            name="type"
+            id="type"
+            v-model="type"
+            style="width: 100%"
+            
+          >
+            <!-- <option value="" selected>Выберите тип</option> -->
+            <option value="SHOP">магазин</option>
+            <option value="BAR" selected>бар</option>
+            
+          </select>
+        </div>
+        <div class="mb-5 position-relative">
+          <span>Адрес</span>
+          <vue-dadata
+            v-model="query" 
+            :token="token" 
+            :count="5" 
+            placeholder="начните ввод"
+          ></vue-dadata>
+        </div>
+        <div class="mb-5 position-relative">
+          <label for="descript" style="width: 100%"
+            >Введите краткое описание</label
+          >
+          <textarea
+            type="text"
+            id="descript"
+            name="description"
+            v-model="description"
+            style="width: 100%"
+          ></textarea>
+        </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-warning text-white d-block m-auto rounded rounded-5" style="width: 270px;">Отправить</button>
+    <button
+      type="submit"
+      class="btn btn-warning text-white d-block m-auto rounded rounded-5"
+      style="width: 270px"
+    >
+      Отправить
+    </button>
+    <p>Address: {{ datada.address }}</p>
+    <p>City: {{ datada.city }}</p>
+    <p>Coords: ({{ datada.geoLat }}, {{ datada.geoLon }})</p>
   </form>
 </template>
 <style scoped >

@@ -57,9 +57,8 @@ const save = () => {
 };
 
 const sendToServer = async () => {
-  console.log("click");
+  
   if (avatarEditorRef.value) {
-    console.log(avatarEditorRef.value);
     const canvasData = avatarEditorRef.value.getImageScaled();
     const blob = await new Promise((resolve) => {
       canvasData.toBlob(resolve, 'image/png');
