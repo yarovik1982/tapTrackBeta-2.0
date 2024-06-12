@@ -2,6 +2,8 @@
 import AdvContent from "@/components/AdvContent.vue";
 import { ref } from "vue";
 import { useGetDataStore } from "@/stores/getData";
+import { useRouter } from "vue-router";
+import { useAppStore } from "@/stores/app";
 
 const getData = useGetDataStore()
 getData.BEER_LIST()
@@ -12,6 +14,13 @@ getData.BREWERY_ADBLOCK()
 
 const showMoreData = () => {
   getData.BEER_LIST()
+}
+
+const appStore = useAppStore()
+const router = useRouter()
+const handleClick = (beerId) => {
+  appStore.setCurrentBeer(beerId)
+  router.push(`/element-${beerId}`)
 }
 </script>
 <template>
@@ -48,6 +57,14 @@ const showMoreData = () => {
                   <p class="card-description">
                     {{ item.description }}
                   </p>
+                  <div class="card-row justify-content-end py-3">
+                  <button
+                    class="btn btn-outline-warning btn-sm rounded rounded-5 me-2 d-block"
+                    @click="handleClick(item.id)"
+                  >
+                    Подробнее
+                  </button>
+                </div>
                 </div>
               </div>
             </div>

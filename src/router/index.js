@@ -73,6 +73,16 @@ import BreweryPage from '@/views/BreweryPage.vue'
       component:() => import('@/views/ProfileOnePlase.vue')
     },
     {
+      path:'/element-:id',
+      name:'element-id',
+      component:() => import('@/views/ElementIdPage.vue')
+    },
+    // {
+    //   path:'/beer/:id',
+    //   name:'place-id',
+    //   component:() => import('@/views/ElementIdPage.vue')
+    // },
+    {
       path:'/search',
       name:'search',
       component: () => import('@/views/SearchPage.vue'),

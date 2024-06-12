@@ -58,39 +58,6 @@ actions:{
          }
       }
    },
-   async FAKE_PLACE(placeId){
-      try{
-         // this.loading = true
-         const response = await axios.get(`http://localhost:3000/places`)
-         this.dataList = await response.data
-         // this.loading = false
-      } catch (error){
-         if(error.response && error.response.status === 401){
-            formsStore.openLayout('login')
-         } else {
-            console.error('Error fetching data:', error)
-         }
-      }
-   },
-   // async _PLACE_CREATE(data, params) {
-   //    try {
-   //      const response = await axios.post(`${BASE_URL}/place/create`, data, {
-   //        headers: {
-   //          "Content-Type": "application/json",
-   //          "Authorization": `Bearer ${token}`,
-   //        },
-   //        params: params,
-   //      });
-    
-   //      if (response.status === 200) {
-   //        console.log("Place created successfully:", response.data);
-   //      } else {
-   //        console.error("Error creating place:", response.status, response.data);
-   //      }
-   //    } catch (error) {
-   //      console.error("Error making request:", error.status, error.response?.data);
-   //    }
-   //  }
    async _PLACE_CREATE(data, params) {
       try {
         const headers = data instanceof FormData

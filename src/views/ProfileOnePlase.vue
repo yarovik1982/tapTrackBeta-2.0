@@ -1,12 +1,17 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { usePlace } from "@/stores/place";
+import { useForms } from "@/stores/forms";
 
 const route = useRoute();
 const placeStore = usePlace();
-// const userId = JSON.parse(localStorage.getItem("user"))?.userId;
 const placeId = route.params.id
 placeStore.PLACE_PROFILE_PLACEID( placeId);
+
+const formsStore = useForms()
+const handleClick = (type) => {
+  formsStore.openLayout(type)
+}
 </script>
 <template>
   <div v-if="placeStore.isShow === 200">
@@ -40,6 +45,11 @@ placeStore.PLACE_PROFILE_PLACEID( placeId);
     </div>
   </div>
   </div>
-<div class="py-5 text-center fs-1" v-else>Пока не заплатишь, - не увидишь!!!</div>
+<div class="py-5 text-center fs-1" 
+  v-else
+  style="cursor: pointer;"
+  @click="handleClick('writeUs')"
+
+>Функция не доступна, свяжитесь пожалуйста со службой поддержки </div>
 </template>
 <style scoped></style>

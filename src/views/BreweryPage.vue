@@ -3,6 +3,8 @@ import StarRating from '@/components/StarRating.vue';
 import AdvContent from "@/components/AdvContent.vue";
 import { ref } from "vue";
 import { useGetDataStore } from "@/stores/getData";
+import { useRouter } from 'vue-router';
+import { useAppStore } from '@/stores/app';
 
 const getData = useGetDataStore()
 getData.BREWERY_LIST()
@@ -13,7 +15,12 @@ getData.BREWERY_ADBLOCK()
 const showMoreData = () => {
   getData.BREWERY_LIST()
 }
-
+ const router = useRouter()
+ const appStore = useAppStore()
+ const handleClick = (breweryId) => {
+  appStore.setCurrentBrewery(breweryId)
+  router.push(`/element-${breweryId}`)
+ }
 </script>
 <template>
     <div class="px-2">
@@ -51,6 +58,14 @@ const showMoreData = () => {
                   <p class="card-description">
                     {{ item.description }}
                   </p>
+                  <div class="card-row justify-content-end py-3">
+                  <button
+                    class="btn btn-outline-warning btn-sm rounded rounded-5 me-2 d-block"
+                    @click="handleClick(item.id)"
+                  >
+                    Подробнее
+                  </button>
+                </div>
                 </div>
               </div>
             </div>
