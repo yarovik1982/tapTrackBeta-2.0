@@ -104,11 +104,11 @@ onUnmounted(() => {
   document.removeEventListener("wheel", handleWheelEvent);
 });
 
-const emits = defineEmits(['close-form'])
-const closeForm = () => {
-  emits('close-form')
-}
-const placeName = ref('')
+// const emits = defineEmits(['close-form'])
+// const closeForm = () => {
+//   emits('close-form')
+// }
+// const placeName = ref('')
 </script>
 <template>
     <form id="addPlace" class="w-75" @submit.prevent="handleSubmit">

@@ -1,8 +1,7 @@
-const arr = [
-  {"id":1},
-  {"id":2},
-  {"id":3},
-  {"id":4},
-]
-const func = id => arr.find(item => item.id === id)
-console.log(typeof func(2));
+
+function formatName(name){
+  const str = name.toLowerCase()
+
+  return str.split(' ').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join('')
+}
+console.log(formatName('Gbd NNNN'));

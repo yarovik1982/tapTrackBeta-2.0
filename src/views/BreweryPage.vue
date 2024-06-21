@@ -55,7 +55,7 @@ const showMoreData = () => {
                     :max="6"
                     :current="item.averageRating"
                   />
-                  <p class="card-description">
+                  <p class="card-description card-description-ellipsis">
                     {{ item.description }}
                   </p>
                   <div class="card-row justify-content-end py-3">

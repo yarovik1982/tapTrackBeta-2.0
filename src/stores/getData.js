@@ -1,6 +1,9 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import { BASE_URL } from "@/constants/url";
 import axios from "axios";
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 
 export const useGetDataStore = defineStore("getData", {
   state: () => ({
@@ -20,6 +23,7 @@ export const useGetDataStore = defineStore("getData", {
     placeAdvList: [],
     beerAdvList: [],
     breweryAdvList: [],
+    error:null,
   }),
   actions: {
     async PLACE_LIST() {
@@ -33,14 +37,21 @@ export const useGetDataStore = defineStore("getData", {
             "Content-Type": "application/json",
           },
         });
-
-        this.placeList = [...this.placeList, ...response.data];
-        this.offsetPlace += this.limitPlace; 
-        this.hasMorePlace = response.data.length === this.limitPlace;
+    
+        if (response.status === 200) {
+          this.placeList = [...this.placeList, ...response.data];
+          this.offsetPlace += this.limitPlace;
+          this.hasMorePlace = response.data.length === this.limitPlace;
+        } else {
+          throw new Error(`Server responded with status code ${response.status}`);
+        }
       } catch (error) {
         console.error("Error in PLACE_LIST:", error);
+        // Выполняем редирект на '/404' в блоке catch
+        // router.push('/404');
       }
     },
+    
     async loadMorePlaces() {
       if (this.hasMorePlace) {
         await this.PLACE_LIST();

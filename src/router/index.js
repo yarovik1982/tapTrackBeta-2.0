@@ -63,19 +63,29 @@ import BreweryPage from '@/views/BreweryPage.vue'
         {
           path:'/profile-brewery',
           name:'profile-brewery',
-          component:() => import('@/views/ProfileBreweryPage.vue')
+          component:() => import('@/views/ProfileBreweryPage.vue'),
+        },
+        {
+          path:'/profile-brewery/breweryId-:id',
+          name: 'profile-brewery-id',
+          component: () => import('@/views/ProfileBreweryId.vue')
+        },
+        {
+          path:'/profile-place/placeId-:id',
+          name:'profile-place-id',
+          component:() => import('@/views/ProfilePlaseId.vue')
         },
       ]
-    },
-    {
-      path:'/profile-place-:id',
-      name:'one-place',
-      component:() => import('@/views/ProfileOnePlase.vue')
     },
     {
       path:'/element-:id',
       name:'element-id',
       component:() => import('@/views/ElementIdPage.vue')
+    },
+    {
+      path:'/404',
+      name:'404',
+      component: () => import('@/views/404Page.vue')
     },
     // {
     //   path:'/beer/:id',

@@ -21,8 +21,11 @@
      class="customSwiper "
    >
      <swiper-slide v-for="slide in feedback.feedbackListMain" :key="slide.id">
-       <div class="slide-img">
+       <div class="slide-img" v-if="slide.imageFeedback">
          <img :src="slide.imageFeedback" :alt="slide.beerName"/>
+       </div> 
+       <div class="slide-img rounded-circle" v-else style="background: #ccc; display:grid; place-content: center;">
+         <span style="color:#fff;font-size: 1rem;">No Photo</span>
        </div> 
        <p class="slide-text">{{ slide.feedbackText }} </p>
 

@@ -8,9 +8,13 @@ import FormAddBrewery from '@/components/FormAddBrewery.vue';
 import FormAddAvatar from '@/components/FormAddAvatar.vue';
 import FormCreateFeedback from '@/components/FormCreateFeedback.vue'
 import FormSuccess from '@/components/FormSuccess.vue'
+// import FormAddAssrtiment from '@/components/FormAddAssortiment.vue'
+import FormQr from '@/components/FormQr.vue';
+import Map from '@/components/Map.vue'
 import { computed, ref } from 'vue';
 import { useForms } from '@/stores/forms';
-import FormSuccessVue from './FormSuccess.vue';
+// import FormSuccessVue from './FormSuccess.vue';
+import FormCreateBeer from '@/components/FormCreateBeer.vue';
 
 
 // const emits = defineEmits(['close-form'])
@@ -46,6 +50,12 @@ const currentForm = computed(() => {
       return FormCreateFeedback;
     case 'success':
       return FormSuccess;
+    case 'createBeer':
+      return FormCreateBeer;
+    case 'map':
+      return Map;
+    case 'qr':
+      return FormQr;
   }
 })
 const closeForm = () => {

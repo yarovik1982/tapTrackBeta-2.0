@@ -1,112 +1,12 @@
-<template>
-  <form id="addBrewery" class="w-75" @submit.prevent="handleSubmit">
-    <h3 class="form-title text-center py-3">Добавить пивоварню</h3>
-    <btn-close-layout />
-    <div class="row g-3">
-      <div
-        class="col py-3 d-flex flex-column align-items-center justify-content-between"
-      >
-        <div
-          style="
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            grid-gap: 50px;
-          "
-        >
-          <avatar-editor
-            :width="250"
-            :height="300"
-            ref="avatarEditorRef"
-            @image-ready="onImageReady"
-            v-model:scale="scaleVal"
-          />
-          <input
-            type="range"
-            :min="scaleMin"
-            :max="scaleMax"
-            :step="scaleStep"
-            v-model="scaleVal"
-          />
-          <button
-            class="btn btn-info btn-sm" 
-            @click.prevent="save"
-          >Сохранить на компьютере</button>
-        </div>
-      </div>
-      <div class="col py-3">
-        <div class="mb-5 position-relative">
-          <input
-            type="text"
-            class="app-form-control"
-            id="inpName"
-            v-model="name"
-            placeholder="Имя"
-          />
-          <label for="inpName" class="app-form-label position-absolute"
-            >Наименование</label
-          >
-        </div>
-        <div class="mb-5 position-relative">
-          <select
-            name="type"
-            id="type"
-            v-model="type"
-            style="width: 100%"
-            placeholder="Выбери"
-          >
-            <option value="" disabled selected></option>
-            <option value="BREWERY">пивоварня</option>
-            <option value="MEADERY">медоварня</option>
-            <option value="CIDRE">сидродельня</option>
-          </select>
-          <label for="type" class="label-for-select" style="width: 100%"
-            >Выберите тип пивоварни</label
-          >
-        </div>
-        <div class="mb-5 position-relative">
-          <input
-            type="text"
-            class="app-form-control"
-            id="inpPhone"
-            v-model="city"
-            placeholder="Город"
-          />
-          <label for="inpPhoneNumber" class="app-form-label position-absolute"
-            >Город</label
-          >
-        </div>
-        <div class="mb-5 position-relative">
-          <label for="descript" style="width: 100%"
-            >Введите краткое описание</label
-          >
-          <textarea
-            type="text"
-            id="descript"
-            name="descript"
-            v-model="description"
-            style="width: 100%"
-          ></textarea>
-        </div>
-      </div>
-    </div>
-    <button
-      type="submit"
-      class="btn btn-warning text-white d-block m-auto rounded rounded-5"
-      style="width: 270px"
-    >
-      Отправить
-    </button>
-  </form>
-</template>
-
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
+import BtnCloseLayout from "./UI/BtnCloseLayout.vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import { AvatarEditor } from "avatar-editor";
 import "avatar-editor/dist/style.css";
-import BtnCloseLayout from "@/components/UI/BtnCloseLayout.vue";
-import { replaceQuotes } from '@/functions/replaceQuotes';
-import { useBreweries } from "@/stores/breweries";
+import { useRoute } from "vue-router";
+import { useBeerStore } from "@/stores/beer";
+import { replaceQuotes } from "@/functions/replaceQuotes";
+import { useForms } from "@/stores/forms";
 
 const scaleVal = ref(1);
 const scaleStep = 0.02;
@@ -138,25 +38,21 @@ const save = () => {
     const canvasData = avatarEditorRef.value.getImageScaled();
     const blob = canvasData.toBlob(
       (blob) => {
-        // Создаем объект URL для загрузки изображения
         const url = URL.createObjectURL(blob);
 
-        // Создаем ссылку для загрузки изображения
         const link = document.createElement("a");
         link.href = url;
-        link.download = "image.png"; // Имя файла для загрузки
+        link.download = "image.png";
 
-        // Добавляем ссылку на страницу и симулируем клик по ней
         document.body.appendChild(link);
         link.click();
 
-        // Удаляем ссылку после загрузки
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
       },
       "image/png",
       0.8
-    ); // Формат и качество изображения
+    ); 
   }
 };
 
@@ -168,20 +64,32 @@ onUnmounted(() => {
   document.removeEventListener("wheel", handleWheelEvent);
 });
 
-// const emits = defineEmits(["close-form"]);
-// const closeForm = () => {
-//   emits("close-form");
-// };
-const name = ref("");
-const type = ref("");
-const city = ref("");
-const description = ref("");
+const forms = useForms()
 
-const breweriesStore = useBreweries()
-const userId = JSON.parse(localStorage.getItem('user')).userId
+const beer = useBeerStore()
+const route = useRoute()
+const breweryId = route.params.id
+console.log(breweryId);
+const name = ref('')
+const style = ref('')
+const description = ref('')
+const abv = ref('')
+const ibu = ref('')
 
-const handleSubmit = async () => {
-  
+const formattedAbv = (event) => {
+  let value = event.target.value
+  value = value.replace(',', '.');
+  value = value.replace(/[^0-9.]/g, '');
+  abv.value = value;
+}
+
+const formattedIbu = (event) => {
+  let value = event.target.value
+  value = value.replace(/[^0-9.]/g, '');
+  ibu.value = value
+}
+
+const createBeer = async () => {  
   let formData = null;
   if (avatarEditorRef.value) {
     const canvasData = avatarEditorRef.value.getImageScaled();
@@ -193,19 +101,131 @@ const handleSubmit = async () => {
     formData.append('image', blob, 'avatar.png');
   }
 
-  // await datada.setAddress(query.value, token);
     const params = {
       name: name.value,
-      type: type.value,
+      style: style.value,
       description: replaceQuotes(description.value),
-      city: city.value,
-      userId: userId
+      abv: abv.value,
+      ibu: ibu.value,
+      breweryId: breweryId
     };
-  await breweriesStore._BREWERY_CREATE(formData, params);
+  await beer._BEER_CREATE(formData, params)
+  await forms.closeLayout()
+  await beer._BEER_LIST_BREWERY(breweryId)
 };
 
 </script>
-
+<template>
+  <form id="createBeer" class="w-75" @submit.prevent="createBeer">
+    <h3 class="form-title text-center py-3">Добавить пиво</h3>
+    <btn-close-layout />
+    <div class="row g-3">
+      <div
+        class="col py-3 d-flex flex-column align-items-center justify-content-between"
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            grid-gap: 50px;
+          "
+        >
+          <avatar-editor
+            :width="250"
+            :height="300"
+            ref="avatarEditorRef"
+            @image-ready="onImageReady"
+            v-model:scale="scaleVal"
+          />
+          <input
+            type="range"
+            :min="scaleMin"
+            :max="scaleMax"
+            :step="scaleStep"
+            v-model="scaleVal"
+          />
+          <button class="btn btn-info btn-sm" @click.prevent="save">
+            Сохранить на компьютере
+          </button>
+        </div>
+      </div>
+      <div class="col py-3">
+        <div class="mb-5 position-relative">
+          <input
+            type="text"
+            class="app-form-control"
+            id="inpName"
+            v-model="name"
+            placeholder="Имя"
+          />
+          <label for="inpName" class="app-form-label position-absolute"
+            >Наименование</label
+          >
+        </div>
+        <div class="mb-5 position-relative">
+          <input
+            type="text"
+            class="app-form-control"
+            id="inpStyle"
+            v-model="style"
+            placeholder="Стиль"
+          />
+          <label for="inpStyle" class="app-form-label position-absolute"
+            >Стиль</label
+          >
+        </div>
+        <div class="mb-5 position-relative">
+          <input
+            type="text"
+            class="app-form-control"
+            id="inpAbv"
+            v-model="abv"
+            placeholder="Abv"
+            @input="formattedAbv(event)"
+          />
+          <label for="inpAbv" class="app-form-label position-absolute"
+            >Abv</label
+          >
+        </div>
+        <div class="mb-5 position-relative">
+          <input
+            type="text"
+            class="app-form-control"
+            id="inpIbu"
+            v-model="ibu"
+            placeholder="Ibu"
+            @input="formattedIbu(event)"
+          />
+          <label for="inpIbu" class="app-form-label position-absolute"
+            >Ibu(целое число)</label
+          >
+        </div>
+        
+        
+        <div class="mb-5 position-relative">
+          <label for="descript" style="width: 100%"
+            >Введите краткое описание</label
+          >
+          <textarea
+            type="text"
+            id="descript"
+            name="descript"
+            v-model="description"
+            style="width: 100%"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <button
+      type="submit"
+      class="btn btn-warning text-white d-block m-auto rounded rounded-5"
+      style="width: 270px"
+    >
+      Отправить
+    </button>
+  </form>
+</template>
 <style scoped>
 .label-for-select {
   position: absolute;

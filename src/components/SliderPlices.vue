@@ -22,8 +22,14 @@
     >
       <div class="text-center text-capitalize mb-4">{{ slide.name }}</div>
       <!-- <img src="../assets/images/news1.jpg" class="rounded rounded-4" alt=""> -->
-      <div class="slide-img">
+      <div class="slide-img" v-if="slide.image">
         <img :src="slide.image" class="rounded rounded-4" :alt="slide.name" height="290">
+      </div>
+      <div class="slide-img" v-else>
+        <div class="slide-placeholder">
+          <span style="color:#fff;font-size: 1rem;">No photo</span>
+        </div>
+        <!-- <img :src="slide.image" class="rounded rounded-4" :alt="slide.name" height="290"> -->
       </div>
     </swiper-slide>
      
@@ -66,6 +72,14 @@
 .slide-img img{
   width: 100%;
   object-fit: cover;
+}
+.slide-placeholder {
+  width: 100%;
+  height: 290px;
+  border-radius: 1rem;
+  background-color: #ccc;
+  display: grid;
+  place-content: center;
 }
  </style>
  

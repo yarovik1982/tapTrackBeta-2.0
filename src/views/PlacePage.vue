@@ -13,10 +13,10 @@ getData.BEER_ADBLOCK();
 getData.BREWERY_ADBLOCK();
 
 const placeStore = usePlace();
-console.log(placeStore.dataList);
+// console.log(placeStore.dataList);
 
 const showMoreData = () => {
-  console.log("worked");
+  // console.log("worked");
   getData.loadMorePlaces();
 };
 // const data = ref([

@@ -1,5 +1,6 @@
 <script setup>
 import AdvContent from "@/components/AdvContent.vue";
+import StarRating from "@/components/StarRating.vue";
 import { ref } from "vue";
 import { useGetDataStore } from "@/stores/getData";
 import { useRouter } from "vue-router";
@@ -51,12 +52,17 @@ const handleClick = (beerId) => {
                     <h5 class="card-title">{{ item.name }}</h5>
                     
                   </div>
-                  <p class="card-text">{{ item.city }}</p>
-
+                  <p class="card-text">{{ item.style }}</p>
+                  <p class="card-text">Производитель: {{ item.breweryName }}</p>
+                  <StarRating
+                    :max="6"
+                    :current="item.averageRating"
+                  ></StarRating>
                   <p class="card-text">{{ item.address }}</p>
-                  <p class="card-description">
+                  <p class="card-description card-description-ellipsis">
                     {{ item.description }}
-                  </p>
+                    </p>
+                  <p class="card-text">Всего отзывов: {{ item.totalReviews }}</p>
                   <div class="card-row justify-content-end py-3">
                   <button
                     class="btn btn-outline-warning btn-sm rounded rounded-5 me-2 d-block"

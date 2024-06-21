@@ -12,7 +12,7 @@ const formsStore = useForms();
 
 const router = useRouter();
 const handleClick = (id) => {
-  router.push(`/profile-place-${id}`);
+  router.push(`/profile-place/placeId-${id}`);
 };
 const placeStore = usePlace();
 
@@ -20,7 +20,7 @@ const token = JSON.parse(localStorage.getItem("token"));
 
 const userId = JSON.parse(localStorage.getItem("user"))?.userId;
 placeStore.PLACE_LIST_USER(userId);
-// placeStore.FAKE_PLACE();
+
 
 const openForm = (type) => {
   formsStore.openLayout(type);
@@ -93,7 +93,7 @@ const setFavorite = async (itemId, state) => {
       Добавить точку продаж
     </button>
 
-    <!-- <h4 class="text-center">Places Page</h4> -->
+    
     <div
       class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 card-shadow"
       v-for="item in placeStore.dataList"
@@ -140,14 +140,15 @@ const setFavorite = async (itemId, state) => {
                 Подробнее
               </button>
             </div>
-            <div class="card-row justify-content-center py-3">
+            <!-- <div class="card-row justify-content-center py-3">
               <button
                 class="btn btn-warning btn-sm text-white rounded rounded-5 me-2 d-block position-absolute"
                 style="width: 270px"
+                @click="openForm('addAssortiment')"
               >
                 Ассортимент
               </button>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

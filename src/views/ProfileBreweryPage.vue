@@ -1,6 +1,6 @@
 <script setup>
 // import Rating from "primevue/rating";
-import StarRating from "@/components/StarRating.vue";
+import CardBrewery from '../components/CardBrewery.vue'
 import { useForms } from "@/stores/forms";
 import { useBreweries } from "@/stores/breweries";
 
@@ -11,6 +11,8 @@ const formsStore = useForms();
 const openForm = (type) => {
   formsStore.openLayout(type);
 };
+
+
 </script>
 <template>
   <div class="position-relative">
@@ -21,8 +23,14 @@ const openForm = (type) => {
     >
       Добавить пивоварню
     </button>
+    <CardBrewery 
+      :item="item"
+      v-for="item in breweriesStore.dataList" 
+      :key="item.id"
+      
+    ></CardBrewery>
     <!-- <h4 class="text-center">Brewery Page</h4> -->
-    <div
+    <!-- <div
       class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 card-shadow"
       v-for="item in breweriesStore.dataList"
       :key="item.placeId"
@@ -41,7 +49,6 @@ const openForm = (type) => {
             <h5 class="card-title">{{ item.name }}</h5>
             <div class="d-flex align-items-center">
              <star-rating :max="6" :current="item.averageRating" :size="60"></star-rating>
-              <!-- <span class="ms-2">{{ item.averageRating }}</span> -->
             </div>
             <p class="card-text">{{ item.type }}</p>
 
@@ -49,18 +56,18 @@ const openForm = (type) => {
             <p class="card-description">
               {{ item.description }}
             </p>
-            <!-- <div class="card-row justify-content-center py-3">
+            <div class="card-row justify-content-between py-3">
               <button
-                class="btn btn-warning btn-sm text-white rounded rounded-5 me-2 d-block position-absolute"
-                style="width: 270px"
+                class="btn btn-outline-warning btn-sm rounded-4"
+                @click="handleClick(item)"
               >
-                Ассортимент
+                Подробнее
               </button>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <style scoped></style>

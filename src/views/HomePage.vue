@@ -4,17 +4,17 @@ import Card from "@/components/Card.vue";
 // import Rating from "primevue/rating";
 // import import { defineComponent } from "vue";
 // import vue3starRatings from "vue3-star-ratings";
-import StarRating from '@/components/StarRating.vue'
+import StarRating from "@/components/StarRating.vue";
 import AppOffer from "@/components/AppOffer.vue";
 import SliderPlices from "@/components/SliderPlices.vue";
 import SliderReviews from "@/components/SliderReviews.vue";
 import { useForms } from "@/stores/forms";
 import { ref } from "vue";
 
-const formsStore = useForms()
+const formsStore = useForms();
 const handleClick = (type) => {
-  formsStore.openLayout(type)
-}
+  formsStore.openLayout(type);
+};
 const data = ref([
   {
     id: 0,
@@ -92,7 +92,7 @@ const rating = ref(3.5);
     <h3 class="text-center mx-auto mb-5">
       <span class="section-title text-capitalize position-relative"
         >Популярные места</span
-        >
+      >
     </h3>
     <slider-plices></slider-plices>
   </section>
@@ -137,7 +137,11 @@ const rating = ref(3.5);
                   </div>
                 </div>
               </div>
+              <div class="container-fluid">
+                <div class="row"></div>
+              </div>
             </div>
+            <!--  -->
           </div>
         </div>
       </div>
@@ -163,7 +167,6 @@ const rating = ref(3.5);
   </section>
 </template>
 <style scoped>
-
 .p-rating-item svg {
   width: 24px;
   height: 24px;
