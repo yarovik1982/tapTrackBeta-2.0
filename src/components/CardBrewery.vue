@@ -53,7 +53,7 @@ const handleClick = (item) => {
             <div class="card-row justify-content-between py-3">
               <button
                 class="btn btn-outline-warning btn-sm rounded-4"
-                @click="handleClick(item)"
+                @click="handleClick(props.item)"
               >
                 Подробнее
               </button>

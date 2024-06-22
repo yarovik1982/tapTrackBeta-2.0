@@ -59,7 +59,7 @@ const getItem = (item) => {
             ></BtnReviews>
             <i class="bi bi-qr-code fs-2 position-relative"                      
                         data-title="Сгенерировать QR-код"
-                        @click=" openForm('qr'); getItem(props.beerItem.name)"
+                        @click=" openForm('qr'); getItem(props.beerItem.id)"
                       ></i>
           </div>
         </div>
