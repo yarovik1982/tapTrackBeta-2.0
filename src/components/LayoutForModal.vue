@@ -8,6 +8,7 @@ import FormAddBrewery from '@/components/FormAddBrewery.vue';
 import FormAddAvatar from '@/components/FormAddAvatar.vue';
 import FormCreateFeedback from '@/components/FormCreateFeedback.vue'
 import FormSuccess from '@/components/FormSuccess.vue'
+import FormAddReview from '@/components/FormAddReview.vue'
 // import FormAddAssrtiment from '@/components/FormAddAssortiment.vue'
 import FormQr from '@/components/FormQr.vue';
 import Map from '@/components/Map.vue'
@@ -56,6 +57,8 @@ const currentForm = computed(() => {
       return Map;
     case 'qr':
       return FormQr;
+    case 'addReview':
+      return FormAddReview;
   }
 })
 const closeForm = () => {

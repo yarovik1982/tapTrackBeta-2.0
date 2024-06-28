@@ -3,6 +3,8 @@ import HomePage from '@/views/HomePage.vue'
 import PlacePage from '@/views/PlacePage.vue'
 import BeerPage from '@/views/BeerPage.vue'
 import BreweryPage from '@/views/BreweryPage.vue'
+import BeerDetails from '@/views/BeerDetails.vue'
+import BeerReviews from '@/views/BeerReviewsPage.vue'
 // import { useUserAuth } from '@/stores/user-auth'
 // import { storeToRefs } from 'pinia'
 // import TestPage from '@/views/TestPage.vue'
@@ -22,12 +24,6 @@ import BreweryPage from '@/views/BreweryPage.vue'
       // component:() => import('@/views/PlacePage.vue')
       component:PlacePage
     },
-    // {
-    //   path:'/test',
-    //   name:'test',
-    //   // component:() => import('@/views/TestPage.vue')
-    //   component:TestPage
-    // },
     {
       path:'/beer',
       name:'beer',
@@ -35,9 +31,18 @@ import BreweryPage from '@/views/BreweryPage.vue'
       component:BeerPage
     },
     {
+      path:'/:breweryName/:beerName_:id',
+      name: BeerDetails,
+      component: BeerDetails
+    },
+    {
+      path:'/beer/reviews',
+      name: BeerReviews,
+      component: BeerReviews
+    },
+    {
       path:'/brewery',
       name:'brewery',
-      // component:() => import('@/views/BreweryPage.vue')
       component:BreweryPage
     },
     {
@@ -87,11 +92,7 @@ import BreweryPage from '@/views/BreweryPage.vue'
       name:'404',
       component: () => import('@/views/404Page.vue')
     },
-    // {
-    //   path:'/beer/:id',
-    //   name:'place-id',
-    //   component:() => import('@/views/ElementIdPage.vue')
-    // },
+   
     {
       path:'/search',
       name:'search',

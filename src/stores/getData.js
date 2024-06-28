@@ -1,9 +1,8 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import { BASE_URL } from "@/constants/url";
 import axios from "axios";
-import { useRouter } from "vue-router";
 
-const router = useRouter()
+
 
 export const useGetDataStore = defineStore("getData", {
   state: () => ({
@@ -47,8 +46,6 @@ export const useGetDataStore = defineStore("getData", {
         }
       } catch (error) {
         console.error("Error in PLACE_LIST:", error);
-        // Выполняем редирект на '/404' в блоке catch
-        // router.push('/404');
       }
     },
     

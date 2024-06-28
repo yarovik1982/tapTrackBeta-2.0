@@ -1,18 +1,18 @@
 <script setup>
 const props = defineProps({
-   id:{type:Number, required:true},
-   reviews:{type:Number, required:false}
+   item:{type:Object, required:true},
+   
 })
-const emits = defineEmits(['open-reviews'])
+const emits = defineEmits(['show-reviews'])
 
-const openReviews = (id) => {
-   emits('open-reviews', id)
+const showReviews = () => {
+   emits('show-reviews')
 }
 </script>
 <template>
   
-    <button class="btn btn-outline-warning" @click="openReviews(props.id)">
-      Всего отзывов: {{ props.reviews }}
+    <button class="btn btn-outline-warning" @click="showReviews">
+      <slot></slot>
     </button>
   
 </template>

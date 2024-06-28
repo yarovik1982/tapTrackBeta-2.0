@@ -1,46 +1,92 @@
 <script setup>
-// import FavoriteIcon from '@/components/UI/FavoriteIcon.vue'
-
+import { useRouter } from 'vue-router';
+import StarRating from '@/components/StarRating.vue';
+import AppButton from '@/components/UI/AppButton.vue'
+import { useForms } from '@/stores/forms';
 const props = defineProps({
-  item:{
-    type:Object,
-    required:true,
-  }
+  cardType:{type:String, default:''},
+  item:{type:Object, required:true},
+  showStarRating:{type:Boolean, default:false},
 })
+
+const emits = defineEmits(['show-details'])
+
+const showDetails = () => {
+  emits('show-details')
+}
+
+const router = useRouter()
+const currRouter = router.currentRoute.value.path
+
+const formsStore = useForms()
+
+const openForm = (type) => {
+  formsStore.openLayout(type)
+}
+
+
 </script>
 <template>
-  <div class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 box-shadow" >
-    <div class="row g-0 align-items-center">
-      <div class="col-md-4 p-3">
-        <img :src="item.image" class="img-fluid rounded rounded-4" width="250" height="300" :alt="item.name" />
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <h5 class="card-title">{{item.name}}</h5>
-            <slot name="favoriteIcon">
-              <!-- <favorite-icon></favorite-icon> -->
-            </slot>
+    <div
+      class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 card-shadow">
+      <div class="row g-0 align-items-center">
+        <div class="col-4 p-3">
+          <img
+            v-if="item.image"
+            :src="item.image"
+            class="img-fluid rounded-4"
+            :alt="item.name"
+            style="width: 250px; height: 300px"
+          />
+          <div class="img-placeholder rounded-4" v-else>
+            <span>No photo</span>
           </div>
-          <div class="card-text">{{ item.city }}</div>
-          <slot name="rating"></slot>
-          <slot name="placeType"></slot>
-         <!-- <p class="card-text">{{ item.type }}</p> -->
-          <p class="card-text card-description">
-            {{item.description}}
-          </p>
-          <p class="card-text">
-            <small class="text-body-secondary"
-              >Последнее обновление 3 мин. назад</small
-            >
-          </p>
         </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name }}</h5>
+            <div class="d-flex align-items-center">
+             <star-rating :max="6" :current="item.averageRating" :size="60" v-if="showStarRating"></star-rating>
+            </div>
+            <p class="card-text">Производитель: {{ item.breweryName }}</p>
+            <p class="card-text" >{{ item.type }}</p>
+
+            <p class="card-text">{{ item.style }}</p>
+            <p class='card-description card-description-ellipsis'>
+              {{ item.description }}
+            </p>
+            <p class="card-text">Всего отзывов {{ item.totalReviews }}</p>
+            <div class="card-row justify-content-between py-3">
+             <AppButton
+              v-if="currRouter.includes('/beer')"
+              id="details"
+              :item="item"
+              :btn-class="'btn btn-outline-warning btn-sm rounded-5'"
+              @on-click="showDetails"
+             >Details</AppButton>
+             <AppButton 
+              v-else
+              id="addReview"
+              :item="item"
+              :btn-class="'btn btn-outline-warning btn-sm rounded-5'"
+              @on-click="openForm('addReview')"
+            >Добавить отзыв</AppButton>
+            </div>
+          </div>
+        </div>
+        <slot></slot>
       </div>
     </div>
-  </div>
 </template>
-<style scoped>
-.box-shadow{
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 20px 0px;
+<style scoped >
+.img-placeholder{
+  width: 250px;
+  height: 300px;
+  display: grid;
+  place-content: center;
+  background: #ccc;
+}
+.img-placeholder{
+  color:blueviolet;
 }
 </style>

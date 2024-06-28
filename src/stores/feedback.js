@@ -4,6 +4,9 @@ import axios from 'axios'
 
 export const useFeedbackStore = defineStore('feedback', {
  state: () => ({
+    limit:45,
+    offset:0,
+    currentId:null,
    feedbackListMain:[
       {
          "id": 252,
@@ -145,10 +148,16 @@ export const useFeedbackStore = defineStore('feedback', {
          "imageBeer": "http://109.201.96.70:8081/api/beer/images/08_09_2023_06_38_11_36999c7f7f316f72298ef8f1d31dbb47.jpeg",
          "dateFeedback": "16.09.2023"
      }
-   ]
+   ],
+   feedbackListBeer:[]
  }),
- getters: {},
+ getters: {
+    getFeedbackListBeer:(state) => state.feedbackListBeer
+ },
  actions: {
+    setCurrentId(id){
+        this.currentId = id
+    },
    async _FEEDBACK_LIST_MAIN(){
       const response = await axios.get(`${BASE_URL}/feedback/list/main`,{
          headers:{
@@ -156,6 +165,28 @@ export const useFeedbackStore = defineStore('feedback', {
          }
       })
       this.feedbackListMain = [...this.feedbackListMain, ...response.data]
+   },
+
+   async _FEEDBACK_LIST_BEER(beerId){
+    try{
+        const response = await axios.get(`${BASE_URL}/feedback/list/beer?id=${beerId}&limit=${this.limit}&offset=${this.offset}`, {
+            headers:{
+                'Content-Type':'application/json'
+            },
+            // params:{
+            //     id:this.currentId,
+            //     limit:this.limit,
+            //     offset:this.offset
+            // }
+        })
+        if(response.status === 200){
+            this.feedbackListBeer = response.data
+            console.log(response.data);
+            return response.data
+        }
+    }catch(error) {
+        console.log(error);
+    }
    }
  },
 })

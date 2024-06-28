@@ -10,11 +10,11 @@ const props = defineProps({
               <div class="row g-0 ">
                 <div class="col-2 p-2">
                   <img 
-                    :src="props.review.imageUser" 
+                    :src="review.imageUser" 
                     :alt="review.userName" 
                     style="width: 100%;aspect-ratio: 1;" 
                     class="rounded-circle"
-                    v-if="props.review.imageUser"
+                    v-if="review.imageUser"
                   />
                   <div class="img-placeholder" v-else>
                     <span class="placeholder-text">No photo</span>
@@ -22,22 +22,22 @@ const props = defineProps({
                 </div>
                 <div class="col-8 p-2">
                   <div class="card-description mb-3">
-                    <strong>{{props. review.userName }} </strong>
+                    <strong>{{review.userName }} </strong>
                     оставил отзыв о
-                    <strong> {{ props.review.beerName }}</strong>
+                    <strong> {{ review.beerName }}</strong>
                     сваренном в 
-                    <strong> {{ props.review.breweryName }}</strong>
+                    <strong> {{ review.breweryName }}</strong>
                     <hr>
-                    <p class="card-text">{{ props.review.feedbackText }}</p>
+                    <p class="card-text">{{ review.feedbackText }}</p>
                   </div>
-                  <img :src="props.review.imageFeedback" :alt="props.review.id" style="width: 100%;aspect-ratio: 1/0.6;" class="rounded-3" v-if="props.review.imageFeedback">
+                  <img :src="review.imageFeedback" :alt="props.review.id" style="width: 100%;aspect-ratio: 1/0.6;" class="rounded-3" v-if="review.imageFeedback">
                   <div 
                     v-else
                     style="width: 100%;aspect-ratio: 1/0.6;background: #ccc; display: flex;justify-content: center; align-items: center; color: #fff;" 
                     class="rounded-3 fs-2"
                   >no photo</div>
                   <div class="d-flex align-items-center justify-content-between mt-3">
-                    <small>{{ props.review.dateFeedback }}</small>
+                    <small>{{ review.dateFeedback }}</small>
                     <StarRating
                       :max="6"
                       :current="props.review.rating"
@@ -47,7 +47,7 @@ const props = defineProps({
                   </div>
                 </div>
                 <div class="col-2 p-2">
-                  <img :src="props.review.imageBeer" :alt="props.review.beerId" style="width: 100%;aspect-ratio: 1;" class="rounded-3">
+                  <img :src="review.imageBeer" :alt="review.beerId" style="width: 100%;aspect-ratio: 1;" class="rounded-3">
                 </div>
               </div>
             </div>

@@ -1,10 +1,12 @@
 <script setup>
 import AdvContent from "@/components/AdvContent.vue";
-import StarRating from "@/components/StarRating.vue";
+import Card from "@/components/Card.vue";
 import { ref } from "vue";
 import { useGetDataStore } from "@/stores/getData";
 import { useRouter } from "vue-router";
-import { useAppStore } from "@/stores/app";
+import { decompositionLink } from "@/functions/decompositionLink";
+
+const router = useRouter()
 
 const getData = useGetDataStore()
 getData.BEER_LIST()
@@ -17,12 +19,11 @@ const showMoreData = () => {
   getData.BEER_LIST()
 }
 
-const appStore = useAppStore()
-const router = useRouter()
-const handleClick = (beerId) => {
-  appStore.setCurrentBeer(beerId)
-  router.push(`/element-${beerId}`)
+const showDetails = (item) => {
+  const {id, breweryName, beerName} = decompositionLink(item.link)
+  router.push(`/${breweryName}/${beerName}_${id}`)
 }
+
 </script>
 <template>
     <div>
@@ -30,52 +31,14 @@ const handleClick = (beerId) => {
       <div class="container-fluid">
       <div class="row">
         <div class="col-8 px-1">
-          <div
-            class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 card-shadow"
+          <Card
+            :item="item"
+            :showStarRating="true"
             v-for="item in getData.beerList"
             :key="item.id"
-          >
-            <div class="row g-0 align-items-center">
-              <div class="col-4 p-3">
-                <img
-                  :src="item.image"
-                  class="img-fluid rounded-4"
-                  :alt="item.name"
-                  style="width: 250px; height: 300px"
-                />
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <div
-                    class="d-flex align-items-center justify-content-between"
-                  >
-                    <h5 class="card-title">{{ item.name }}</h5>
-                    
-                  </div>
-                  <p class="card-text">{{ item.style }}</p>
-                  <p class="card-text">Производитель: {{ item.breweryName }}</p>
-                  <StarRating
-                    :max="6"
-                    :current="item.averageRating"
-                  ></StarRating>
-                  <p class="card-text">{{ item.address }}</p>
-                  <p class="card-description card-description-ellipsis">
-                    {{ item.description }}
-                    </p>
-                  <p class="card-text">Всего отзывов: {{ item.totalReviews }}</p>
-                  <div class="card-row justify-content-end py-3">
-                  <button
-                    class="btn btn-outline-warning btn-sm rounded rounded-5 me-2 d-block"
-                    @click="handleClick(item.id)"
-                  >
-                    Подробнее
-                  </button>
-                </div>
-                </div>
-              </div>
-            </div>
-            
-          </div>
+            @show-details="showDetails(item)"
+          ></Card>
+          
           <button
             class="btn btn-warning btn-sm text-white rounded rounded-5 m-auto d-block"
             style="width: 270px"

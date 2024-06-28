@@ -13,6 +13,7 @@ export const useBeerStore = defineStore('beer', {
    offset:0,
    beerList:[],
    beerListBrewery:[],
+   beerItem:{},
 
  }),
  getters: {
@@ -21,7 +22,8 @@ export const useBeerStore = defineStore('beer', {
    },
    getBeerListBrewery:(state) => {
       return state.beerListBrewery
-   }
+   },
+   getBeerItem:(state) => state.beerItem
  },
  actions: {
    async _BEER_PLACE(id){
@@ -75,8 +77,25 @@ export const useBeerStore = defineStore('beer', {
          console.error("Error making request:", error.status, error.response?.data);
          throw error; // Перебрасываем ошибку наверх
        }
+   },
+
+   async _BEER_PROFILE(beerId){
+      try{
+         const response = await axios.get(`${BASE_URL}/beer/profile/${beerId}`, {
+            headers:{
+               "Content-Type": 'application/json' 
+            }
+         })
+      if(response.status === 200){
+         this.beerItem = response.data
+         return response.data
+      }
+      }catch(error){
+         console.log("Ошибка получения данных", response.error);
+      }
    }
  },
+
 })
 
 if (import.meta.hot) {

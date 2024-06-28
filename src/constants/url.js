@@ -14,4 +14,4 @@ function replaceEmpty (str){
    return url + '/' + breweryChank + '/' + beerChank
 } 
 
-console.log(generateLink({ name: 'Степь и ветер' }, { name: 'гроза и тучи в Москве' }));
+// console.log(generateLink({ name: 'Степь и ветер' }, { name: 'гроза и тучи в Москве' }));
