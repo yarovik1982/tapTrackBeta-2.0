@@ -29,8 +29,13 @@ onMounted(async () => {
   <div class="container-fluid px-5">
     <h3 class="text-center">Детализация пива: {{ beerId }}</h3>
     <Card :item="beerItem" :showStarRating="true"></Card>
-    <h3 class="text-center" v-if="feedbackList" >Отзывы {{ beerItem.name }}</h3>
-    <CardReview :review="review" v-for="(review, ind) in feedbackList" :key="ind"></CardReview>
+    <h3 class="text-center" v-if="feedbackList.length > 0" >Отзывы: {{ beerItem.name }}</h3>
+    <CardReview
+     :review="review" 
+     v-for="(review, ind) in feedbackList" 
+     :key="ind"
+     
+     ></CardReview>
   </div>
 </template>
 
