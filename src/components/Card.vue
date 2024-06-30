@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router';
 import StarRating from '@/components/StarRating.vue';
 import AppButton from '@/components/UI/AppButton.vue'
 import { useForms } from '@/stores/forms';
+import { useFeedbackStore } from '@/stores/feedback';
 const props = defineProps({
   cardType:{type:String, default:''},
   item:{type:Object, required:true},
@@ -15,6 +16,8 @@ const showDetails = () => {
   emits('show-details')
 }
 
+
+const feedback = useFeedbackStore()
 const router = useRouter()
 const currRouter = router.currentRoute.value.path
 
@@ -69,7 +72,7 @@ const openForm = (type) => {
               id="addReview"
               :item="item"
               :btn-class="'btn btn-outline-warning btn-sm rounded-5'"
-              @on-click="openForm('addReview')"
+              @on-click="openForm('createFeedback')"
             >Добавить отзыв</AppButton>
             </div>
           </div>

@@ -2,6 +2,8 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 import { BASE_URL } from '@/constants/url'
 import axios from 'axios'
 
+
+const token = JSON.parse(localStorage.getItem('token'))
 export const useFeedbackStore = defineStore('feedback', {
  state: () => ({
     limit:45,
@@ -152,7 +154,8 @@ export const useFeedbackStore = defineStore('feedback', {
    feedbackListBeer:[]
  }),
  getters: {
-    getFeedbackListBeer:(state) => state.feedbackListBeer
+    getFeedbackListBeer:(state) => state.feedbackListBeer,
+    getCurrentId: state => state.currentId
  },
  actions: {
     setCurrentId(id){
@@ -187,7 +190,25 @@ export const useFeedbackStore = defineStore('feedback', {
     }catch(error) {
         console.log(error);
     }
-   }
+   },
+
+   async _FEEDBACK_CREATE(data,params){
+    try {
+        const headers = data instanceof FormData
+          ? { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${token}` }
+          : { "Content-Type": "application/json", "Authorization": `Bearer ${token}` };
+    
+        const response = await axios.post(`${BASE_URL}/feedback/create`, data, {
+          headers,
+          params
+        });
+    
+        return response.data; // Возвращаем данные из ответа
+      } catch (error) {
+        console.error("Error making request:", error.status, error.response?.data);
+        throw error; // Перебрасываем ошибку наверх
+      }
+   },
  },
 })
 
