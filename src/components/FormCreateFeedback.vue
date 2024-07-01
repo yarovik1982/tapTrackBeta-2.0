@@ -96,6 +96,7 @@ const createFeedback = async () => {
   await feedback._FEEDBACK_CREATE(formData, params)
   await forms.closeLayout()
   await feedback._FEEDBACK_LIST_BEER(beerId.value)
+  window.location.reload()
 };
 </script>
 <template>
@@ -146,7 +147,7 @@ const createFeedback = async () => {
     
     <div class="mb-3">
       <label for="exampleFormControlTextarea1" class="form-label"
-        >Пример текстового поля</label
+        >Текст отзыва</label
       >
       <textarea
         class="form-control"

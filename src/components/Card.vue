@@ -16,7 +16,7 @@ const showDetails = () => {
   emits('show-details')
 }
 
-
+const auth = JSON.parse(localStorage.getItem('user'))
 const feedback = useFeedbackStore()
 const router = useRouter()
 const currRouter = router.currentRoute.value.path
@@ -24,7 +24,11 @@ const currRouter = router.currentRoute.value.path
 const formsStore = useForms()
 
 const openForm = (type) => {
-  formsStore.openLayout(type)
+  if(!auth){
+    formsStore.openLayout('login')
+  }else{
+    formsStore.openLayout(type)
+  }
 }
 
 

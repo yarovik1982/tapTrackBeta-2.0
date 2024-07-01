@@ -3,8 +3,8 @@ import StarRating from "@/components/StarRating.vue";
 import { useRoute } from "vue-router";
 import { usePlace } from "@/stores/place";
 import { useForms } from "@/stores/forms";
-import { ref } from "vue";
-import QRCode from "qrcode";
+// import { ref } from "vue";
+// import QRCode from "qrcode";
 import { useBeerStore } from "@/stores/beer";
 import { useReviewsStore } from "@/stores/reviews";
 
@@ -18,9 +18,9 @@ const handleClick = (type) => {
   formsStore.openLayout(type);
 };
 
-const createQr = (beer) => {
-  console.log(beer.name);
-};
+// const createQr = (beer) => {
+//   console.log(beer.name);
+// };
 
 const beer = useBeerStore();
 beer._BEER_PLACE(placeId);
