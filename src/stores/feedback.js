@@ -184,7 +184,6 @@ export const useFeedbackStore = defineStore('feedback', {
         })
         if(response.status === 200){
             this.feedbackListBeer = response.data
-            console.log(response.data);
             return response.data
         }
     }catch(error) {

@@ -8,10 +8,10 @@
    -moz-transition: box-shadow 0.3s linear, border 0.3s linear;
    -ms-transition: box-shadow 0.3s linear, border 0.3s linear;
    -o-transition: box-shadow 0.3s linear, border 0.3s linear;
+   /* max-height: 200px; */
 }
  .card-description-ellipsis{
    /* height: fit-content; */
-   max-height: 200px;
    -webkit-box-orient: vertical;
    display: block;
    display: -webkit-box;

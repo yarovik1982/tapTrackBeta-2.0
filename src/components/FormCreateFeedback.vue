@@ -72,7 +72,7 @@ const currRouter = router.currentRoute.value.fullPath
 const beerId = ref(getIdAtLink(currRouter))
 const userId = JSON.parse(localStorage.getItem('user')).userId
 const rating = ref(0)
-console.log(beerId.value, userId);
+console.log(forms.getCurrId);
 const feedbackText = ref('')
 
 const createFeedback = async () => {  
@@ -88,7 +88,7 @@ const createFeedback = async () => {
   }
 
     const params = {
-      beerId: beerId.value,
+      beerId: forms.getCurrId,
       feedbackText: replaceQuotes(feedbackText.value),
       rating:rating.value,
       userId:userId

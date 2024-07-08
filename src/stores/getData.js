@@ -24,6 +24,9 @@ export const useGetDataStore = defineStore("getData", {
     breweryAdvList: [],
     error:null,
   }),
+  getters:{
+    getBeerAdvList:state => state.beerAdvList,
+  },
   actions: {
     async PLACE_LIST() {
       try {

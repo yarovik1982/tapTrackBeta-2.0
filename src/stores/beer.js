@@ -14,16 +14,17 @@ export const useBeerStore = defineStore('beer', {
    beerList:[],
    beerListBrewery:[],
    beerItem:{},
+   beerAddList:[],
 
  }),
  getters: {
-   getBeerPlace:(state) => {
-      return state.beerList
-   },
-   getBeerListBrewery:(state) => {
-      return state.beerListBrewery
-   },
-   getBeerItem:(state) => state.beerItem
+   getBeerPlace:(state) => {return state.beerList},
+   // @-------------------------------------------
+   getBeerListBrewery:(state) => {return state.beerListBrewery},
+   // @-------------------------------------------
+   getBeerItem:(state) => state.beerItem,
+   //@------------------------------------------- 
+   getBeerAddList:state => state.beerAddList,
  },
  actions: {
    async _BEER_PLACE(id){
@@ -93,6 +94,16 @@ export const useBeerStore = defineStore('beer', {
       }catch(error){
          console.log("Ошибка получения данных", response.error);
       }
+   },
+
+   async _BEER_ADDBLOCK(){
+      try{
+         const response = await axios.get(`${BASE_URL}/beer/addblock`)
+         if(response.status === 200){
+            this.beerAddList = response.data
+            return response.data
+         }
+      }catch(error){}
    }
  },
 

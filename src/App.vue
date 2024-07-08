@@ -40,6 +40,7 @@ const scrollTo = () => {
     <LayoutForAge @set-confirm="setConfirm">
     </LayoutForAge>
   </Teleport>
+  <LayoutForModal v-if="formsStore.getFormLoginActive"></LayoutForModal>
   <LayoutForModal 
     
   ></LayoutForModal>

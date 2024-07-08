@@ -35,4 +35,8 @@ console.log(typeof id);
  let number = 300;       
  let pos = number + 'px'                                
 //  div.style.top = pos                           
- console.log(pos);                                 
+ console.log(pos);          
+ 
+//  const getIdAtLink
+//  const funcion reduce container element class block box main header success error lower case filter sort slice replace includes
+//  container flex item element function class placeholder input button div warning praimary justify content center end map document query selector fragment figure picrure image folder file margin padding info danger sucessfull toaster notification revolution animatiom 
