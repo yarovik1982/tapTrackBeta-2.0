@@ -1,0 +1,10 @@
+services:
+  app:
+    image: beer-front-app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: beer-front-app
+    ports:
+      - "8080:8080"
+    restart: always
