@@ -4,6 +4,7 @@ import Card from '@/components/Card.vue';
 import AppOffer from "@/components/AppOffer.vue";
 import SliderPlices from "@/components/SliderPlices.vue";
 import SliderReviews from '@/components/SliderReviews.vue'
+// import { usePlaceStoreStore } from '@/stores/placeStore';
 import { ref } from 'vue';
 const emits = defineEmits(["open-form"]);
 const showForm = (type) => {
@@ -40,6 +41,7 @@ const data = ref([
   }
 ])
 const ratingValue = ref(0)
+
 </script>
 
 <template>
@@ -80,14 +82,9 @@ const ratingValue = ref(0)
     </div>
   </section>
 
-  <section id="slider" class="mb-5">
-    <h3 class="text-center mx-auto mb-5">
-      <span class="section-title text-capitalize position-relative"
-        >Популярные места</span
-      >
-    </h3>
-    <slider-plices></slider-plices>
-  </section>
+  
+    <slider-plices ></slider-plices>
+  
 
   <section id="novelties" class="mb-5">
     <h5 class="text-center mx-auto mb-5 ">

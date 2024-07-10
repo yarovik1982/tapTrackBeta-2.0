@@ -2,8 +2,8 @@
 import MainContent from '@/components/MainContent.vue'
 import AdvContent from '@/components/AdvContent.vue';
 import { ref } from 'vue'
-import { usePlaces } from '@/stores/getPlaces';
-import { storeToRefs } from 'pinia';
+// import { usePlaces } from '@/stores/getPlaces';
+// import { storeToRefs } from 'pinia';
 
 // const emits = defineEmits(['emit-layout'])
 // const toggleLayout = () => {

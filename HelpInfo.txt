@@ -50,6 +50,12 @@ http://taptrack.ru:7777/
 http://109.201.96.70:8081/api/swagger-ui/index.html#/
 http://192.168.1.105:7777/login
 
+comands for doker
+docker build -t vue-vite-app .
+docker run -it -p 8080:8080 vue-vite-app
+docker compose up
+
+
 
 
 

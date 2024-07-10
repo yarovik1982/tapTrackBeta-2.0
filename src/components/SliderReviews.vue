@@ -64,7 +64,15 @@
          {id:10, 'image':"src/assets/images/news2.jpg",'text': 'Отзыв'},
          {id:11, 'image':"src/assets/images/news3.jpg",'text': 'Отзыв'},
          {id:12, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
-      ])
+         {id:13, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
+         {id:14, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
+         {id:15, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
+         {id:16, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
+         {id:17, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
+         {id:18, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
+         {id:19, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
+         {id:20, 'image':"src/assets/images/news4.jpg",'text': 'Отзыв'},
+        ])
      return {
        modules: [Autoplay, EffectCoverflow],
        data
