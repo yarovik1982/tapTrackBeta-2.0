@@ -1,30 +1,30 @@
 <script setup>
 import {onMounted, onUnmounted, ref } from 'vue';
-import { AvatarEditor } from "avatar-editor";
-import "avatar-editor/dist/style.css";
+// import { AvatarEditor } from "avatar-editor";
+// import "avatar-editor/dist/style.css";
 
-const scaleVal = ref(1);
-const scaleStep = 0.02;
-const scaleMin = 1;
-const scaleMax = 3;
+// const scaleVal = ref(1);
+// const scaleStep = 0.02;
+// const scaleMin = 1;
+// const scaleMax = 3;
 
-const avatarEditorRef = ref(null);
+// const avatarEditorRef = ref(null);
 
-const onImageReady = (scale) => {
-  scaleVal.value = scale;
-};
+// const onImageReady = (scale) => {
+//   scaleVal.value = scale;
+// };
 
-const handleWheelEvent = (e) => {
-  if (e.deltaY > 0 && scaleVal.value - scaleStep >= scaleMin) {
-    // Down
-    scaleVal.value -= scaleStep;
-  } else {
-    // Up
-    if (scaleVal.value + scaleStep <= scaleMax) {
-      scaleVal.value += scaleStep;
-    }
-  }
-};
+// const handleWheelEvent = (e) => {
+//   if (e.deltaY > 0 && scaleVal.value - scaleStep >= scaleMin) {
+//     // Down
+//     scaleVal.value -= scaleStep;
+//   } else {
+//     // Up
+//     if (scaleVal.value + scaleStep <= scaleMax) {
+//       scaleVal.value += scaleStep;
+//     }
+//   }
+// };
 
 // const save = () => {
 //   if (avatarEditorRef.value) {
@@ -33,37 +33,37 @@ const handleWheelEvent = (e) => {
 //     console.log(img);
 //   }
 // };
-const save = () => {
-  if (avatarEditorRef.value) {
-    const canvasData = avatarEditorRef.value.getImageScaled();
-    const blob = canvasData.toBlob((blob) => {
-      // Создаем объект URL для загрузки изображения
-      const url = URL.createObjectURL(blob);
+// const save = () => {
+//   if (avatarEditorRef.value) {
+//     const canvasData = avatarEditorRef.value.getImageScaled();
+//     const blob = canvasData.toBlob((blob) => {
+//       // Создаем объект URL для загрузки изображения
+//       const url = URL.createObjectURL(blob);
 
-      // Создаем ссылку для загрузки изображения
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'image.png'; // Имя файла для загрузки
+//       // Создаем ссылку для загрузки изображения
+//       const link = document.createElement('a');
+//       link.href = url;
+//       link.download = 'image.png'; // Имя файла для загрузки
 
-      // Добавляем ссылку на страницу и симулируем клик по ней
-      document.body.appendChild(link);
-      link.click();
+//       // Добавляем ссылку на страницу и симулируем клик по ней
+//       document.body.appendChild(link);
+//       link.click();
 
-      // Удаляем ссылку после загрузки
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    }, 'image/png', 0.8); // Формат и качество изображения
-  }
-};
+//       // Удаляем ссылку после загрузки
+//       document.body.removeChild(link);
+//       URL.revokeObjectURL(url);
+//     }, 'image/png', 0.8); // Формат и качество изображения
+//   }
+// };
 
 
-onMounted(() => {
-  document.addEventListener("wheel", handleWheelEvent);
-});
+// onMounted(() => {
+//   document.addEventListener("wheel", handleWheelEvent);
+// });
 
-onUnmounted(() => {
-  document.removeEventListener("wheel", handleWheelEvent);
-});
+// onUnmounted(() => {
+//   document.removeEventListener("wheel", handleWheelEvent);
+// });
 
 const emits = defineEmits(['close-form'])
 const closeForm = () => {
@@ -89,7 +89,7 @@ const placeName = ref('')
       grid-gap: 50px;
     "
   >
-    <avatar-editor
+    <!-- <avatar-editor
       :width="250"
       :height="250"
       ref="avatarEditorRef"
@@ -103,7 +103,7 @@ const placeName = ref('')
       :step="scaleStep"
       v-model="scaleVal"
     />
-    <button @click.prevent="save">Save</button>
+    <button @click.prevent="save">Save</button> -->
   </div>
       </div>
       <div class="col py-3">
