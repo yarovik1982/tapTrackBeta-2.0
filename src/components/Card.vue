@@ -1,22 +1,33 @@
 <script setup>
-import FavoriteIcon from '../components/UI/FavoriteIcon.vue'
+import FavoriteIcon from '@/components/UI/FavoriteIcon.vue'
+
+const props = defineProps({
+  item:{
+    type:Object,
+    required:true,
+  }
+})
 </script>
 <template>
-  <div class="card mb-3 border-2 border-warning bg-opacity-50 bg-white">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img src="..." class="img-fluid rounded-start" alt="..." />
+  <div class="card mb-4 border-warning border-2 rounded rounded-4 bg-white bg-opacity-50 box-shadow" >
+    <div class="row g-0 align-items-center">
+      <div class="col-md-4 p-3">
+        <img :src="item.image" class="img-fluid rounded rounded-4" width="250" height="300" :alt="item.name" />
       </div>
       <div class="col-md-8">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Заголовок карточки</h5>
-            <favorite-icon></favorite-icon>
+            <h5 class="card-title">{{item.name}}</h5>
+            <slot name="favoriteIcon">
+              <!-- <favorite-icon></favorite-icon> -->
+            </slot>
           </div>
-          <p class="card-text">
-            Это более широкая карточка с вспомогательным текстом ниже в качестве
-            естественного перехода к дополнительному контенту. Этот контент
-            немного длиннее.
+          <div class="card-text">{{ item.city }}</div>
+          <slot name="rating"></slot>
+          <slot name="placeType"></slot>
+         <!-- <p class="card-text">{{ item.type }}</p> -->
+          <p class="card-text card-description">
+            {{item.description}}
           </p>
           <p class="card-text">
             <small class="text-body-secondary"
@@ -28,4 +39,8 @@ import FavoriteIcon from '../components/UI/FavoriteIcon.vue'
     </div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.box-shadow{
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 20px 0px;
+}
+</style>

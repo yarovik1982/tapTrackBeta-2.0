@@ -1,8 +1,13 @@
 @import './base.css';
 
 body{
-  background-image:linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,.7)) ,url(../assets/images/Layer1.svg);
+  /* background-image:linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,.7)) ,url(../assets/images/Layer1.svg); */
   background-attachment: fixed;
+  min-width: 1200px;
+}
+body.unScroll{
+  padding-right: 21px;
+  overflow: hidden;
 }
 a{
   text-decoration: none;
@@ -22,6 +27,89 @@ a{
   padding-top: 130px;
   border:1px solid #000
 }
-#mainContent{
-  padding-top: 130px;
+
+.layout{
+  background-image: linear-gradient(rgba(0,0,0, .3), rgba(0,0,0,.3 ));
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 50px;
+}
+.custom-form {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  width: 25%;
+  min-width: 560px;
+  background-color: #fff;
+  padding: 1rem;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  animation-name: isShow;
+  animation-duration: .5s;
+  animation-timing-function: ease;
+}
+.bookmark {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  position: relative;
+  top: 0;
+  right: 0;
+}
+.custom-form.show{
+  animation-name: isShow;
+  animation-duration: .5s;
+  animation-timing-function: ease;
+}
+@keyframes isShow{
+  from{top:-100% ;}
+  to{top: 50px;}
+}
+.adv-row:not(:last-child){
+  margin-bottom: 0.5rem;
+}
+.title {
+  text-align: start;
+  margin-left: -80px;
+  font-weight: bold;
+  margin-top: 60px;
+  margin-bottom: 66px;
+  font-size: 40px;
+  letter-spacing: 3px;
+  position: relative;
+}
+.title::before {
+  position: absolute;
+  content: "";
+  width: 209px;
+  height: 6px;
+  background-color: #fbcc04;
+  top: 100px;
+  left: 0;
+}
+.card-description {
+  padding: 8px;
+  max-height: 200px;
+  transition: box-shadow 0.3s linear;
+  overflow-y: auto;
+  box-shadow: 0 0 1px 1px #ffc107;
+  border-radius: 8px;
+}
+.card-description:hover {
+  box-shadow: 0 0 20px 1px rgba(0,0,0,.5);
+  cursor: ns-resize;
+}
+input:-webkit-autofill {
+  transition: all 5000s ease-in-out 0s;
 }

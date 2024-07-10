@@ -1,6 +1,8 @@
 # tap-track_beta-2-0
 
-This template should help get you started developing with Vue 3 in Vite.
+## Наша команда
+Автор и идейный вдохновитель проекта Николай Елсуков (бэкенд)
+Яровиков Олег (фронтенд)
 
 ## Recommended IDE Setup
 

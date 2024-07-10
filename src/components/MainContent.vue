@@ -1,25 +1,32 @@
 <script setup>
 import Card from "@/components/Card.vue";
+import FavoriteIcon from "@/components/UI/FavoriteIcon.vue";
+import { RouterView } from "vue-router";
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 const props = defineProps({
-  title: String,
+  list:{
+    type:Array,
+    required:true
+  }
 });
 </script>
 <template>
-  <main id="mainContent">
-    <h3 class="text-center text-capitalize">{{ title }}</h3>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-8 px-1">
-         <Card></Card>
-         <Card></Card>
-         <Card></Card>
-         <Card></Card>
-        </div>
-        <div class="col-4 px-1">
-          <div class="border border-2 border-warning py-5"></div>
-        </div>
-      </div>
-    </div>
-  </main>
+  <Card :item="item" v-for="item in list " :key="item.title">
+    <template #favoriteIcon>
+      <FavoriteIcon></FavoriteIcon>
+    </template>
+    <template #placeType v-if="router.currentRoute.value.path === '/place'">
+      <p class="card-text">{{ item.type }}</p>
+    </template>
+  </Card>
+  
+  <button
+    class="btn btn-warning btn-sm text-white rounded rounded-5 m-auto d-block"
+    style="width: 270px"
+  >
+    Показать еще
+  </button>
 </template>
 <style scoped></style>
