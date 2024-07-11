@@ -55,6 +55,8 @@ docker build -t vue-vite-app .
 docker run -it -p 8080:8080 vue-vite-app
 docker compose up
 
+# удалить файл из гита - git rm {fileName.ext}
+
 
 
 
