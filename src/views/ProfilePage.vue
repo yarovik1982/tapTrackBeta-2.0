@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import { getUser } from '@/functions/storage';
-import { ref } from 'vue';
+import { useUserStoreStore } from '@/stores/userStore';
+import {  ref } from 'vue';
 // import { useRouter } from 'vue-router'
 
 const emits = defineEmits(['open-form', 'handle-click'])
@@ -12,10 +12,9 @@ const openForm = (type) => {
 const  handleClick = (type) => {
   emits('open-form', type)
 }
-const user = getUser()
-const userRole = user?.role
-// const router = useRouter()
-// const currentRouter = router.currentRoute.value.path
+const userStore = useUserStoreStore()
+const userRole = JSON.parse(localStorage.getItem('user')).userRole
+
 const userName = ref('madbad')
 const login = ref('madbad')
 const mail = ref('madbad@mail.com')

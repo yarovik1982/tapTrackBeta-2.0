@@ -59,7 +59,7 @@ import BreweryPage from '@/views/BreweryPage.vue'
           component:() => import('@/views/ProfilePlacesPage.vue')
         },
         {
-          path:'/profile-brewery',
+          path:'/profile_brewery',
           name:'profile-brewery',
           component:() => import('@/views/ProfileBreweryPage.vue')
         },

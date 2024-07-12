@@ -9,7 +9,11 @@ export const useUserStoreStore = defineStore("userStore", {
         userProfile: localStorage.getItem("user") || null,
         isAuth: false,
     }),
-    getters: {},
+    getters: {
+      getToken: state => state.token,
+      getRefresh: state => state.refresh,
+      getProfile: state => state.userProfile
+    },
     actions: {
         async _USER_AUTH(data) {
             try {

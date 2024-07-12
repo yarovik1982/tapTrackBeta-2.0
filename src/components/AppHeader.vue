@@ -3,8 +3,7 @@ import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref, watchEffect }
 import { useRouter } from "vue-router";
 import { handleScroll } from "@/functions/scroll";
 import { useForms } from "@/stores/forms";
-// import { useUserAuth } from "@/stores/user-auth";
-// import { useSearchStore } from "@/stores/search"
+import { useUserStoreStore } from "@/stores/userStore";
 import { storeToRefs } from "pinia";
 
 const formsStore = useForms()
@@ -19,6 +18,9 @@ onBeforeUnmount(()=>{
   window.addEventListener('scroll',updateScroll)
 })
 const router = useRouter()
+
+const userStore = useUserStoreStore()
+const {isAuth, userProfile} = storeToRefs(userStore)
 
 const showForm = (type) => {
 
@@ -97,50 +99,29 @@ const name = ref('')
             </div>
           </form>
         </ul>
+        
         <div class="buttons ms-3">
           <button class="btn btn-warning text-white btn-sm text-capitalise"
             @click="showForm('login')"
-            
+            v-if="!userProfile"
           >
             Авторизация
           </button>
           <button
             class="btn btn-warning text-white btn-sm text-capitalize ms-1"
             @click="showForm('register')"
-           
+            v-if="!userProfile"
           >
             Регистрация
           </button>
         </div>
-        <div class="buttons ms-3" >
+        <div class="buttons ms-3" v-if="userProfile">
           <button class="btn btn-warning btn-sm text-white text-capitalize"
             @click="handleLogout('login')"
           >
             выход
           </button>
         </div>
-        <!-- <div class="buttons ms-3">
-          <button class="btn btn-warning text-white btn-sm text-capitalise"
-            @click="showForm('login')"
-            v-if="!isAuth"
-          >
-            Авторизация
-          </button>
-          <button
-            class="btn btn-warning text-white btn-sm text-capitalize ms-1"
-            @click="showForm('register')"
-            v-if="!isAuth"
-          >
-            Регистрация
-          </button>
-        </div>
-        <div class="buttons ms-3" v-if="isAuth">
-          <button class="btn btn-warning btn-sm text-white text-capitalize"
-            @click="handleLogout('login')"
-          >
-            выход
-          </button>
-        </div> -->
       </div>
     </div>
   </nav>
@@ -166,8 +147,7 @@ const name = ref('')
             <a role="button" :class="['nnav-link', 'py-0', 'position-relative', {'text-white': isScrolled, '': !isScrolled}]" @click="showForm('writeUs')">Написать нам</a>
           </li>        
          
-        <!--v-if="isAuth"-->
-          <li class="nav-item ms-auto" >
+          <li class="nav-item ms-auto" v-if="userProfile">
             <RouterLink to="/profile" :class="['nnav-link', 'py-0', 'position-relative', {'text-white': isScrolled, '': !isScrolled}]">Профиль</RouterLink>
           </li>        
         </ul>
