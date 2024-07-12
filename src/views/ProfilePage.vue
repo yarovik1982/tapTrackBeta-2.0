@@ -27,23 +27,23 @@ const mail = ref('madbad@mail.com')
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav w-100 justify-content-around">
           <li class="nav-item">
-            <RouterLink class="nav-link py-0" to="/profile-favorite"
+            <RouterLink class="nav-link py-0" to="/profile_favorite"
               >Избранное</RouterLink
             >
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link py-0" to="/profile-reviews"
+            <RouterLink class="nav-link py-0" to="/profile_reviews"
               >Мои Отзывы</RouterLink
             >
           </li>
           <li class="nav-item" v-if="userRole === 2 || userRole === 3">
-            <RouterLink class="nav-link py-0" to="/profile-places"
+            <RouterLink class="nav-link py-0" to="/profile_places"
               >Мои точки продаж</RouterLink
             >
           </li>
 
           <li class="nav-item" v-if="userRole === 3 || userRole === 1">
-            <RouterLink class="nav-link py-0" to="/profile-brewery"
+            <RouterLink class="nav-link py-0" to="/profile_brewery"
               >Мои пивоварни</RouterLink
             >
           </li>
@@ -55,9 +55,7 @@ const mail = ref('madbad@mail.com')
   <div class="container-fluid">
     <div class="row">
         <div class="col-8">
-            <RouterView
-                @open-form="openForm"
-            ></RouterView>
+            <RouterView></RouterView>
         </div>
         <div class="col-4">
             <h5 class="text-center">Profile</h5>

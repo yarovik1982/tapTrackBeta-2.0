@@ -44,17 +44,17 @@ import BreweryPage from '@/views/BreweryPage.vue'
       component:() => import('@/views/ProfilePage.vue'),
       children:[
         {
-          path:'/profile-favorite',
+          path:'/profile_favorite',
           name:'profile-favorite',
           component:() => import('@/views/ProfileFavoritePage.vue')
         },
         {
-          path:'/profile-reviews',
+          path:'/profile_reviews',
           name:'profile-reviews',
           component:() => import('@/views/ProfileReviewsPage.vue')
         },
         {
-          path:'/profile-places',
+          path:'/profile_places',
           name:'profile-places',
           component:() => import('@/views/ProfilePlacesPage.vue')
         },

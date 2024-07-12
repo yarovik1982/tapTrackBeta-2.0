@@ -1,8 +1,13 @@
 <script setup>
-import { onBeforeMount, onBeforeUnmount, onMounted, ref } from "vue"
+import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref, watchEffect } from "vue"
 import { useRouter } from "vue-router";
 import { handleScroll } from "@/functions/scroll";
+import { useForms } from "@/stores/forms";
+// import { useUserAuth } from "@/stores/user-auth";
+// import { useSearchStore } from "@/stores/search"
+import { storeToRefs } from "pinia";
 
+const formsStore = useForms()
 const isScrolled = ref(false)
 const updateScroll = () => {
   isScrolled.value = handleScroll()
@@ -14,16 +19,30 @@ onBeforeUnmount(()=>{
   window.addEventListener('scroll',updateScroll)
 })
 const router = useRouter()
-const emits = defineEmits(['show-form'])
+
 const showForm = (type) => {
-  emits('show-form', type)
+
+  formsStore.openLayout(type)
 }
 const handleLogout = (type) => {
-  localStorage.removeItem('user')
+  localStorage.clear()
   router.push('/')
-  emits('show-form', type)
+  formsStore.openLayout(type)
+  window.location.reload()
 }
-const auth = ref(false)
+// const userAuthStore = useUserAuth()
+// const { auth , token, refresh, userProfile} = storeToRefs(userAuthStore)
+// const isAuth = computed(() => userAuthStore.Get_Profile)
+
+const name = ref('')
+// const search = useSearchStore()
+// const handleSearchInput = () => {
+//   if(name.value.length >= 3){
+//     search._SEARCH_BEER(name.value)
+//     router.push('/search/beer')
+//   }
+  // setTimeout(() => {name.value = ''},1500)
+// }
 </script>
 <template>
   <nav id="topPanel" class="navbar navbar-expand navbar-dark bg-dark ">
@@ -37,7 +56,7 @@ const auth = ref(false)
         id="navbarUnCollapsed"
       >
         <ul class="navbar-nav flex-grow-1">
-          <form action="#" class="form px-3 w-100" role="search">
+          <form  class="form px-3 w-100" role="search" >
             <div class="input-group input-group-sm">
               <input
                 style="
@@ -46,9 +65,12 @@ const auth = ref(false)
                 "
                 type="search"
                 class="form-control form-search-input border border-3 border-warning"
-                placeholder=""
+                placeholder="Поиск"
+                minlength="3"
                 aria-label="Имя пользователя"
                 aria-describedby="basic-addon1"
+                v-model="name"
+                @input="handleSearchInput"
               />
               <button
                 class="btn btn-warning text-white"
@@ -78,23 +100,47 @@ const auth = ref(false)
         <div class="buttons ms-3">
           <button class="btn btn-warning text-white btn-sm text-capitalise"
             @click="showForm('login')"
+            
           >
             Авторизация
           </button>
           <button
             class="btn btn-warning text-white btn-sm text-capitalize ms-1"
             @click="showForm('register')"
+           
           >
             Регистрация
           </button>
         </div>
-        <div class="buttons ms-3">
+        <div class="buttons ms-3" >
           <button class="btn btn-warning btn-sm text-white text-capitalize"
             @click="handleLogout('login')"
           >
             выход
           </button>
         </div>
+        <!-- <div class="buttons ms-3">
+          <button class="btn btn-warning text-white btn-sm text-capitalise"
+            @click="showForm('login')"
+            v-if="!isAuth"
+          >
+            Авторизация
+          </button>
+          <button
+            class="btn btn-warning text-white btn-sm text-capitalize ms-1"
+            @click="showForm('register')"
+            v-if="!isAuth"
+          >
+            Регистрация
+          </button>
+        </div>
+        <div class="buttons ms-3" v-if="isAuth">
+          <button class="btn btn-warning btn-sm text-white text-capitalize"
+            @click="handleLogout('login')"
+          >
+            выход
+          </button>
+        </div> -->
       </div>
     </div>
   </nav>
@@ -119,6 +165,8 @@ const auth = ref(false)
           <li class="nav-item ms-3">
             <a role="button" :class="['nnav-link', 'py-0', 'position-relative', {'text-white': isScrolled, '': !isScrolled}]" @click="showForm('writeUs')">Написать нам</a>
           </li>        
+         
+        <!--v-if="isAuth"-->
           <li class="nav-item ms-auto" >
             <RouterLink to="/profile" :class="['nnav-link', 'py-0', 'position-relative', {'text-white': isScrolled, '': !isScrolled}]">Профиль</RouterLink>
           </li>        

@@ -1,28 +1,40 @@
-import { defineStore } from "pinia";
+import { defineStore, acceptHMRUpdate } from 'pinia'
+import { unScroll, scroll } from '@/functions/scroll'
 
-export const useForms = defineStore('forms',{
-   state:() => ({
-      formType:null,
-      isActive:false,
-   }),
-   // getters:{
-   //    getFormType(){
-   //       return this.formType
-   //    },
-   //    getIsActive(){
-   //       return this.isActive
-   //    },
-   // },
-   actions:{
-      setFormType(value){
-         this.formType = value
-      },
-      toggleIsActive(){
-         this.isActive = !this.isActive
-      },
-      clearFormType(){
-         this.formType = null
-         this.isActive = false
+
+export const useForms = defineStore("formsStore", {
+  state: () => ({
+    formType: '',
+    formLoginActive:false,
+    currId:null,
+  }),
+  getters:{
+    getFormLoginActive:state => state.formLoginActive,
+    getCurrId:state => state.currId
+  },
+  actions: {
+    openLayout(type) {
+      unScroll()
+     
+      if(type === 'success'){
+        this.formLoginActive = true
       }
-   },
-})
+      return this.formType = type;
+    },
+    closeLayout(){
+      scroll()
+      if(this.formLoginActive){
+        this.formLoginActive = false
+      }
+      return this.formType = ''
+    },
+    setCurrId(id){
+      this.currId = id
+      
+    }
+  },
+});
+
+if (import.meta.hot) {
+ import.meta.hot.accept(acceptHMRUpdate(useForms, import.meta.hot))
+}

@@ -6,27 +6,30 @@ import AppFooter from '@/components/AppFooter.vue'
 import LayoutForAge from '@/components/LayoutForAge.vue'
 import { unScroll, scroll, scrollUp } from '@/functions/scroll'
 import { useConfirmAge } from '@/stores/confirmAge'
+import { useForms } from './stores/forms'
 import { storeToRefs } from 'pinia'
 import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
 
 const confirmAge = useConfirmAge()
+const formsStore = useForms()
 const {isConfirm} = storeToRefs(confirmAge)
 const shouldPreventScroll = ref(false)
 const setConfirm = () => {
   
   confirmAge.setConfirmAge()
+  formsStore.openLayout('login')
 }
 
-const currentFormType = ref('')
-const showForm = (type) => {
-  currentFormType.value = type
-  unScroll()
-}
-const closeForm = () => {
-  currentFormType.value = ''
-  scroll()
-}
+// const currentFormType = ref('')
+// const showForm = (type) => {
+//   currentFormType.value = type
+//   unScroll()
+// }
+// const closeForm = () => {
+//   currentFormType.value = ''
+//   scroll()
+// }
 const scrollTo = () => {
   scrollUp()
 }
@@ -37,20 +40,19 @@ const scrollTo = () => {
     <LayoutForAge @set-confirm="setConfirm">
     </LayoutForAge>
   </Teleport>
+  <LayoutForModal v-if="formsStore.getFormLoginActive"></LayoutForModal>
   <LayoutForModal 
-    v-if="currentFormType" 
-    :type="currentFormType" 
-    @close-form="closeForm"
+    
   ></LayoutForModal>
  
  <div class="position-sticky top-0" style="z-index: 5;">
-  <AppHeader @show-form="showForm"></AppHeader>
+  <AppHeader ></AppHeader>
  </div>
   <AppToTop @click="scrollTo"></AppToTop>
   <RouterView 
-    @open-form="showForm"
+    
   />
-  <AppFooter @open-form="showForm"></AppFooter>
+  <AppFooter ></AppFooter>
 </template>
 
 <style scoped>

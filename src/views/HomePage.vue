@@ -5,7 +5,7 @@ import AppOffer from "@/components/AppOffer.vue";
 import SliderPlices from "@/components/SliderPlices.vue";
 import SliderReviews from '@/components/SliderReviews.vue'
 // import { usePlaceStoreStore } from '@/stores/placeStore';
-import { ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 const emits = defineEmits(["open-form"]);
 const showForm = (type) => {
   emits("open-form", type);
@@ -41,6 +41,7 @@ const data = ref([
   }
 ])
 const ratingValue = ref(0)
+
 
 </script>
 
