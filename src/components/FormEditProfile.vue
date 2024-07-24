@@ -1,23 +1,19 @@
 <script setup>
-import InputText from '@/components/UI/InputText.vue';
-
-// import InputOtp from 'primevue/inputotp';
+import BtnCloseLayout from './UI/BtnCloseLayout.vue';
 
 
 import { nextTick, onMounted, ref } from 'vue';
-const emits = defineEmits(['close-form'])
-const closeForm = () => {
-   emits('close-form')
-}
-const userName = ref('')
-const mail = ref('')
-const telephoneNumber = ref('')
-const birthday = ref('')
-const city = ref('')
-const country = ref('')
+
+const user = JSON.parse(localStorage.getItem('user'))
+const userName = ref(user?.userName)
+const mail = ref(user?.mail)
+const telephoneNumber = ref(user?.telephoneNumber)
+const birthday = ref(user?.birthday)
+const city = ref(user?.city)
+const country = ref(user?.country)
 
 
-const sendData = () => {
+const handleSubmit = () => {
    const data = {
       userName:userName.value,
       mail: mail.value,
@@ -30,16 +26,12 @@ const sendData = () => {
 }
 </script>
 <template>
-    <form id="editProfile" @submit.prevent="sendData">
+    <form id="editProfile" @submit.prevent="handleSubmit">
     <h3 class="form-title text-center py-3 mb-3">Редакторовать профиль</h3>
-    <i
-      class="bi bi-x fs-1 text-white position-absolute fw-bold"
-      style="top: -25px;right: -40px; cursor: pointer; font-weight: bold;"
-      @click="closeForm"
-    ></i>
+    <btn-close-layout></btn-close-layout>
     
     <div class="mb-5 position-relative">
-       <input type="text" class="app-form-control" 
+       <input type="text" class="app-form-control fw-bold" 
          id="inpName" 
          v-model="userName"
         placeholder="Имя"
@@ -48,7 +40,7 @@ const sendData = () => {
        <i class="bi bi-person-fill position-absolute"></i>
     </div>
     <div class="mb-5 position-relative">
-      <input type="email" class="app-form-control"   
+      <input type="email" class="app-form-control fw-bold"   
          id="inpEmail" 
          v-model="mail"
           placeholder="Почта"
@@ -58,7 +50,7 @@ const sendData = () => {
        <i class="bi bi-person-fill position-absolute"></i>
     </div>
     <div class="mb-5 position-relative">
-      <input type="text" class="app-form-control"   
+      <input type="text" class="app-form-control fw-bold"   
          id="inpPhone" 
          v-model="telephoneNumber"
           placeholder="Телефон"
@@ -68,7 +60,7 @@ const sendData = () => {
        <i class="bi bi-person-fill position-absolute"></i>
     </div>
     <div class="mb-5 position-relative">
-      <input type="text" class="app-form-control"   
+      <input type="text" class="app-form-control fw-bold"   
          id="inpBirthday" 
          v-model="birthday"
           placeholder="Дата рождения дд-мм-гггг"
@@ -78,7 +70,7 @@ const sendData = () => {
        <i class="bi bi-person-fill position-absolute"></i>
     </div>
     <div class="mb-5 position-relative">
-      <input type="text" class="app-form-control"   
+      <input type="text" class="app-form-control fw-bold"   
          id="inpCountry" 
          v-model="country"
           placeholder="Страна"
@@ -88,7 +80,7 @@ const sendData = () => {
        <i class="bi bi-person-fill position-absolute"></i>
     </div>
     <div class="mb-5 position-relative">
-      <input type="text" class="app-form-control"  
+      <input type="text" class="app-form-control fw-bold"  
          id="inpCity" 
          v-model="city"
           placeholder="Город"

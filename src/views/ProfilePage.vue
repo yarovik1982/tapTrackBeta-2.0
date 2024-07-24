@@ -1,23 +1,24 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import { useUserStoreStore } from '@/stores/userStore';
 import {  ref } from 'vue';
-// import { useRouter } from 'vue-router'
+import { useForms } from '@/stores/forms';
 
-const emits = defineEmits(['open-form', 'handle-click'])
+
+
+const user = JSON.parse(localStorage.getItem('user'))
+
+const userRole = ref(user?.userRole)
+
+const userName = ref(user?.userName)
+const login = ref(user?.login)
+const mail = ref(user?.mail)
+const image = ref(user?.image)
+
+const formsStore = useForms()
+
 const openForm = (type) => {
-    emits('open-form', type)
-    console.log(type);
+  formsStore.openLayout(type)
 }
-const  handleClick = (type) => {
-  emits('open-form', type)
-}
-const userStore = useUserStoreStore()
-const userRole = JSON.parse(localStorage.getItem('user')).userRole
-
-const userName = ref('madbad')
-const login = ref('madbad')
-const mail = ref('madbad@mail.com')
 </script>
 <template>
     
@@ -57,58 +58,80 @@ const mail = ref('madbad@mail.com')
             <RouterView></RouterView>
         </div>
         <div class="col-4">
-            <h5 class="text-center">Profile</h5>
-            <div class="flex-body">
-        <div class="flex-dir-col">
-          <div class="flex-avatar-settings">
-            <div class="flex-avatar-icon">
-              <i
-                class="bi bi-pencil fs-2 text-warning"
-                style="cursor: pointer"
-                @click="handleClick('editProfile')"
-              ></i>
-            </div>
-            <div class="flex-avatar-icon">
-              <i
-                class="bi bi-trash fs-2 text-warning"
-                style="cursor: pointer"
-              ></i>
-            </div>
-          </div>
-          <div class="flex-avatar">
-            <img src="" alt="AVATAR" />
-            <div
-              class="flex-avatar-upload bg-opacity-50 bg-warning d-flex justify-content-center position-absolute bottom-0 w-100"
-            >
-              <div class="flex-avatar-icon">
-                <i
-                  class="bi bi-camera fs-2 text-white"
-                  style="cursor: pointer"
-                ></i>
+        
+        <div class="flex-body">
+          <div class="flex-dir-col">
+            
+            <div class="flex-avatar">
+              <img :src="image" alt="AVATAR" />
+              <div
+                class="flex-avatar-upload bg-opacity-50 bg-warning d-flex justify-content-center position-absolute bottom-0 w-100"
+              >
+                <div class="flex-avatar-icon" v-if="image">
+                  <i
+                    class="bi bi-trash fs-2 text-white"
+                    style="cursor: pointer"
+                    @click="handleClick"
+                    title="Удалить аватар"
+                  ></i>
+                </div>
+                <div class="flex-avatar-icon" v-else>
+                  <i
+                    class="bi bi-camera fs-2 text-white"
+                    style="cursor: pointer"
+                    title="Установить аватар"
+                    @click="openForm('addAvatar')"
+                  ></i>
+                </div>
               </div>
             </div>
           </div>
+          <form class="form-profile p-2 mt-5 position-relative">
+            <div class="flex-avatar-settings">
+              <div class="flex-avatar-icon">
+                <i
+                  class="bi bi-pencil fs-4 text-warning"
+                  style="cursor: pointer"
+                  title="Редактировать профиль"
+                  @click="openForm('editProfile')"
+                ></i>
+              </div>
+            </div>
+            <h5 class="text-center">Profile</h5>
+            <div class="mb-3 border-bottom border-2 border-warning">
+              <label class="form-label">Имя</label>
+              <input
+                type="text"
+                class="w-100 border-0 px-2 fw-bold"
+                :value="userName"
+                readonly
+              />
+            </div>
+            <div class="mb-3 border-bottom border-2 border-warning">
+              <label class="form-label">Login</label>
+              <input
+                type="text"
+                class="w-100 border-0 px-2 fw-bold"
+                :value="login"
+                readonly
+              />
+            </div>
+            <div class="mb-3 border-bottom border-2 border-warning">
+              <label class="form-label">Email</label>
+              <input
+                type="text"
+                class="w-100 border-0 px-2 fw-bold"
+                :value="mail"
+                readonly
+              />
+            </div>
+          </form>
         </div>
-        <form  class="p-2">
-          <div class="mb-3 border-bottom border-2 border-warning">
-            <label class="form-label">Имя</label>
-            <input type="text" class="w-100 border-0 px-2 fw-bold" :value="userName" readonly>
-          </div>
-          <div class="mb-3 border-bottom border-2 border-warning">
-            <label class="form-label">Login</label>
-            <input type="text" class="w-100 border-0 px-2 fw-bold" :value="login" readonly>
-          </div>
-          <div class="mb-3 border-bottom border-2 border-warning">
-            <label class="form-label">Email</label>
-            <input type="text" class="w-100 border-0 px-2 fw-bold" :value="mail" readonly>
-          </div>
-        </form>
       </div>
-        </div>
     </div>
   </div>
 </template>
-<style scoped >
+<style scoped>
 .nav-item {
   border-radius: 0.5rem;
 }
@@ -124,15 +147,16 @@ const mail = ref('madbad@mail.com')
 }
 .flex-body {
   padding: 1rem;
-  border:#ffc107 1px solid;
+  border: rgb(255, 193, 7) 1px solid;
+  border-radius: 16px;
 }
 .flex-dir-col {
   position: relative;
 }
 .flex-avatar {
   margin: 0 auto;
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   background: #ccc;
   border-radius: 50%;
   overflow: hidden;
@@ -142,29 +166,29 @@ const mail = ref('madbad@mail.com')
   width: fit-content;
   position: absolute;
   top: 0;
-  left: 0;
+  right:  0;
 }
-.flex-avatar-settings > .flex-avatar-icon{
+.flex-avatar-settings > .flex-avatar-icon {
   opacity: 0;
-  transition: opacity .5s linear;
-  -webkit-transition: opacity .5s linear;
-  -moz-transition: opacity .5s linear;
-  -ms-transition: opacity .5s linear;
-  -o-transition: opacity .5s linear;
+  transition: opacity 0.5s linear;
+  -webkit-transition: opacity 0.5s linear;
+  -moz-transition: opacity 0.5s linear;
+  -ms-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
 }
 
-.flex-avatar-upload{
+.flex-avatar-upload {
   opacity: 0;
-  transition: opacity .5s linear;
-  -webkit-transition: opacity .5s linear;
-  -moz-transition: opacity .5s linear;
-  -ms-transition: opacity .5s linear;
-  -o-transition: opacity .5s linear;
+  transition: opacity 0.5s linear;
+  -webkit-transition: opacity 0.5s linear;
+  -moz-transition: opacity 0.5s linear;
+  -ms-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
 }
-.flex-avatar:hover .flex-avatar-upload{
+.flex-avatar:hover .flex-avatar-upload {
   opacity: 1;
 }
-.flex-dir-col:hover .flex-avatar-settings > .flex-avatar-icon{
+.form-profile:hover .flex-avatar-settings > .flex-avatar-icon {
   opacity: 1;
 }
 </style>
