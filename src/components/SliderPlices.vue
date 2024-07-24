@@ -1,5 +1,5 @@
 <template>
-    <section id="sliader" class="mb-5" v-if="placeAdvList.length > 0">
+    <section id="sliader" class="mb-5" v-if="placeAdBlock.length > 0">
         <h3 class="text-center mx-auto mb-5">
             <span class="section-title text-capitalize position-relative"
                 >Популярные места</span
@@ -22,7 +22,7 @@
             >
                 <swiper-slide
                     class="slide border border-2 border-warning rounded rounded-4 p-1"
-                    v-for="(slide, ind) in placeAdvList"
+                    v-for="(slide, ind) in placeAdBlock"
                     :key="ind"
                 >
                     <div class="text-center text-capitalize mb-4">
@@ -57,14 +57,14 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
-import { usePlaceStoreStore } from "@/stores/placeStore";
+import { usePlaceStore } from "@/stores/placeStore";
 import { computed } from "vue";
 
 const modules = [Autoplay];
 
-const placeStore = usePlaceStoreStore();
-placeStore._PLACE_ADVBLOCK();
-const placeAdvList = computed(() => placeStore.getPlaceAdvList);
+const placeStore = usePlaceStore();
+placeStore._PLACE_ADBLOCK();
+const placeAdBlock = computed(() => placeStore.getPlaceAdBlock);
 </script>
 <style>
 .swiper {

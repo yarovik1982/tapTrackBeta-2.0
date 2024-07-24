@@ -22,6 +22,7 @@ const props = defineProps({
          v-for="item in data"
          :key="item.name"
          :data="data"
+         style="cursor: pointer;"
       >
          <img :src="item.image" class="border border-1" :alt="item.name" style="width: 50px;
          height: 50px;">

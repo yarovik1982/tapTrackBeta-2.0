@@ -113,3 +113,17 @@ a{
 input:-webkit-autofill {
   transition: all 5000s ease-in-out 0s;
 }
+.btn-big{
+  width: 273px;
+  text-align: center;
+  padding: 6px;
+  text-transform: capitalize;
+  background: #ffc107;
+  color: #fff;
+  border-radius: 20px;
+  border: 0;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}

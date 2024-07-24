@@ -9,7 +9,7 @@ const openForm = (type) => {
 <template>
    <div class="position-relative">
       <button class="btn btn-warning btn-sm text-white rounded rounded-5 me-2 d-block position-absolute"
-         style="width: 270px;z-index: 10;top:-100px;left:120%;"
+         style="width: 270px;z-index: 10;top:-100px;left:120%;z-index: -1;"
          @click="openForm('addBrewery')"
       >
             Добавить пивоварню
