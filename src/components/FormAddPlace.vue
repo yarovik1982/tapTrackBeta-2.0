@@ -1,75 +1,21 @@
 <script setup>
-import {onMounted, onUnmounted, ref } from 'vue';
-// import { AvatarEditor } from "avatar-editor";
-// import "avatar-editor/dist/style.css";
+import { ref } from 'vue';
+import BtnCloseLayout from './UI/BtnCloseLayout.vue';
 
-// const scaleVal = ref(1);
-// const scaleStep = 0.02;
-// const scaleMin = 1;
-// const scaleMax = 3;
+const name = ref('')
+const type = ref('')
+const description = ref('')
+const formData = ref({})
 
-// const avatarEditorRef = ref(null);
-
-// const onImageReady = (scale) => {
-//   scaleVal.value = scale;
-// };
-
-// const handleWheelEvent = (e) => {
-//   if (e.deltaY > 0 && scaleVal.value - scaleStep >= scaleMin) {
-//     // Down
-//     scaleVal.value -= scaleStep;
-//   } else {
-//     // Up
-//     if (scaleVal.value + scaleStep <= scaleMax) {
-//       scaleVal.value += scaleStep;
-//     }
-//   }
-// };
-
-// const save = () => {
-//   if (avatarEditorRef.value) {
-//     const canvasData = avatarEditorRef.value.getImageScaled();
-//     const img = canvasData.toDataURL("image/png");
-//     console.log(img);
-//   }
-// };
-// const save = () => {
-//   if (avatarEditorRef.value) {
-//     const canvasData = avatarEditorRef.value.getImageScaled();
-//     const blob = canvasData.toBlob((blob) => {
-//       // Создаем объект URL для загрузки изображения
-//       const url = URL.createObjectURL(blob);
-
-//       // Создаем ссылку для загрузки изображения
-//       const link = document.createElement('a');
-//       link.href = url;
-//       link.download = 'image.png'; // Имя файла для загрузки
-
-//       // Добавляем ссылку на страницу и симулируем клик по ней
-//       document.body.appendChild(link);
-//       link.click();
-
-//       // Удаляем ссылку после загрузки
-//       document.body.removeChild(link);
-//       URL.revokeObjectURL(url);
-//     }, 'image/png', 0.8); // Формат и качество изображения
-//   }
-// };
-
-
-// onMounted(() => {
-//   document.addEventListener("wheel", handleWheelEvent);
-// });
-
-// onUnmounted(() => {
-//   document.removeEventListener("wheel", handleWheelEvent);
-// });
-
-const emits = defineEmits(['close-form'])
-const closeForm = () => {
-  emits('close-form')
+const handleSubmit = () => {
+  const data = {
+    name : name.value,
+    typePlace: type.value,
+    description: description.value
+  }
+  formData.value = data
+  console.log(data);
 }
-const placeName = ref('')
 </script>
 <template>
   <form id="addPlace" class="w-75" @submit.prevent="handleSubmit">
@@ -87,7 +33,7 @@ const placeName = ref('')
           grid-gap: 50px;
         "
       >
-        <avatar-editor
+        <!-- <avatar-editor
           :width="250"
           :height="300"
           ref="avatarEditorRef"
@@ -100,7 +46,7 @@ const placeName = ref('')
           :max="scaleMax"
           :step="scaleStep"
           v-model="scaleVal"
-        />
+        /> -->
         <button class="btn btn-info btn-sm" @click.prevent="save">Сохранить на компьютере</button>
       </div>
     </div>
@@ -138,12 +84,12 @@ const placeName = ref('')
       </div>
       <div class="mb-5 position-relative">
         <span>Адрес</span>
-        <vue-dadata
+        <!-- <vue-dadata
           v-model="query" 
           :token="token" 
           :count="5" 
           placeholder="начните ввод"
-        ></vue-dadata>
+        ></vue-dadata> -->
       </div>
       <div class="mb-5 position-relative">
         <label for="descript" style="width: 100%"
@@ -166,9 +112,7 @@ const placeName = ref('')
   >
     Отправить
   </button>
-  <p>Address: {{ datada.address }}</p>
-  <p>City: {{ datada.city }}</p>
-  <p>Coords: ({{ datada.geoLat }}, {{ datada.geoLon }})</p>
+  <p>{{ formData }}</p>
 </form>
 </template>
 <style scoped >
