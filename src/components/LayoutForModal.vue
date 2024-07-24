@@ -4,7 +4,7 @@ import FormRegister from '@/components/FormRegister.vue';
 import FormWriteUs from '@/components/FormWriteUs.vue';
 // import FormEditProfile from '@/components/FormEditProfile.vue';
 import FormAddPlace from '@/components/FormAddPlace.vue';
-// import FormAddBrewery from '@/components/FormAddBrewery.vue';
+import FormAddBrewery from '@/components/FormAddBrewery.vue';
 // import FormAddAvatar from '@/components/FormAddAvatar.vue';
 // import FormCreateFeedback from '@/components/FormCreateFeedback.vue'
 // import FormSuccess from '@/components/FormSuccess.vue'
@@ -42,8 +42,8 @@ const currentForm = computed(() => {
     //   return FormEditProfile;
     case 'addPlace':
       return FormAddPlace;
-    // case 'addBrewery':
-    //   return FormAddBrewery;
+    case 'addBrewery':
+      return FormAddBrewery;
     // case 'addAvatar':
     //   return FormAddAvatar;
     // case 'createFeedback':

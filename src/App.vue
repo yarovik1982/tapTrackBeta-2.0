@@ -45,7 +45,7 @@ const scrollTo = () => {
     
   ></LayoutForModal>
  
- <div class="position-sticky top-0" style="z-index: 5;">
+ <div class="position-sticky top-0" style="z-index: 12;">
   <AppHeader ></AppHeader>
  </div>
   <AppToTop @click="scrollTo"></AppToTop>
