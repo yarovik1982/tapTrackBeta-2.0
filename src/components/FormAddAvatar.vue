@@ -1,107 +1,23 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
-// import { AvatarEditor } from "avatar-editor";
-// import "avatar-editor/dist/style.css";
+import { VueAvatar } from "vue-avatar-editor-improved";
 import BtnCloseLayout from "@/components/UI/BtnCloseLayout.vue";
-// import { BASE_URL } from "@/constants/url";
-// import axios from "axios";
-// import { useUserAuth } from "@/stores/user-auth";
 
-// const token = JSON.parse(localStorage.getItem("token"));
-// const userId = JSON.parse(localStorage.getItem("user"))?.userId;
+const rotation = ref(0);
+const scale = ref(1);
+const borderRadius = ref(200);
+const vueavatar = ref(null);
+const image = ref(null);
 
-// const userAuthStore = useUserAuth();
-
-const scaleVal = ref(1);
-const scaleStep = 0.02;
-const scaleMin = 1;
-const scaleMax = 3;
-
-const avatarEditorRef = ref(null);
-
-const onImageReady = (scale) => {
-    scaleVal.value = scale;
+const saveClicked = () => {
+    const img = vueavatar.value.getImageScaled();
+    image.value.src = img.toDataURL();
 };
 
-const handleWheelEvent = (e) => {
-    if (e.deltaY > 0 && scaleVal.value - scaleStep >= scaleMin) {
-        // Down
-        scaleVal.value -= scaleStep;
-    } else {
-        // Up
-        if (scaleVal.value + scaleStep <= scaleMax) {
-            scaleVal.value += scaleStep;
-        }
-    }
+const onImageReady = () => {
+    scale.value = 1;
+    rotation.value = 0;
 };
-
-// const image = ref(null);
-
-// const save = () => {
-//     if (avatarEditorRef.value) {
-//         const canvasData = avatarEditorRef.value.getImageScaled();
-//         const blob = canvasData.toBlob(
-//             (blob) => {
-//                 const url = URL.createObjectURL(blob);
-
-//                 const link = document.createElement("a");
-//                 link.href = url;
-//                 link.download = "image.png";
-
-//                 document.body.appendChild(link);
-//                 link.click();
-
-//                 document.body.removeChild(link);
-//                 URL.revokeObjectURL(url);
-//             },
-//             "image/png",
-//             0.8
-//         );
-//     }
-// };
-
-// const sendToServer = async () => {
-//     if (avatarEditorRef.value) {
-//         const canvasData = avatarEditorRef.value.getImageScaled();
-//         const blob = await new Promise((resolve) => {
-//             canvasData.toBlob(resolve, "image/png");
-//         });
-
-//         const formData = new FormData();
-//         formData.append("image", blob, "avatar.png");
-
-//         try {
-//             const response = await axios.post(
-//                 `${BASE_URL}/user/photo?userId=${userId}`,
-//                 formData,
-//                 {
-//                     headers: {
-//                         Authorization: `Bearer ${token}`,
-//                         "Content-Type": "multipart/form-data",
-//                     },
-//                 }
-//             );
-
-//             if (response.status === 200) {
-//                 console.log("Изображение успешно отправлено на сервер");
-//                 userAuthStore._USER_PROFILE(token);
-//                 location.reload();
-//             } else {
-//                 console.error("Ошибка при отправке изображения на сервер");
-//             }
-//         } catch (error) {
-//             console.error("Ошибка сети:", error);
-//         }
-//     }
-// };
-
-// onMounted(() => {
-//     document.addEventListener("wheel", handleWheelEvent);
-// });
-
-// onUnmounted(() => {
-//     document.removeEventListener("wheel", handleWheelEvent);
-// });
 </script>
 <template>
     <form id="addAvatar" class="w-50">
@@ -119,23 +35,67 @@ const handleWheelEvent = (e) => {
                         grid-gap: 50px;
                     "
                 >
-                    <!-- <avatar-editor
-                        :width="250"
-                        :height="250"
-                        ref="avatarEditorRef"
-                        @image-ready="onImageReady"
-                        v-model:scale="scaleVal"
-                    /> -->
-                    <input
-                        type="range"
-                        :min="scaleMin"
-                        :max="scaleMax"
-                        :step="scaleStep"
-                        v-model="scaleVal"
-                    />
-                    <button class="btn btn-info" @click.prevent="save">
-                        сохранить на компьютере
-                    </button>
+                    <div class="d-flex flex-column align-items-center">
+                        <vue-avatar
+                            :width="250"
+                            :height="250"
+                            :rotation="rotation"
+                            :borderRadius="borderRadius"
+                            :scale="Number(scale)"
+                            ref="vueavatar"
+                            @vue-avatar-editor:image-ready="onImageReady"
+                        >
+                        </vue-avatar>
+                        <div>
+                            <label>
+                                Zoom : {{ scale }}x
+                                <br />
+                                <input
+                                    type="range"
+                                    min="1"
+                                    max="3"
+                                    step="0.02"
+                                    v-model="scale"
+                                />
+                            </label>
+
+                            <label class="d-none">
+                                Rotation : {{ rotation }}°
+
+                                <input
+                                    type="hidden"
+                                    min="0"
+                                    max="360"
+                                    step="1"
+                                    v-model="rotation"
+                                />
+                            </label>
+
+                            <label class="d-none">
+                                Radius : {{ borderRadius }}px
+
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="200"
+                                    step="1"
+                                    v-model="borderRadius"
+                                />
+                            </label>
+                        </div>
+
+                        <button
+                            class="btn btn-info btn-sm rounded-5"
+                            @click.prevent="saveClicked"
+                        >
+                            Предпросмотр
+                        </button>
+                        <br />
+                        <div class="preview-radius">
+                            preview
+                            <img ref="image" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -152,5 +112,26 @@ const handleWheelEvent = (e) => {
 <style scoped>
 canvas {
     border: 4px solid rgb(127, 127, 127);
+}
+.preview-radius {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 1px solid yellow;
+    overflow: hidden;
+    display: grid;
+    place-content: center;
+    background-color: #ccc;
+    font-weight: bold;
+    font-style: italic;
+    position: relative;
+}
+img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
 }
 </style>

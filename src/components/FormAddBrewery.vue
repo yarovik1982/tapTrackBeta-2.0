@@ -2,18 +2,69 @@
   <form id="addBrewery" class="w-75" @submit.prevent="handleSubmit">
   <h3 class="form-title text-center py-3">Добавить пивоварню</h3>
   <btn-close-layout></btn-close-layout>
-  <div class="row g-3 ">
-    <div class="col py-3 d-flex flex-column align-items-center justify-content-between">
-       <div
-  style="
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    grid-gap: 50px;
-  "
->
- 
-</div>
+  <div class="row g-3 align-items-center ">
+    <div class="col py-3 ">
+      <div class="d-flex flex-column align-items-center">
+                        <vue-avatar
+                            :width="250"
+                            :height="250"
+                            :rotation="rotation"
+                            :borderRadius="borderRadius"
+                            :scale="Number(scale)"
+                            ref="vueavatar"
+                            @vue-avatar-editor:image-ready="onImageReady"
+                        >
+                        </vue-avatar>
+                        <div>
+                            <label>
+                                Zoom : {{ scale }}x
+                                <br />
+                                <input
+                                    type="range"
+                                    min="1"
+                                    max="3"
+                                    step="0.02"
+                                    v-model="scale"
+                                />
+                            </label>
+
+                            <label class="d-none">
+                                Rotation : {{ rotation }}°
+
+                                <input
+                                    type="hidden"
+                                    min="0"
+                                    max="360"
+                                    step="1"
+                                    v-model="rotation"
+                                />
+                            </label>
+
+                            <label class="d-none">
+                                Radius : {{ borderRadius }}px
+
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="200"
+                                    step="1"
+                                    v-model="borderRadius"
+                                />
+                            </label>
+                        </div>
+
+                        <button
+                            class="btn btn-info btn-sm rounded-5"
+                            @click.prevent="saveClicked"
+                        >
+                            Предпросмотр
+                        </button>
+                        <br />
+                        <div class="preview">
+                            preview
+                            <img ref="image" />
+                        </div>
+                    </div>
     </div>
     <div class="col py-3">
        <div class="mb-5 position-relative">
@@ -59,15 +110,29 @@
     </div>
   </div>
   <button type="submit" class="btn btn-warning text-white d-block m-auto rounded rounded-5" style="width: 270px;">Отправить</button>
-  <p>{{ formData }}</p>
 </form>
 </template>
 
 <script setup>
 import {onMounted, onUnmounted, ref } from 'vue';
 import BtnCloseLayout from './UI/BtnCloseLayout.vue';
+import { VueAvatar } from "vue-avatar-editor-improved";
 
+const rotation = ref(0);
+const scale = ref(1);
+const borderRadius = ref(16);
+const vueavatar = ref(null);
+const image = ref(null);
 
+const saveClicked = () => {
+    const img = vueavatar.value.getImageScaled();
+    image.value.src = img.toDataURL();
+};
+
+const onImageReady = () => {
+    scale.value = 1;
+    rotation.value = 0;
+};
 const name = ref('')
 const type = ref('')
 const city = ref('')
@@ -83,6 +148,7 @@ const handleSubmit = () => {
     description: description.value
   }
 }
+// const image = ref(null)
 </script>
 
 <style scoped >
@@ -193,5 +259,26 @@ textarea{
   outline: none;
   border: #ffc107 1px solid;
   border-radius: 8px;
+}
+.preview{
+   width: 250px;
+   height: 350px;
+   border-radius: 16px;
+   border: 1px solid yellow;
+   overflow: hidden;
+   display: grid;
+   place-content: center;
+   background-color: #ccc;
+   font-weight: bold;
+   font-style: italic;
+   position: relative;
+}
+img{
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
 }
 </style>

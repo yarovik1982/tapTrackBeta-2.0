@@ -67,6 +67,23 @@ export const useUserStore = defineStore("userStore", {
            return null;
          }
        },
+       async _USER_PHOTO_REMOVE(){
+        try{
+          const response = await axios.delete(`${BASE_URL}/user/photo/remove`,{
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${this.token}`
+            },
+            params:{
+              id:JSON.parse(this.userProfile).userId
+            }
+          })
+          if(response.status === 200){
+            await this._USER_PROFILE(this.token)
+            window.location.reload()
+          }
+        }catch(e){console.log(e);}
+       },
     }
 });
 
