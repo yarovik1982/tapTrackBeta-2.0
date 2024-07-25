@@ -1,8 +1,16 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import {  ref } from 'vue';
+import {  computed, ref } from 'vue';
 import { useForms } from '@/stores/forms';
+// import { useUserStore } from '@/stores/userStore';
+// import { storeToRefs } from 'pinia';
 
+
+// const userStore = useUserStore()
+
+// // const profile = JSON.parse(userStore.getProfile)
+
+// const { userProfile } = storeToRefs(useUserStore)
 
 
 const user = JSON.parse(localStorage.getItem('user'))

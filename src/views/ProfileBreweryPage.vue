@@ -16,7 +16,7 @@ const openForm = (type) => {
       >
             Добавить пивоварню
         </button>
-      <h4 class="text-center">Brewery Page</h4>
+      <h4 class="text-center text-capitalize">Brewery Page</h4>
    </div>
 </template>
 <style scoped >

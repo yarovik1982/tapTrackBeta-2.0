@@ -2,7 +2,8 @@ import { defineStore, acceptHMRUpdate } from "pinia";
 import { BASE_URL } from "@/constants/constants";
 import axios from "axios";
 
-export const useUserStoreStore = defineStore("userStore", {
+// export const useUserStoreStore = defineStore("userStore", {
+export const useUserStore = defineStore("userStore", {
     state: () => ({
         token: localStorage.getItem("token") || null,
         refresh: localStorage.getItem("refresh") || null,
@@ -70,5 +71,5 @@ export const useUserStoreStore = defineStore("userStore", {
 });
 
 if (import.meta.hot) {
-    import.meta.hot.accept(acceptHMRUpdate(useUserStoreStore, import.meta.hot));
+    import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot));
 }

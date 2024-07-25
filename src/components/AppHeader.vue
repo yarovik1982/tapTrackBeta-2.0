@@ -3,7 +3,7 @@ import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref, watchEffect }
 import { useRouter } from "vue-router";
 import { handleScroll } from "@/functions/scroll";
 import { useForms } from "@/stores/forms";
-import { useUserStoreStore } from "@/stores/userStore";
+import { useUserStore } from "@/stores/userStore";
 import { storeToRefs } from "pinia";
 
 const formsStore = useForms()
@@ -19,7 +19,7 @@ onBeforeUnmount(()=>{
 })
 const router = useRouter()
 
-const userStore = useUserStoreStore()
+const userStore = useUserStore()
 const {isAuth, userProfile} = storeToRefs(userStore)
 
 const showForm = (type) => {

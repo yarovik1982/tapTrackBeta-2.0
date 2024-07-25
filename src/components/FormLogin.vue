@@ -3,11 +3,11 @@ import InputPassword from '@/components/UI/InputPassword.vue'
 import BtnCloseLayout from '@/components/UI/BtnCloseLayout.vue'
 import { ref } from 'vue';
 import { useForms } from '@/stores/forms';
-import { useUserStoreStore } from '@/stores/userStore';
+import { useUserStore } from '@/stores/userStore';
 import { useRouter } from 'vue-router';
 
 const formsStore = useForms()
-const userStore = useUserStoreStore()
+const userStore = useUserStore()
 const router = useRouter()
 const login = ref('')
 const password = ref('')
