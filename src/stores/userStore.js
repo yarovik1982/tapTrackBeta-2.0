@@ -99,6 +99,10 @@ export const useUserStore = defineStore("userStore", {
               userId: JSON.parse(this.userProfile).userId
             }
           })
+          if(response.status === 200){
+            this._USER_PROFILE(this.token)
+            window.location.reload()
+          }
         }catch(e){
           console.log(e);
         }
