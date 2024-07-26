@@ -2,7 +2,9 @@
 import { onMounted, onUnmounted, ref } from "vue";
 import { VueAvatar } from "vue-avatar-editor-improved";
 import BtnCloseLayout from "@/components/UI/BtnCloseLayout.vue";
+import { useUserStore } from '@/stores/userStore.js'
 
+const userStore = useUserStore()
 const rotation = ref(0);
 const scale = ref(1);
 const borderRadius = ref(200);
@@ -18,6 +20,19 @@ const onImageReady = () => {
     scale.value = 1;
     rotation.value = 0;
 };
+
+const handleSubmit = async () => {
+    if(vueavatar.value){
+        const canvasData = vueavatar.value.getImageScaled()
+        const blob = await new Promise(resolve => {
+            canvasData.toBlob(resolve, 'image/png')
+        })
+        const formData = new FormData()
+        formData.append('image', blob, 'avatar.png')
+        console.log(formData);
+        await userStore._USER_PHOTO(formData)
+    }
+}
 </script>
 <template>
     <form id="addAvatar" class="w-50">

@@ -1,7 +1,11 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import axios from 'axios';
 import { BASE_URL, beerList } from '@/constants/constants';
+import { useForms } from './forms';
 
+const token = localStorage.getItem('token')
+const userId = JSON.parse(localStorage.getItem('user'))?.userId
+// console.log(token);
 export const usePlaceStore = defineStore('placeStore', {
  state: () => ({
    limit:5,
@@ -63,7 +67,24 @@ export const usePlaceStore = defineStore('placeStore', {
       this._PLACE_LIST
     }
    },
-  //  async _PLACE_LIST_USER(GET){},
+   async _PLACE_LIST_USER(){
+    try{
+      const response = await axios.get(`${BASE_URL}/place/list/user`,{
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        params:{userId}
+      })
+      if(response.status === 200){
+        this.placeListUser = response.data
+        return response.data
+      }
+    }catch(e){
+      useForms().openLayout('login')
+      console.log(e)
+    }
+   },
   //  async _PLACE_LIST_MAP(GET){},
   //  async _PLACE_ISADDED_LIST(GET){},
   //  async _PLACE_BEER_LIST(GET){},

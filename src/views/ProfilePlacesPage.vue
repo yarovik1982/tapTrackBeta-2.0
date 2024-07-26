@@ -1,6 +1,13 @@
 <script setup>
+import Card from '@/components/Card.vue';
 import { useForms } from '@/stores/forms';
+import { usePlaceStore } from '@/stores/placeStore';
+import { computed } from 'vue';
 
+
+const placeStore = usePlaceStore()
+placeStore._PLACE_LIST_USER()
+const placeList = computed(() => placeStore.getPlaceListUser)
 const formsStore = useForms()
 const openForm = (type) => {
    formsStore.openLayout(type)
@@ -18,6 +25,22 @@ const openForm = (type) => {
         </button>
     
       <h4 class="text-center">Places Page</h4>
+      <div class="container-fluid">
+         <div class="col">
+            <Card
+               :typeCard="'place'"
+               :item="item"
+               v-for="item in placeList"
+               :key="item.id"
+               :name="item.name"
+               :address="item.address"
+               :description="item.description"
+               :type="item.type"
+               :image="item.image"
+               :city="item.city"
+            ></Card>
+         </div>
+      </div>
    </div>
 </template>
 <style scoped >

@@ -9,11 +9,13 @@ export const useUserStore = defineStore("userStore", {
         refresh: localStorage.getItem("refresh") || null,
         userProfile: localStorage.getItem("user") || null,
         isAuth: false,
+        userImage:''
     }),
     getters: {
       getToken: state => state.token,
       getRefresh: state => state.refresh,
-      getProfile: state => state.userProfile
+      getProfile: state => state.userProfile,
+      getUserImage: state => state.userImage
     },
     actions: {
         async _USER_AUTH(data) {
@@ -56,6 +58,7 @@ export const useUserStore = defineStore("userStore", {
        
            if (responseProfile.status === 200) {
              const profile = responseProfile.data;
+             this.userImage = profile.image
              localStorage.setItem('user', JSON.stringify(profile));
              return profile;
            } else {
@@ -83,6 +86,22 @@ export const useUserStore = defineStore("userStore", {
             window.location.reload()
           }
         }catch(e){console.log(e);}
+       },
+
+       async _USER_PHOTO(image){
+        try{
+          const response = await axios.post(`${BASE_URL}/user/photo`, image, {
+            headers:{
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${this.token}`
+            },
+            params:{
+              userId: JSON.parse(this.userProfile).userId
+            }
+          })
+        }catch(e){
+          console.log(e);
+        }
        },
     }
 });
