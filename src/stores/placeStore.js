@@ -2,6 +2,7 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 import axios from 'axios';
 import { BASE_URL, beerList } from '@/constants/constants';
 import { useForms } from './forms';
+import { useUserStore } from './userStore';
 
 const token = localStorage.getItem('token')
 const userId = JSON.parse(localStorage.getItem('user'))?.userId
@@ -36,7 +37,30 @@ export const usePlaceStore = defineStore('placeStore', {
   //  getPlace: state => state.place,
  },
  actions: {
-  //  async _PLACE_FAVORITE(POST){},
+   async _PLACE_FAVORITE(placeId){
+    
+     const data={
+         placeId,
+         userId
+      }
+      
+    try{
+      const response = await axios.post(`${BASE_URL}/place/favorite`, data, {
+        headers:{
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+       }
+      })
+      if(response.status === 200){
+        // useUserStore()._USER_FAVORITE_PLACE()
+        this._PLACE_LIST_USER()
+        // window.location.reload()
+      }
+    }catch(e){
+      console.log(e);
+      useForms().openLayout('login')
+    }
+   },
   //  async _PLACE_CREATE(POST){},
   //  async _PLACE_BUY_BEER(POST){},
   //  async _PLACE_PROFILE(GET){},
@@ -102,7 +126,27 @@ export const usePlaceStore = defineStore('placeStore', {
   }
    },
   //  async _PLACE_ISADDED_REMOVE(DELETE){},
-  //  async _PLACE_FAVORITE_REMOVE(DELETE){},
+   async _PLACE_FAVORITE_REMOVE(placeId){
+    const config = {
+      data:{
+         placeId,
+         userId
+      },
+      headers:{
+         "Content-Type": "application/json",
+         "Authorization": `Bearer ${token}`
+      }
+    }
+    try{
+      const response = await axios.delete(`${BASE_URL}/place/favorite/remove`,config )
+      if(response.status === 200){
+        this._PLACE_LIST_USER()
+      }
+    }catch(e){
+      console.log(e);
+      useForms().openLayout('login')
+    }
+   },
  },
 })
 

@@ -1,5 +1,6 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import { BASE_URL } from "@/constants/constants";
+import { useForms } from "./forms";
 import axios from "axios";
 
 // export const useUserStoreStore = defineStore("userStore", {
@@ -9,13 +10,15 @@ export const useUserStore = defineStore("userStore", {
         refresh: localStorage.getItem("refresh") || null,
         userProfile: localStorage.getItem("user") || null,
         isAuth: false,
-        userImage:''
+        userImage:'',
+        userFavoritePlaceList:[],
     }),
     getters: {
       getToken: state => state.token,
       getRefresh: state => state.refresh,
       getProfile: state => state.userProfile,
-      getUserImage: state => state.userImage
+      getUserImage: state => state.userImage,
+      getUserFavoritePlaceList: state => state.userFavoritePlaceList,
     },
     actions: {
         async _USER_AUTH(data) {
@@ -107,6 +110,27 @@ export const useUserStore = defineStore("userStore", {
           console.log(e);
         }
        },
+
+       async _USER_FAVORITE_PLACE(){
+        try{
+          const response = await axios.get(`${BASE_URL}/user/favorite/place`, {
+            headers:{
+              "Content-Type": "applicaton/json",
+              "Authorization": `Bearer ${this.token}`
+            },
+            params:{
+              id: JSON.parse(this.userProfile).userId
+            }
+          })
+          if(response.status === 200){
+            this.userFavoritePlaceList = response.data
+            return response.data
+          }
+        }catch(e){
+          console.log(e);
+          useForms().openLayout('login')
+        }
+       }
     }
 });
 

@@ -1,5 +1,5 @@
 <script setup>
-// import { usePlaceStore } from '@/stores/place';
+import { usePlaceStore } from '@/stores/placeStore';
 const props = defineProps({
   item:{type:Object, required:true},
   beerId:Number,
@@ -20,19 +20,18 @@ const props = defineProps({
   setAvailabilityOfSpaceForTheUser: Boolean,
   typeCard:String,
   address:String,
+ 
 })
 
-// const placeStore = usePlaceStore()
+const placeStore = usePlaceStore()
 
-// const addToFavorite = (item) => {
-//   console.log(item.placeId);
-//     placeStore._PLACE_FAVORITE(item.placeId)    
-//   }
+const addToFavorite = (item) => {
+    placeStore._PLACE_FAVORITE(item.placeId)    
+  }
 
-//   const delFromFavorite = (item) => {
-//     console.log(item.placeId);
-//     placeStore._PLACE_FAVORITE_REMOVE(item.placeId)
-// }
+  const delFavorite = (item) => {
+    placeStore._PLACE_FAVORITE_REMOVE(item.placeId)
+}
 </script>
 <template>
     <div
@@ -55,11 +54,11 @@ const props = defineProps({
       <div class="col-md-8 d-flex flex-column p-3" style="min-height: 430px;">
         <div class="card-row justify-content-between ">
           <h5 class="card-title">{{ name }}</h5>
-          <div class="card-favorite-icons" v-if="typeCard === 'place'">
-            <i class="bi bi-heart" v-if="!item.setAvailabilityOfSpaceForTheUser"  
+          <div class="card-favorite-icons" v-if="typeCard === 'place' || typeCard === 'placeFavorite'" >
+            <i class="bi bi-heart" v-if="(!item.setAvailabilityOfSpaceForTheUser && typeCard === 'place')"  
             @click="addToFavorite(item)"
           ></i>
-          <i class="bi bi-heart-fill" @click="delFromFavorite(item)" v-if="item.setAvailabilityOfSpaceForTheUser"></i>
+          <i class="bi bi-heart-fill" @click="delFavorite(item)" v-if="(item.setAvailabilityOfSpaceForTheUser && typeCard === 'place') || typeCard === 'placeFavorite'"></i>
           </div>
 
         </div>
