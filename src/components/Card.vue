@@ -1,5 +1,6 @@
 <script setup>
 import { usePlaceStore } from '@/stores/placeStore';
+import { useUserStore } from '@/stores/userStore';
 const props = defineProps({
   item:{type:Object, required:true},
   beerId:Number,
@@ -32,6 +33,10 @@ const addToFavorite = (item) => {
   const delFavorite = (item) => {
     placeStore._PLACE_FAVORITE_REMOVE(item.placeId)
 }
+const delFavoriteFromPlaceFavorite = async (item) => {
+  await placeStore._PLACE_FAVORITE_REMOVE(item.placeId)
+  await useUserStore()._USER_FAVORITE_PLACE()
+}
 </script>
 <template>
     <div
@@ -58,7 +63,8 @@ const addToFavorite = (item) => {
             <i class="bi bi-heart" v-if="(!item.setAvailabilityOfSpaceForTheUser && typeCard === 'place')"  
             @click="addToFavorite(item)"
           ></i>
-          <i class="bi bi-heart-fill" @click="delFavorite(item)" v-if="(item.setAvailabilityOfSpaceForTheUser && typeCard === 'place') || typeCard === 'placeFavorite'"></i>
+          <i class="bi bi-heart-fill" @click="delFavorite(item)" v-if="item.setAvailabilityOfSpaceForTheUser && typeCard === 'place'"></i>
+          <i class="bi bi-heart-fill" @click="delFavoriteFromPlaceFavorite(item)" v-if=" typeCard === 'placeFavorite'"></i>
           </div>
 
         </div>

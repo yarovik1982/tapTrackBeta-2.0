@@ -15,6 +15,7 @@ coverage
 *.local
 test.js
 ./HelpInfo.txt
+./components/TEST_COMPONENT.vue
 /cypress/videos/
 /cypress/screenshots/
 
