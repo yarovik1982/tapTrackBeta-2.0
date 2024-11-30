@@ -153,7 +153,7 @@ const delFavoriteFromPlaceFavorite = async (item) => {
 }
 .img-placeholder{
   height: 300px;
-  width: 100%;
+  width: 250px;
   display: grid;
   place-content: center;
   background: #ccc;

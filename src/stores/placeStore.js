@@ -6,6 +6,10 @@ import { useUserStore } from './userStore';
 
 const token = localStorage.getItem('token')
 const userId = JSON.parse(localStorage.getItem('user'))?.userId
+console.log(userId);
+console.log(token);
+
+
 // console.log(token);
 export const usePlaceStore = defineStore('placeStore', {
  state: () => ({
@@ -93,12 +97,12 @@ export const usePlaceStore = defineStore('placeStore', {
    },
    async _PLACE_LIST_USER(){
     try{
-      const response = await axios.get(`${BASE_URL}/place/list/user`,{
+      const response = await axios.get(`${BASE_URL}/place/list/user?userId=${userId}`,{
         headers:{
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`
         },
-        params:{userId}
+        // params:{userId}
       })
       if(response.status === 200){
         this.placeListUser = response.data

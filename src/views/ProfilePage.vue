@@ -1,17 +1,12 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import {  computed, ref } from 'vue';
+import {  computed, ref, watch } from 'vue';
 import { useForms } from '@/stores/forms';
 import { useUserStore } from '@/stores/userStore';
 // import { storeToRefs } from 'pinia';
 
 
 const userStore = useUserStore()
-
-// // const profile = JSON.parse(userStore.getProfile)
-
-// const { userProfile } = storeToRefs(useUserStore)
-
 
 const user = JSON.parse(localStorage.getItem('user'))
 
@@ -20,7 +15,8 @@ const userRole = ref(user?.userRole)
 const userName = ref(user?.userName)
 const login = ref(user?.login)
 const mail = ref(user?.mail)
-const image = ref(user?.image)
+const image = computed(() => userStore.getUserImage)
+
 
 const formsStore = useForms()
 
@@ -29,7 +25,9 @@ const openForm = (type) => {
 }
 
 const handleClick = () => {
-  userStore._USER_PHOTO_REMOVE()
+   userStore._USER_PHOTO_REMOVE()
+  // await formsStore.closeLayout()
+ 
 }
 </script>
 <template>
@@ -39,23 +37,23 @@ const handleClick = () => {
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav w-100 justify-content-around">
           <li class="nav-item">
-            <RouterLink class="nav-link py-0" to="/profile_favorite"
+            <RouterLink class="nav-link py-0" to="/profile/profile_favorite"
               >Избранное</RouterLink
             >
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link py-0" to="/profile_reviews"
+            <RouterLink class="nav-link py-0" to="/profile/profile_reviews"
               >Мои Отзывы</RouterLink
             >
           </li>
           <li class="nav-item" v-if="userRole === 2 || userRole === 3">
-            <RouterLink class="nav-link py-0" to="/profile_places"
+            <RouterLink class="nav-link py-0" to="/profile/profile_places"
               >Мои точки продаж</RouterLink
             >
           </li>
 
           <li class="nav-item" v-if="userRole === 3 || userRole === 1">
-            <RouterLink class="nav-link py-0" to="/profile_brewery"
+            <RouterLink class="nav-link py-0" to="/profile/profile_brewery"
               >Мои пивоварни</RouterLink
             >
           </li>
@@ -65,7 +63,7 @@ const handleClick = () => {
   </nav>
 
   <div class="container-fluid">
-    <div class="row">
+    <div class="row pt-3">
         <div class="col-8">
             <RouterView></RouterView>
         </div>

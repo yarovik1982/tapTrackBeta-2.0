@@ -19,7 +19,7 @@ const handleSubmit = async() => {
   }
   await userStore._USER_AUTH(data)
   await formsStore.closeLayout()
-  router.push('/profile_favorite')
+  router.push('/profile/profile_favorite')
 }
 </script>
 <template>

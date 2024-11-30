@@ -20,7 +20,8 @@ onBeforeUnmount(()=>{
 const router = useRouter()
 
 const userStore = useUserStore()
-const {isAuth, userProfile} = storeToRefs(userStore)
+// const {isAuth, userProfile} = storeToRefs(userStore)
+const userProfile = computed(() => userStore.getProfile)
 
 const showForm = (type) => {
 

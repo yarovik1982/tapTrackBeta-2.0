@@ -4,13 +4,19 @@ import { useForms } from "./forms";
 import axios from "axios";
 
 // export const useUserStoreStore = defineStore("userStore", {
+
+// const id = JSON.parse(localStorage?.user).userId
+
+
+
+
 export const useUserStore = defineStore("userStore", {
     state: () => ({
-        token: localStorage.getItem("token") || null,
-        refresh: localStorage.getItem("refresh") || null,
-        userProfile: localStorage.getItem("user") || null,
+        token: '',
+        refresh:'',
+        userProfile: {},
         isAuth: false,
-        userImage:'',
+        userImage:"",
         userFavoritePlaceList:[],
     }),
     getters: {
@@ -32,17 +38,14 @@ export const useUserStore = defineStore("userStore", {
                 );
 
                 if (response.status === 200) {
-                  const token = response.data.token;
-                  const refresh = response.data.refresh;
-                  localStorage.setItem('token', (token));
-                  localStorage.setItem('refresh', (refresh));
+                  this.token = response.data.token;
+                  this.refresh = response.data.refresh;
+                  localStorage.setItem('token', (this.token));
+                  localStorage.setItem('refresh', (this.refresh));
             
                   
-                  const profile = await this._USER_PROFILE(token);
-                  if (profile) {
-                    this.isAuth = true;
-                    
-                  }
+                  await this._USER_PROFILE(this.token);
+                  
                 } else {
                   console.error("Authentication failed:", response.status);
                 }
@@ -50,20 +53,22 @@ export const useUserStore = defineStore("userStore", {
                 console.error("Error during authentication:", error);
               }
         },
-        async _USER_PROFILE(token) {
+        async _USER_PROFILE() {
          try {
            const responseProfile = await axios.get(BASE_URL + '/user/profile', {
              headers: {
                "Content-Type": "application/json",
-               "Authorization": `Bearer ${token}`
+               "Authorization": `Bearer ${localStorage.token}`
              }
            });
        
            if (responseProfile.status === 200) {
-             const profile = responseProfile.data;
-             this.userImage = profile.image
-             localStorage.setItem('user', JSON.stringify(profile));
-             return profile;
+            //  const profile = responseProfile.data;
+            //  this.userImage = profile.image
+            this.userProfile = responseProfile.data
+            this.userImage = responseProfile.data.image
+             localStorage.setItem('user', JSON.stringify(responseProfile.data));
+             return responseProfile.data;
            } else {
              console.log("Error during data acquisition:", responseProfile.status);
              return null;
@@ -74,37 +79,40 @@ export const useUserStore = defineStore("userStore", {
          }
        },
        async _USER_PHOTO_REMOVE(){
+        // this.userImage = false
         try{
           const response = await axios.delete(`${BASE_URL}/user/photo/remove`,{
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${this.token}`
+              "Authorization": `Bearer ${localStorage.token}`
             },
             params:{
-              id:JSON.parse(this.userProfile).userId
+              id:id
             }
           })
           if(response.status === 200){
-            await this._USER_PROFILE(this.token)
-            window.location.reload()
+            await this._USER_PROFILE()
+            // window.location.reload()
           }
         }catch(e){console.log(e);}
        },
 
        async _USER_PHOTO(image){
         try{
-          const response = await axios.post(`${BASE_URL}/user/photo`, image, {
+          const response = await axios.post(`${BASE_URL}/user/photo?userId=${id}`, image, {
             headers:{
               "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${this.token}`
+              Authorization: `Bearer ${localStorage.token}`
             },
-            params:{
-              userId: JSON.parse(this.userProfile).userId
-            }
+            // params:{
+            //   userId: (this.userProfile).userId
+            // }
           })
           if(response.status === 200){
-            this._USER_PROFILE(this.token)
-            window.location.reload()
+            await this._USER_PROFILE(this.token)
+            await useForms().closeLayout()
+            // this.userImage = true
+            // window.location.reload()
           }
         }catch(e){
           console.log(e);

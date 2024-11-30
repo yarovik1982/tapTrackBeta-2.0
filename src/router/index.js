@@ -44,22 +44,22 @@ import BreweryPage from '@/views/BreweryPage.vue'
       component:() => import('@/views/ProfilePage.vue'),
       children:[
         {
-          path:'/profile_favorite',
+          path:'/profile/profile_favorite',
           name:'profile-favorite',
           component:() => import('@/views/ProfileFavoritePage.vue')
         },
         {
-          path:'/profile_reviews',
+          path:'/profile/profile_reviews',
           name:'profile-reviews',
           component:() => import('@/views/ProfileReviewsPage.vue')
         },
         {
-          path:'/profile_places',
+          path:'/profile/profile_places',
           name:'profile-places',
           component:() => import('@/views/ProfilePlacesPage.vue')
         },
         {
-          path:'/profile_brewery',
+          path:'/profile/profile_brewery',
           name:'profile-brewery',
           component:() => import('@/views/ProfileBreweryPage.vue')
         },
@@ -72,17 +72,17 @@ import BreweryPage from '@/views/BreweryPage.vue'
     routes
   })
 
-  // router.beforeEach((to, from, next) => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   const access = JSON.parse(localStorage.getItem("access"));
-  //   if (to.path.startsWith("/profile")) {
-  //     if (access && user) {
-  //       next();
-  //     } else {
-  //       next("/");
-  //     }
-  //   } else {
-  //     next();
-  //   }
-  // });
+  router.beforeEach((to, from, next) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+  
+    if (to.path.startsWith("/profile")) {
+      if ( user) {
+        next();
+      } else {
+        next("/");
+      }
+    } else {
+      next();
+    }
+  });
 export default router

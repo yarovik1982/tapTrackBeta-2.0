@@ -24,7 +24,7 @@ const openForm = (type) => {
             Добавить точку продаж
         </button>
     
-      <h4 class="text-center">Places Page</h4>
+      <!-- <h4 class="text-center">Places Page</h4> -->
       <div class="container-fluid">
          <div class="col">
             <Card

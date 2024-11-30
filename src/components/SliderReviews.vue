@@ -2,7 +2,7 @@
     <swiper
         :loop="true"
         :effect="'coverflow'"
-        :grabCursor="true"
+        :grabCursor="false"
         :centeredSlides="true"
         :slidesPerView="4"
         :spaceBetween="-150"
@@ -64,15 +64,10 @@ const modules = [Autoplay, EffectCoverflow];
     flex-direction: column;
     align-items: center;
 }
-/* .custonSwiper div {
-   align-self: center;
-   overflow: hidden;
-   position: relative;
- } */
+
 .slide-img {
     width: fit-content;
     aspect-ratio: 1;
-    /* background: red; */
     position: relative;
     z-index: 5;
     overflow: hidden;
